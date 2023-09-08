@@ -26,6 +26,6 @@ public class Product {
     private String category;
     private BigDecimal price;
     private int quantity;
-    @Column(name = "creation_date")
+    @Column(name = "creation_date", columnDefinition = "DATE")
     private LocalDate creationDate;
 }
