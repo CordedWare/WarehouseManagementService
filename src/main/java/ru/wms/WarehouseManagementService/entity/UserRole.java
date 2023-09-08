@@ -1,4 +1,6 @@
 package ru.wms.WarehouseManagementService.entity;
 
-public class UserRole {
+public enum UserRole {
+    USER,
+    ADMIN;
 }

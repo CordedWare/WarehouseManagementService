@@ -1,15 +1,22 @@
 package ru.wms.WarehouseManagementService.entity;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
-import javax.persistence.Column;
-import javax.persistence.Entity;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 public class Order {
     @Id
@@ -25,6 +32,7 @@ public class Order {
     private BigDecimal totalCost;
     private boolean delivery;
 
+    // getters & setters
     public Long getId() {
         return id;
     }
