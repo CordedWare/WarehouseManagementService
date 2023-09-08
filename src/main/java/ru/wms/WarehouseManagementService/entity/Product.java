@@ -20,7 +20,6 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Size(min = 2, message = "Имя должно содержать не менее 2 символов")
     private String name;
     private String description;
@@ -29,7 +28,6 @@ public class Product {
     private int quantity;
     @Column(name = "creation_date")
     private LocalDate creationDate;
-    private String category;
 
     // getters & setters
     public Long getId() {
@@ -82,5 +80,9 @@ public class Product {
 
     public String getCategory() {
         return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
