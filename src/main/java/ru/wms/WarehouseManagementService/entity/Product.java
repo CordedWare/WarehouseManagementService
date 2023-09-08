@@ -1,12 +1,19 @@
 package ru.wms.WarehouseManagementService.entity;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 public class Product {
 
@@ -14,10 +21,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @NotNull
     @Size(min = 2, message = "Имя должно содержать не менее 2 символов")
     private String name;
     private String description;
+    private String category;
     private BigDecimal price;
     private int quantity;
     @Column(name = "creation_date")
@@ -75,9 +82,5 @@ public class Product {
 
     public String getCategory() {
         return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 }
