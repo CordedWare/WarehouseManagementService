@@ -19,9 +19,9 @@ public class WarehouseController {
     }
 
     @PostMapping
-    public Warehouse createWarehouseById(@RequestBody Warehouse warehouse) {
+    public Warehouse createWarehouse(@RequestBody Warehouse warehouse) {
 
-        return createWarehouseById(warehouse);
+        return createWarehouse(warehouse);
     }
 
     @GetMapping("/{id}")
@@ -29,4 +29,5 @@ public class WarehouseController {
 
         return getWarehouseById(id);
     }
+
 }
