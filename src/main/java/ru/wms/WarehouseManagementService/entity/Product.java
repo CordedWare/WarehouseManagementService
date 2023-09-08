@@ -24,6 +24,7 @@ public class Product {
     private LocalDate creationDate;
     private String category;
 
+    // getters & setters
     public Long getId() {
         return id;
     }
