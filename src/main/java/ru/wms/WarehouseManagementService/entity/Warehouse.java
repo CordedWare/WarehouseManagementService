@@ -28,6 +28,6 @@ public class Warehouse {
 
     private String contactInformation;
 
-    @Column(name = "creation_date")
-    private int creationDate;
+    @Column(name = "creation_date", columnDefinition = "DATE")
+    private LocalDate creationDate;
 }
