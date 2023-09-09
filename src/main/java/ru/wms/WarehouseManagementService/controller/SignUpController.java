@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ru.wms.WarehouseManagementService.configuration.SecurityConfiguration;
 import ru.wms.WarehouseManagementService.dto.UserRegistrationDTO;
 import ru.wms.WarehouseManagementService.entity.AppUser;
-import ru.wms.WarehouseManagementService.entity.Authority;
+import ru.wms.WarehouseManagementService.security.Authority;
 import ru.wms.WarehouseManagementService.repository.UserRepository;
 
 import java.util.Collections;

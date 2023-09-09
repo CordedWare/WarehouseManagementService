@@ -20,15 +20,17 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "creation_date")
-    private LocalDate creationDate;
+
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
     private int quantity;
     @Column(name = "total_cost")
     private BigDecimal totalCost;
     private boolean delivery;
+    @Column(name = "creation_date")
+    private LocalDate creationDate;
 
-//    private List<Product> products;
+    @OneToMany
+    private List<Product> products;
 
 }

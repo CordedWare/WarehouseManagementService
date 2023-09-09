@@ -1,4 +1,4 @@
-package ru.wms.WarehouseManagementService.entity;
+package ru.wms.WarehouseManagementService.security;
 
 import org.springframework.security.core.GrantedAuthority;
 

@@ -2,8 +2,8 @@ package ru.wms.WarehouseManagementService.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.wms.WarehouseManagementService.entity.Warehouse;
+import ru.wms.WarehouseManagementService.entity.Order;
 
 @Repository
-public interface WarehouseRepo extends JpaRepository<Warehouse, Long> {
+public interface OrderRepository extends JpaRepository<Order, Long> {
 }
