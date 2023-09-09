@@ -3,7 +3,7 @@ package ru.wms.WarehouseManagementService.service;
 
 import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.entity.Warehouse;
-import ru.wms.WarehouseManagementService.repo.WarehouseRepo;
+import ru.wms.WarehouseManagementService.repository.WarehouseRepo;
 
 import java.util.List;
 

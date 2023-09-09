@@ -1,8 +1,6 @@
 package ru.wms.WarehouseManagementService.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
+@Entity(name = "app_order")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,9 +24,11 @@ public class Order {
     private LocalDate creationDate;
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
-    private List<Product> products;
     private int quantity;
     @Column(name = "total_cost")
     private BigDecimal totalCost;
     private boolean delivery;
+
+//    private List<Product> products;
+
 }
