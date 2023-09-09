@@ -2,13 +2,13 @@ package ru.wms.WarehouseManagementService.service;
 
 import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.entity.Product;
-import ru.wms.WarehouseManagementService.repo.ProductRepo;
+import ru.wms.WarehouseManagementService.repository.ProductRepository;
 
 import java.util.List;
 
 @Service
 public class ProductService {
-    private ProductRepo productRepo;
+    private ProductRepository productRepo;
 
     public List<Product> getAllProducts() {
 
