@@ -1,7 +1,8 @@
-package ru.wms.WarehouseManagementService.entity;
+package ru.wms.WarehouseManagementService.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.wms.WarehouseManagementService.entity.AppUser;
 
 import java.util.Collection;
 

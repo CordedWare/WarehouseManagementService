@@ -17,6 +17,7 @@ target/
 /logs
 /data
 /target
+application-dev.properties
 
 ### Eclipse ###
 .apt_generated

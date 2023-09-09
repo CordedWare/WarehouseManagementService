@@ -3,6 +3,7 @@ package ru.wms.WarehouseManagementService.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
+import ru.wms.WarehouseManagementService.security.Authority;
 
 import java.util.Set;
 
