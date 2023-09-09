@@ -15,18 +15,22 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
+@Entity(name = "app_order")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "creation_date", columnDefinition = "DATE")
-    private LocalDate creationDate;
+
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
-    private List<Product> products;
     private int quantity;
     @Column(name = "total_cost")
     private BigDecimal totalCost;
     private boolean delivery;
+    @Column(name = "creation_date")
+    private LocalDate creationDate;
+
+    @OneToMany
+    private List<Product> products;
+
 }
