@@ -12,11 +12,11 @@ public class WarehouseController {
 
     private WarehouseService warehouseService;
 
-    @GetMapping
-    public List<Warehouse> getAllWarehouses() {
-
-        return warehouseService.getAllWarehouses();
-    }
+//    @GetMapping   // TODO: порефакторить или удалить
+//    public List<Warehouse> getAllWarehouses() {
+//
+//        return warehouseService.getAllWarehouses();
+//    }
 
     @PostMapping
     public Warehouse createWarehouse(@RequestBody Warehouse warehouse) {

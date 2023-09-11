@@ -4,24 +4,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Регистрация</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            margin-top: 100px;
+        }
+
+        h3 {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <form name="f" th:action="@{/sign-up}" th:object="${user}" method="post">
         <div>
             <label for="name">Имя</label>
             <input type="text" class="form-control" id="name" th:field="*{username}" name="name"
-                   placeholder="Имя">
+                   placeholder="имя">
         </div>
         <div>
             <label for="password">Пароль</label>
             <input type="password" class="form-control" id="password" th:field="*{password}" name="password"
-                   placeholder="Пароль">
+                   placeholder="пароль">
+        </div>
+        <div>
+            <label for="email">Пароль</label>
+            <input type="email" class="form-control" id="email" th:field="*{email}" name="email"
+                   placeholder="some@some.com">
         </div>
         <div>
             <button type="submit">Зарегистрироваться</button>
         </div>
     </form>
-    <h3><a href="/login">Войти</a></h3>
+    <h3><a href="/login">Вернутся назад</a></h3>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

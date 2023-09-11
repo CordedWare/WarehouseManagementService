@@ -11,27 +11,41 @@ import ru.wms.WarehouseManagementService.dto.UserRegistrationDTO;
 import ru.wms.WarehouseManagementService.entity.AppUser;
 import ru.wms.WarehouseManagementService.security.Authority;
 import ru.wms.WarehouseManagementService.repository.UserRepository;
+import ru.wms.WarehouseManagementService.service.UserPrincipalDetailsService;
 
 import java.util.Collections;
+import java.util.Map;
 
 @Controller
 public class SignUpController {
 
+    public static final String USER_ROLE = "user";
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserPrincipalDetailsService userPrincipalDetailsService;
+
     @GetMapping("/sign-up")
     public String getRegisterPage(Model model) {
-        model.addAttribute("user", new UserRegistrationDTO());
+        model.addAttribute(USER_ROLE, new UserRegistrationDTO());
+
         return "sign-up";
     }
 
     @PostMapping("/sign-up")
-    public String newUserRegistration(@ModelAttribute UserRegistrationDTO userRegistrationDTO) {
+    public String newUserRegistration(AppUser user, Map<String, Object> model) {
+        if (!userPrincipalDetailsService.addUser(user)) {
+            model.put("message", "User exists!");
+
+            return "sign-up";
+        }
         var newUser = new AppUser();
-        newUser.setUsername(userRegistrationDTO.getUsername());
-        newUser.setPassword(SecurityConfiguration.passwordEncoder().encode(userRegistrationDTO.getPassword()));
+        newUser.setUsername(user.getUsername());
+        newUser.setPassword(SecurityConfiguration.passwordEncoder().encode(user.getPassword()));
+        newUser.setEmail(user.getEmail());
         newUser.setAuthorities(Collections.singleton(Authority.USER));
+        userPrincipalDetailsService.addUser(user);
         userRepository.save(newUser);
 
         return "redirect:/login";
