@@ -12,10 +12,10 @@ public class OrderController {
 
     private OrderService orderService;
 
-    @GetMapping
-    public List<Order> getAllOrders() {
-        return orderService.getAllOrders();
-    }
+//    @GetMapping   // TODO: порефакторить или удалить
+//    public List<Order> getAllOrders() {
+//        return orderService.getAllOrders();
+//    }
 
     @PostMapping
     public Order createOrder(@RequestBody Order order) {

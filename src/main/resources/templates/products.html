@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Index</title>
+    <title>Products</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
@@ -29,24 +29,15 @@
 </head>
 <body>
 
-    <h1>Hello, World!</h1>
     <h2>Вы вошли в систему как <span sec:authentication="name"></span></h2>
 
     <hr>
         <p>
-            Это приложение предназначено для управления складскими операциями в компании. Пользователи могут просматривать, добавлять, редактировать и удалять информацию о товарах, складах и заказах, а также отслеживать их статусы. Приложение также взаимодействует с внешними источниками данных для получения актуальной информации о поставках и продажах.
+         Раздел управления товарами
         </p>
     <hr>
-
-    <hr>
-        <h2><a href="/products">Товары</a></h2>
-
-        <h2><a href="/orders">Заказы</a></h2>
-
-        <h2><a href="/warehouses">Склады</a></h2>
-    <hr/>
-
-    <h2><a href="/logout">Выйти</a></h2>
+    
+    <h3><a href="/index">Вернутся в меню</a></h3>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
