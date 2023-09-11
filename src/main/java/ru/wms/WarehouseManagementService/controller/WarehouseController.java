@@ -12,11 +12,6 @@ public class WarehouseController {
 
     private WarehouseService warehouseService;
 
-//    @GetMapping   // TODO: порефакторить или удалить
-//    public List<Warehouse> getAllWarehouses() {
-//
-//        return warehouseService.getAllWarehouses();
-//    }
 
     @PostMapping
     public Warehouse createWarehouse(@RequestBody Warehouse warehouse) {

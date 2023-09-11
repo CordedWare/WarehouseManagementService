@@ -29,6 +29,7 @@ public class SecurityConfiguration {
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .permitAll()
+                        .usernameParameter("email")
                 )
                 .logout(LogoutConfigurer::permitAll);
         return http.build();

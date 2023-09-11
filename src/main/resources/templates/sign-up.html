@@ -29,6 +29,9 @@
 </head>
 <body>
     <form name="f" th:action="@{/sign-up}" th:object="${user}" method="post">
+        <div th:if="${param.userExist}" class="alert alert-danger">
+            Пользователь с такой почтой уже существует.
+        </div>
         <div>
             <label for="name">Имя</label>
             <input type="text" class="form-control" id="name" th:field="*{username}" name="name"
@@ -40,7 +43,7 @@
                    placeholder="пароль">
         </div>
         <div>
-            <label for="email">Пароль</label>
+            <label for="email">Почта</label>
             <input type="email" class="form-control" id="email" th:field="*{email}" name="email"
                    placeholder="some@some.com">
         </div>
