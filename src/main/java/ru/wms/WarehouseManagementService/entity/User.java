@@ -1,6 +1,7 @@
 package ru.wms.WarehouseManagementService.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 import ru.wms.WarehouseManagementService.security.Authority;
@@ -35,4 +36,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Set<Authority> authorities;
 
+    public User() {
+
+    }
 }

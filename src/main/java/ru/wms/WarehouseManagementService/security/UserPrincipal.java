@@ -1,11 +1,13 @@
 package ru.wms.WarehouseManagementService.security;
 
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.wms.WarehouseManagementService.entity.User;
 
 import java.util.Collection;
 
+@NoArgsConstructor
 public class UserPrincipal implements UserDetails {
     private User user;
 
@@ -13,10 +15,6 @@ public class UserPrincipal implements UserDetails {
         this.user = user;
     }
 
-    //Пустой конструктор необходим для Spring
-    public UserPrincipal() {
-
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
