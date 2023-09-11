@@ -11,11 +11,11 @@ import java.util.List;
 public class ProductController {
     private ProductService productService;
 
-    @GetMapping
-    public List<Product> getAllProducts() {
-
-        return productService.getAllProducts();
-    }
+//    @GetMapping // TODO: порефакторить или удалить
+//    public List<Product> getAllProducts() {
+//
+//        return productService.getAllProducts();
+//    }
 
     @PostMapping
     public Product createProduct(@RequestBody Product product) {
