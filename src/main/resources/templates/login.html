@@ -29,6 +29,22 @@
 <body>
 <div class="container">
     <form th:action="@{/login}" method="post">
+        <div th:if="${param.activate_email}" class="alert alert-warning">
+            На вашу почту было отправлено письмо активации
+            <p>
+                DEBUG: <span th:text="'http://localhost:8080/activate/'+${param.activate_email}">ссылка</span>  ссылка для подтверждения почты
+<!--                DEBUG: <a th:href="@{/activate/}">ссылка</a> для подтверждения почты-->
+            </p>
+        </div>
+        <div th:if="${param.activate_success}" class="alert alert-success">
+            Почта успешно активирована
+        </div>
+        <div th:if="${param.activate_fail}" class="alert alert-danger">
+            Неверный код активации
+        </div>
+        <div th:if="${param.error}" class="alert alert-danger">
+            Неверные данные при входе или пользователь не существует
+        </div>
         <div class="mb-3">
             <label class="form-label" for="email"> Почта: </label>
             <input class="form-control" type="email" name="email" id="email"/>

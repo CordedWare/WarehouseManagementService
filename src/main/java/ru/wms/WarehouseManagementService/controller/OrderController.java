@@ -1,5 +1,6 @@
 package ru.wms.WarehouseManagementService.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.wms.WarehouseManagementService.entity.Order;
 import ru.wms.WarehouseManagementService.service.OrderService;
@@ -9,6 +10,7 @@ import ru.wms.WarehouseManagementService.service.OrderService;
 @RequestMapping("/orders")
 public class OrderController {
 
+    @Autowired
     private OrderService orderService;
 
     @PostMapping

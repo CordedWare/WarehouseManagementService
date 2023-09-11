@@ -18,11 +18,11 @@ public class UserPrincipalDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         var user = this.userRepository.findByEmail(email);
 
-        if (user == null) {
+        if (user.isEmpty()) {
             throw new UsernameNotFoundException("User not found");
         }
 
-        return new UserPrincipal(user);
+        return new UserPrincipal(user.get());
     }
 
 }

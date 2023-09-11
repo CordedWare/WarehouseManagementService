@@ -18,19 +18,18 @@ public class UserService {
     private UserRepository userRepository;
 
     public boolean isUserExist(UserRegistrationDTO userRegistrationDTO){
-        return userRepository.findByEmail(userRegistrationDTO.getEmail()) != null;
+        return userRepository.findByEmail(userRegistrationDTO.getEmail()).isPresent();
     }
 
 
-    public User addUser(UserRegistrationDTO userDTO) {
+    public User registerUser(UserRegistrationDTO userDTO) {
         var newUser = new User();
         newUser.setUsername(userDTO.getUsername());
-        newUser.setPassword(SecurityConfiguration.passwordEncoder().encode(userDTO.getPassword()));
         newUser.setEmail(userDTO.getEmail());
         newUser.setAuthorities(Collections.singleton(Authority.USER));
-
-        newUser.setActive(true);
+        newUser.setActive(false);
         newUser.setActivationCode(UUID.randomUUID().toString());
+        newUser.setPassword(SecurityConfiguration.passwordEncoder().encode(userDTO.getPassword()));
 
         userRepository.save(newUser);
 
@@ -38,19 +37,17 @@ public class UserService {
     }
 
 
-
-
     public boolean activateUser(String code) {
-        var user = userRepository.findByActivationCode(code);
-        if (user == null) {
+        var optionalUser = userRepository.findByActivationCode(code);
+        if (optionalUser.isEmpty()) {
             return false;
         }
+        var user = optionalUser.get();
+
         user.setActive(true);
         user.setActivationCode(null);
 
         userRepository.save(user);
-
         return true;
     }
-
 }

@@ -19,23 +19,32 @@ public class SignUpController {
     private MailSenderService mailSender;
 
     @GetMapping("/sign-up")
-    public String getRegisterPage(Model model) {
+    public String signUpPage(Model model) {
         model.addAttribute("user", new UserRegistrationDTO());
         return "sign-up";
     }
 
     @PostMapping("/sign-up")
-    public String newUserRegistration(UserRegistrationDTO userDTO) {
+    public String userRegistration(UserRegistrationDTO userDTO) {
 
-        if(userService.isUserExist(userDTO)){
-            return "redirect:/sign-up?userExist";
+        if(!isCorrectUserDTO(userDTO)){
+            return "redirect:/sign-up?validate_error";
         }
 
-        var newUser = userService.addUser(userDTO);
+        if(userService.isUserExist(userDTO)){
+            return "redirect:/sign-up?user_exist";
+        }
+
+        var newUser = userService.registerUser(userDTO);
 
 //        mailSender.sendActivationCode(newUser);
 
-        return "redirect:/login";
+        return String.format("redirect:/login?activate_email=%s",newUser.getActivationCode());
+    }
+
+    private boolean isCorrectUserDTO(UserRegistrationDTO userDTO){
+//        TODO: проверка полей
+        return true;
     }
 
 }
