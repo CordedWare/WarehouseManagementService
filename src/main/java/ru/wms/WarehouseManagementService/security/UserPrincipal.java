@@ -2,18 +2,20 @@ package ru.wms.WarehouseManagementService.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.wms.WarehouseManagementService.entity.AppUser;
+import ru.wms.WarehouseManagementService.entity.User;
 
 import java.util.Collection;
 
 public class UserPrincipal implements UserDetails {
-    private AppUser user;
+    private User user;
 
-    public UserPrincipal(AppUser user) {
+    public UserPrincipal(User user) {
         this.user = user;
     }
 
+    //Пустой конструктор необходим для Spring
     public UserPrincipal() {
+
     }
 
     @Override
@@ -28,7 +30,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.user.getUsername();
+        return this.user.getEmail();
     }
 
     @Override

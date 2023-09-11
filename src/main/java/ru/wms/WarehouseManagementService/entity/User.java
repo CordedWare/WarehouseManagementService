@@ -3,15 +3,14 @@ package ru.wms.WarehouseManagementService.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.security.core.userdetails.UserDetails;
 import ru.wms.WarehouseManagementService.security.Authority;
 
 import java.util.Set;
 
 @Data
-@Entity
+@Entity(name = "app_user")
 @ToString
-public class AppUser implements UserDetails {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,31 +35,4 @@ public class AppUser implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Authority> authorities;
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return isActive();
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
 }

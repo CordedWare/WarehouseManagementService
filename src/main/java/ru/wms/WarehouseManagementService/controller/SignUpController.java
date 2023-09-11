@@ -4,49 +4,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.wms.WarehouseManagementService.configuration.SecurityConfiguration;
 import ru.wms.WarehouseManagementService.dto.UserRegistrationDTO;
-import ru.wms.WarehouseManagementService.entity.AppUser;
-import ru.wms.WarehouseManagementService.security.Authority;
-import ru.wms.WarehouseManagementService.repository.UserRepository;
-import ru.wms.WarehouseManagementService.service.UserPrincipalDetailsService;
-
-import java.util.Collections;
-import java.util.Map;
+import ru.wms.WarehouseManagementService.service.MailSenderService;
+import ru.wms.WarehouseManagementService.service.UserService;
 
 @Controller
 public class SignUpController {
 
-    public static final String USER_ROLE = "user";
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    private UserPrincipalDetailsService userPrincipalDetailsService;
+    private MailSenderService mailSender;
 
     @GetMapping("/sign-up")
     public String getRegisterPage(Model model) {
-        model.addAttribute(USER_ROLE, new UserRegistrationDTO());
-
+        model.addAttribute("user", new UserRegistrationDTO());
         return "sign-up";
     }
 
     @PostMapping("/sign-up")
-    public String newUserRegistration(AppUser user, Map<String, Object> model) {
-        if (!userPrincipalDetailsService.addUser(user)) {
-            model.put("message", "User exists!");
+    public String newUserRegistration(UserRegistrationDTO userDTO) {
 
-            return "sign-up";
+        if(userService.isUserExist(userDTO)){
+            return "redirect:/sign-up?userExist";
         }
-        var newUser = new AppUser();
-        newUser.setUsername(user.getUsername());
-        newUser.setPassword(SecurityConfiguration.passwordEncoder().encode(user.getPassword()));
-        newUser.setEmail(user.getEmail());
-        newUser.setAuthorities(Collections.singleton(Authority.USER));
-        userPrincipalDetailsService.addUser(user);
-        userRepository.save(newUser);
+
+        var newUser = userService.addUser(userDTO);
+
+//        mailSender.sendActivationCode(newUser);
 
         return "redirect:/login";
     }

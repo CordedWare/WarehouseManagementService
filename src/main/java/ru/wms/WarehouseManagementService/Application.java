@@ -3,7 +3,7 @@ package ru.wms.WarehouseManagementService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication()
+@SpringBootApplication
 public class Application {
 
 	public static void main(String[] args) {
