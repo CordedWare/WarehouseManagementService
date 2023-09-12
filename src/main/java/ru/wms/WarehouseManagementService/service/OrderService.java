@@ -14,4 +14,8 @@ public class OrderService {
 
         return orderRepo.findAll();
     }
+
+    public Order saveOrder(Order order) {
+        return orderRepo.save(order);
+    }
 }

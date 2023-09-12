@@ -15,6 +15,9 @@ public class UserPrincipal implements UserDetails {
         this.user = user;
     }
 
+    public Long getUserId() {
+        return this.user.getId();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
