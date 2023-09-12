@@ -5,14 +5,20 @@ import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.entity.Warehouse;
 import ru.wms.WarehouseManagementService.repository.WarehouseRepository;
 
-import java.util.List;
-
 @Service
 public class WarehouseService {
-    private WarehouseRepository warehouseRepo;
+    private WarehouseRepository warehouseRepository;
 
-    public List<Warehouse> getAllWarehouses() {
+    public WarehouseService(WarehouseRepository warehouseRepository) {
+        this.warehouseRepository = warehouseRepository;
+    }
 
-        return warehouseRepo.findAll();
+    public Iterable<Warehouse> getAllWarehouses() {
+
+        return warehouseRepository.findAll();
+    }
+
+    public Warehouse saveWarehouse(Warehouse warehouse) {
+        return warehouseRepository.save(warehouse);
     }
 }
