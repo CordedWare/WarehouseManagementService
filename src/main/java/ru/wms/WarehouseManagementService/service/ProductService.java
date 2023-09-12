@@ -12,15 +12,15 @@ import java.util.Optional;
 public class ProductService {
 
     @Autowired
-    private final ProductRepository productRepo;
+    private final ProductRepository productRepository;
 
     @Autowired
-    public ProductService(ProductRepository productRepo) {
-        this.productRepo = productRepo;
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
     public Product getProductById(Long id) {
-        Optional<Product> productOptional = productRepo.findById(id);
+        Optional<Product> productOptional = productRepository.findById(id);
 
         if (productOptional.isPresent()) {
             return productOptional.get();
@@ -30,7 +30,7 @@ public class ProductService {
     }
 
     public Product updateProduct(Long id, Product updatedProduct) {
-        Optional<Product> existingProductOptional = productRepo.findById(id);
+        Optional<Product> existingProductOptional = productRepository.findById(id);
 
         if (existingProductOptional.isPresent()) {
             Product existingProduct = existingProductOptional.get();
@@ -38,25 +38,25 @@ public class ProductService {
             existingProduct.setDescription(updatedProduct.getDescription());
             existingProduct.setPrice(updatedProduct.getPrice());
 
-            return productRepo.save(existingProduct);
+            return productRepository.save(existingProduct);
         } else {
             throw new RuntimeException("Product not found with id: " + id);
         }
     }
 
     public Iterable<Product> getAllProducts() {
-        return productRepo.findAll();
+        return productRepository.findAll();
     }
 
     public Product saveProduct(Product product) {
-        return productRepo.save(product);
+        return productRepository.save(product);
     }
 
     public List<Product> getProductsByName(String name) {
-        return productRepo.findByName(name);
+        return productRepository.findByName(name);
     }
 
     public void deleteProductById(Long id) {
-        productRepo.deleteById(id);
+        productRepository.deleteById(id);
     }
 }
