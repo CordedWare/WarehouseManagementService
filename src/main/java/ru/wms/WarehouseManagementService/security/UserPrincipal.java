@@ -1,5 +1,6 @@
 package ru.wms.WarehouseManagementService.security;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,17 +8,16 @@ import ru.wms.WarehouseManagementService.entity.User;
 
 import java.util.Collection;
 
+@Getter
 @NoArgsConstructor
 public class UserPrincipal implements UserDetails {
+
     private User user;
 
     public UserPrincipal(User user) {
         this.user = user;
     }
 
-    public Long getUserId() {
-        return this.user.getId();
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -51,6 +51,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.user.isActive();
     }
+
 }

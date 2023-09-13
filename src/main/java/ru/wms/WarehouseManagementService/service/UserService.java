@@ -39,15 +39,16 @@ public class UserService {
 
     public boolean activateUser(String code) {
         var optionalUser = userRepository.findByActivationCode(code);
-        if (optionalUser.isEmpty()) {
-            return false;
+
+        if (optionalUser.isPresent()) {
+            var user = optionalUser.get();
+
+            user.setActive(true);
+            user.setActivationCode(null);
+
+            userRepository.save(user);
         }
-        var user = optionalUser.get();
 
-        user.setActive(true);
-        user.setActivationCode(null);
-
-        userRepository.save(user);
-        return true;
+        return optionalUser.isPresent();
     }
 }

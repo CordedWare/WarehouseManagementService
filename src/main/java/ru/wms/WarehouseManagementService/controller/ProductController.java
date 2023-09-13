@@ -2,17 +2,16 @@ package ru.wms.WarehouseManagementService.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.wms.WarehouseManagementService.entity.Product;
-import ru.wms.WarehouseManagementService.entity.User;
 import ru.wms.WarehouseManagementService.repository.ProductRepository;
 import ru.wms.WarehouseManagementService.repository.UserRepository;
 import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.ProductService;
-import org.springframework.security.core.Authentication;
 
 import java.util.Optional;
 
@@ -45,14 +44,12 @@ public class ProductController {
             @ModelAttribute("product")
             @Valid Product product,
             BindingResult bindingResult,
-            Authentication authentication
+            @AuthenticationPrincipal UserPrincipal userPrincipal
     ) {
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException("Invalid product data");
         }
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        User user = userRepository.findById(userPrincipal.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        var user = userPrincipal.getUser();
 
         product.setUser(user);
 
