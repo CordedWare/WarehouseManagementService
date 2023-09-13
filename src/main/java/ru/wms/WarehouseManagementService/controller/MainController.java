@@ -10,8 +10,8 @@ public class MainController {
 
     @GetMapping("/")
     public String index(@AuthenticationPrincipal UserPrincipal userPrincipal){
-        var user = userPrincipal.getUser();
-        System.out.println(user);
+//        var user = userPrincipal.getUser();
+//        System.out.println(user);
         return "index";
     }
 
