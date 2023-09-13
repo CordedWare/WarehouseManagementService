@@ -7,27 +7,46 @@
 </head>
 <body>
 
+<div class="container">
+
     <h2>Вы вошли в систему как <span sec:authentication="name"></span></h2>
 
     <hr>
-        <p>
-         Раздел управления складами
-        </p>
+    <p>
+        Раздел управления складами
+    </p>
     <hr>
-    
-    <h3><a href="/index">Вернутся в меню</a></h3>
 
-    <form th:action="@{/warehouses}" th:object="${warehouse}" method="post">
-        <label>Name: <input type="text" th:field="*{name}" required /></label><br>
-        <label>Address: <input type="text" th:field="*{address}" required /></label><br>
-        <label>Capacity: <input type="text" th:field="*{capacity}" required /></label><br>
-        <label>Contact Information: <input type="text" th:field="*{contactInformation}" required /></label><br>
-        <label>Creation Date: <input type="date" th:field="*{creationDate}" required /></label><br>
+    <h3><a href="/index">Вернуться в меню</a></h3>
+    <hr>
+    <h2>Создать склад</h2>
+    <hr>
+    <form class="mb-3" th:action="@{/warehouses}" th:object="${warehouse}" method="post">
+        <div class="form-group mb-3">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Name" value="name" th:field="*{name}" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" id="address" placeholder="Address" value="address" th:field="*{address}" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="capacity">Capacity</label>
+            <input type="number" class="form-control" id="capacity" placeholder="123" value="capacity" th:field="*{capacity}" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="contactInformation">Name</label>
+            <input type="text" class="form-control" id="contactInformation" placeholder="contact info" value="contact information" th:field="*{contactInformation}" required>
+        </div>
+        <div class="form-group mb-3 ">
+            <label for="creationDate">Creation date</label>
+            <input type="date" class="form-control" id="creationDate" placeholder="01.01.2000" value="01.01.2001" th:field="*{creationDate}" required>
+        </div>
 
-        <input type="submit" value="Create" />
+        <button type="submit" class="btn btn-primary">Submit</button>
         <a href="/">Cancel</a>
     </form>
-
+    <hr>
     <table>
         <thead>
         <tr>
@@ -53,6 +72,7 @@
             <td th:text="${warehouse.capacity}"></td>
             <td th:text="${warehouse.contactInformation}"></td>
             <td th:text="${warehouse.creationDate}"></td>
+            <td th:text="${warehouse.user.email}"></td>
             <td>
                 <form th:action="@{'/warehouses/' + ${warehouse.id}}" method="post">
                     <input type="hidden" name="_method" value="delete">
@@ -62,8 +82,9 @@
         </tr>
         </tbody>
     </table>
+</div>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
