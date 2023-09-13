@@ -1,6 +1,5 @@
 package ru.wms.WarehouseManagementService.entity;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -26,7 +25,6 @@ public class Warehouse {
 
     @Column(name = "creation_date", columnDefinition = "DATE")
     private LocalDate creationDate;
-
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
