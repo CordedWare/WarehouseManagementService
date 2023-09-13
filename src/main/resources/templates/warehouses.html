@@ -72,7 +72,6 @@
             <td th:text="${warehouse.capacity}"></td>
             <td th:text="${warehouse.contactInformation}"></td>
             <td th:text="${warehouse.creationDate}"></td>
-            <td th:text="${warehouse.user.username}"></td>
             <td th:text="${warehouse.user.email}"></td>
             <td>
                 <form th:action="@{'/warehouses/' + ${warehouse.id}}" method="post">

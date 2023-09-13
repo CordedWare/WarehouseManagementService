@@ -20,8 +20,8 @@ public class WarehouseController {
     private WarehouseService warehouseService;
 
     @GetMapping
-    public String warehouses(Model model) {
-        Iterable<Warehouse> warehousesList = warehouseService.getAllWarehouses();
+    public String warehouses(Model model,@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        Iterable<Warehouse> warehousesList = warehouseService.getAllWarehouses(userPrincipal.getUser());
         model.addAttribute("warehouses", warehousesList);
         model.addAttribute("warehouse", new Warehouse());
 

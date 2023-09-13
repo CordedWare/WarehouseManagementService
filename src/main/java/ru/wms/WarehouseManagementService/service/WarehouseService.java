@@ -13,8 +13,8 @@ public class WarehouseService {
     @Autowired
     private WarehouseRepository warehouseRepository;
 
-    public Iterable<Warehouse> getAllWarehouses() {
-        return warehouseRepository.findAll();
+    public Iterable<Warehouse> getAllWarehouses(User user) {
+        return warehouseRepository.findAllByUser(user);
     }
 
     public Warehouse saveWarehouse(Warehouse warehouse, User user) {
