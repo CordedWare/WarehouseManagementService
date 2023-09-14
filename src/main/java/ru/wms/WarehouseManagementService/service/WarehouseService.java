@@ -21,4 +21,8 @@ public class WarehouseService {
         warehouse.setUser(user);
         return warehouseRepository.save(warehouse);
     }
+
+    public void deleteWarehouseById(Long id) {
+        warehouseRepository.deleteById(id);
+    }
 }
