@@ -18,7 +18,7 @@ public class Product {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "warehouse_id", nullable = false)
     private Warehouse warehouse;
     @Size(min = 2, message = "Имя должно содержать не менее 2 символов")
     private String name;

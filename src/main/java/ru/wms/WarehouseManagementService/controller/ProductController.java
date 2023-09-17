@@ -1,6 +1,7 @@
 package ru.wms.WarehouseManagementService.controller;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -8,32 +9,44 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.wms.WarehouseManagementService.entity.Product;
+import ru.wms.WarehouseManagementService.entity.Warehouse;
 import ru.wms.WarehouseManagementService.repository.ProductRepository;
 import ru.wms.WarehouseManagementService.repository.UserRepository;
 import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.ProductService;
+import ru.wms.WarehouseManagementService.service.WarehouseService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/products")
 public class ProductController {
-
+    @Autowired
     private final ProductService productService;
+    @Autowired
     private final UserRepository userRepository;
+    @Autowired
     private final ProductRepository productRepository;
-
+    @Autowired
+    private WarehouseService warehouseService;
 
     @Autowired
-    public ProductController(ProductService productService, UserRepository userRepository, ProductRepository productRepository) {
+    public ProductController(ProductService productService, UserRepository userRepository, ProductRepository productRepository, WarehouseService warehouseService) {
         this.productService = productService;
         this.userRepository = userRepository;
         this.productRepository = productRepository;
+        this.warehouseService = warehouseService;
     }
 
     @GetMapping
-    public String products(Model model) {
+    public String products(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal
+    ) {
+        var user = userPrincipal.getUser();
+
         Iterable<Product> productList = productService.getAllProducts();
+        Iterable<Warehouse> warehouseList = warehouseService.getAllWarehouses(user);
+        model.addAttribute("warehouses", warehouseList);
         model.addAttribute("products", productList);
         model.addAttribute("product", new Product());
         return "products";
@@ -43,6 +56,7 @@ public class ProductController {
     public Product createProduct(
             @ModelAttribute("product")
             @Valid Product product,
+            @Valid Warehouse warehouse,
             BindingResult bindingResult,
             @AuthenticationPrincipal UserPrincipal userPrincipal
     ) {
@@ -52,6 +66,7 @@ public class ProductController {
         var user = userPrincipal.getUser();
 
         product.setUser(user);
+        product.setWarehouse(warehouse);
 
         Product savedProduct = productService.saveProduct(product);
 
