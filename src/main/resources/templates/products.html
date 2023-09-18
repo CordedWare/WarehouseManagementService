@@ -13,45 +13,35 @@
 
     <hr>
         <p>
-         Раздел управления товарами
+         Главный раздел управления товарами
         </p>
     <hr>
 
-    <h3><a href="/index">Вернутся в меню</a></h3>
+    <h4><a href="/createProduct">Зарегистрировать товар</a></h4>
 
-    <form th:action="@{/products}" th:object="${product}" method="post">
-        <label>Name: <input type="text" th:field="*{name}" required /></label><br>
-        <label>Description: <input type="text" th:field="*{description}" required /></label><br>
-        <label>Category: <input type="text" th:field="*{category}" required /></label><br>
-        <label>Price: <input type="text" th:field="*{price}" required /></label><br>
-        <label>Quantity: <input type="number" th:field="*{quantity}" required /></label><br>
-        <label>Creation Date: <input type="date" th:field="*{creationDate}" required /></label><br>
-
-        <input type="submit" value="Create" />
-        <a href="/">Cancel</a>
-    </form>
+    <tr>
+        <td colspan="7">
+            <form th:action="@{'/products/' + ${product.name}}" method="get">
+                <input type="text" name="filter" placeholder="Поиск по имени">
+                <button type="submit">Поиск</button>
+            </form>
+        </td>
+    </tr>
 
     <table>
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Creation Date</th>
-            <th>Actions</th>
+            <th>Имя</th>
+            <th>Описание</th>
+            <th>Категория</th>
+            <th>Стоимость</th>
+            <th>Количество</th>
+            <th>Дата создания</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td colspan="7">
-                <form th:action="@{'/products/' + ${product.name}}" method="get">
-                    <input type="text" name="filter" placeholder="Search by name">
-                    <button type="submit">Search</button>
-                </form>
-            </td>
-        </tr>
+
         <tr th:each="product : ${products}">
             <td th:text="${product.name}"></td>
             <td th:text="${product.description}"></td>
@@ -60,14 +50,23 @@
             <td th:text="${product.quantity}"></td>
             <td th:text="${product.creationDate}"></td>
             <td>
-                <form th:action="@{'/products/' + ${product.id}}" method="post">
+                <form th:action="@{'/products/' + ${product.id} + '/edit'}" method="post">
+                    <input type="hidden" name="_method" value="edit">
+                    <button type="submit">Редактировать</button>
+                </form>
+            </td>
+            <td>
+                <form th:action="@{'/products/' + ${product.id} + '/delete'}" method="post">
                     <input type="hidden" name="_method" value="delete">
-                    <button type="submit">Delete</button>
+                    <button type="submit">Удалить</button>
                 </form>
             </td>
         </tr>
         </tbody>
     </table>
+
+    <h3><a href="/index">Вернутся в меню</a></h3>
+
 </div>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
