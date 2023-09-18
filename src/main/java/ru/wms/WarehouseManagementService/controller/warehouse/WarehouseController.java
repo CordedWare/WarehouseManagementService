@@ -1,4 +1,4 @@
-package ru.wms.WarehouseManagementService.controller;
+package ru.wms.WarehouseManagementService.controller.warehouse;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.wms.WarehouseManagementService.entity.Warehouse;
-import ru.wms.WarehouseManagementService.repository.ProductRepository;
 import ru.wms.WarehouseManagementService.repository.WarehouseRepository;
 import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.WarehouseService;
