@@ -60,7 +60,7 @@ public class CreateProductController {
         product.setUser(user);
         product.setWarehouse(warehouse);
 
-        Product savedProduct = productService.saveProduct(product);
+        var savedProduct = productService.saveProduct(product);
 
         return savedProduct;
     }
