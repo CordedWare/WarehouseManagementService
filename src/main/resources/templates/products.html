@@ -49,6 +49,8 @@
             <td th:text="${product.price}"></td>
             <td th:text="${product.quantity}"></td>
             <td th:text="${product.creationDate}"></td>
+            <td th:text="${product.warehouse.name}"></td>
+            <td th:text="${product.warehouse.id}"></td>
             <td>
                 <form th:action="@{'/products/' + ${product.id} + '/edit'}" method="post">
                     <input type="hidden" name="_method" value="edit">

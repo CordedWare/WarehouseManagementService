@@ -28,4 +28,18 @@ public class Product {
     private int quantity;
     @Column(name = "creation_date", columnDefinition = "DATE")
     private LocalDate creationDate;
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", warehouse=" + warehouse +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", category='" + category + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", creationDate=" + creationDate +
+                '}';
+    }
 }

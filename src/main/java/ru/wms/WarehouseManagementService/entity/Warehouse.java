@@ -29,4 +29,16 @@ public class Warehouse {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @Override
+    public String toString() {
+        return "Warehouse{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", capacity=" + capacity +
+                ", contactInformation='" + contactInformation + '\'' +
+                ", creationDate=" + creationDate +
+                '}';
+    }
 }

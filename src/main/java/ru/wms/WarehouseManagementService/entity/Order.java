@@ -1,30 +1,41 @@
 package ru.wms.WarehouseManagementService.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.validator.constraints.UniqueElements;
 
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 @Entity(name = "app_order")
+@ToString
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private int quantity;
+    private boolean delivery;
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
-    private int quantity;
     @Column(name = "total_cost")
     private BigDecimal totalCost;
-    private boolean delivery;
-    @Column(name = "creation_date")
-    private LocalDate creationDate;
+    @Column(name = "creation_date", columnDefinition = "DATE")
+    @CreationTimestamp
+    private LocalDateTime creationDate;
+    @NotNull
+    @Column
+    private String name;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @OneToMany
+    @NotNull
+    @ManyToMany
     private List<Product> products;
-
 }

@@ -6,4 +6,7 @@ import ru.wms.WarehouseManagementService.entity.Order;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
+
+    Order findOrderById(Long id);
+
 }
