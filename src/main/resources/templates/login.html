@@ -10,8 +10,9 @@
         <div th:if="${param.activate_email}" class="alert alert-warning">
             На вашу почту было отправлено письмо активации
             <p>
-                DEBUG: <span th:text="'http://localhost:8080/activate/'+${param.activate_email}">ссылка</span>  ссылка для подтверждения почты
-<!--                DEBUG: <a th:href="@{/activate/}">ссылка</a> для подтверждения почты-->
+                DEBUG: <span th:text="'http://localhost:8080/activate/'+${param.activate_email}">ссылка</span> ссылка
+                для подтверждения почты
+                <!--                DEBUG: <a th:href="@{/activate/}">ссылка</a> для подтверждения почты-->
             </p>
         </div>
         <div th:if="${param.activate_success}" class="alert alert-success">
