@@ -8,38 +8,31 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
     @ManyToOne
     @JoinColumn(name = "warehouse_id", nullable = false)
     private Warehouse warehouse;
+
     @Size(min = 2, message = "Имя должно содержать не менее 2 символов")
     private String name;
     private String description;
     private String category;
     private BigDecimal price;
     private int quantity;
+
     @Column(name = "creation_date", columnDefinition = "DATE")
     private LocalDate creationDate;
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", warehouse=" + warehouse +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", category='" + category + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                ", creationDate=" + creationDate +
-                '}';
-    }
 }

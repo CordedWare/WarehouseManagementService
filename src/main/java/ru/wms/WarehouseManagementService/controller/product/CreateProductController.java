@@ -20,12 +20,12 @@ import ru.wms.WarehouseManagementService.service.WarehouseService;
 @RequestMapping("/createProduct")
 public class CreateProductController {
 
-    @Autowired
+
     private final ProductService productService;
-    @Autowired
+
     private WarehouseService warehouseService;
 
-    @Autowired
+
     public CreateProductController(ProductService productService, WarehouseService warehouseService) {
         this.productService = productService;
         this.warehouseService = warehouseService;

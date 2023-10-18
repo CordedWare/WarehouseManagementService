@@ -1,15 +1,16 @@
 package ru.wms.WarehouseManagementService.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 import ru.wms.WarehouseManagementService.security.Authority;
 
 import java.util.Set;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity(name = "app_user")
-@ToString
 public class User {
 
     @Id
@@ -34,5 +35,4 @@ public class User {
     @CollectionTable(name = "user_authorities", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Authority> authorities;
-
 }
