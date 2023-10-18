@@ -18,6 +18,7 @@ import java.util.List;
 @Builder
 @Entity(name = "app_order")
 public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -47,4 +48,5 @@ public class Order {
     @NotNull
     @ManyToMany
     private List<Product> products;
+
 }

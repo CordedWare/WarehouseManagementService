@@ -23,46 +23,46 @@
     <hr>
     <form class="mb-3" th:action="@{/warehouses}" th:object="${warehouse}" method="post">
         <div class="form-group mb-3">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" placeholder="Name" value="name" th:field="*{name}" required>
+            <label for="name">Имя склада</label>
+            <input type="text" class="form-control" id="name" placeholder="имя склада" value="name" th:field="*{name}" required>
         </div>
         <div class="form-group mb-3">
-            <label for="address">Address</label>
-            <input type="text" class="form-control" id="address" placeholder="Address" value="address" th:field="*{address}" required>
+            <label for="address">Адрес</label>
+            <input type="text" class="form-control" id="address" placeholder="адрес" value="address" th:field="*{address}" required>
         </div>
         <div class="form-group mb-3">
-            <label for="capacity">Capacity</label>
+            <label for="capacity">Площадь</label>
             <input type="number" class="form-control" id="capacity" placeholder="123" value="capacity" th:field="*{capacity}" required>
         </div>
         <div class="form-group mb-3">
-            <label for="contactInformation">Contact Information</label>
-            <input type="text" class="form-control" id="contactInformation" placeholder="contact info" value="contact information" th:field="*{contactInformation}" required>
+            <label for="contactInformation">Контактная информация</label>
+            <input type="text" class="form-control" id="contactInformation" placeholder="контактная информация" value="contact information" th:field="*{contactInformation}" required>
         </div>
         <div class="form-group mb-3 ">
-            <label for="creationDate">Creation date</label>
+            <label for="creationDate">Дата создания</label>
             <input type="date" class="form-control" id="creationDate" placeholder="01.01.2000" value="01.01.2001" th:field="*{creationDate}" required>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <a href="/">Cancel</a>
+        <button type="submit" class="btn btn-primary">Создать склад</button>
+        <a href="/static">Отменить</a>
     </form>
     <hr>
     <table>
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Capacity</th>
-            <th>Contact Information</th>
-            <th>Creation Date</th>
+            <th>Имя склада</th>
+            <th>Адрес</th>
+            <th>Площадь</th>
+            <th>Контактная информация</th>
+            <th>Дата создания</th>
         </tr>
         </thead>
         <tbody>
         <tr>
             <td colspan="7">
                 <form th:action="@{'/warehouses/' + ${warehouse.name}}" method="get">
-                    <input type="text" name="filter" placeholder="Search by name">
-                    <button type="submit">Search</button>
+                    <input type="text" name="filter" placeholder="Поиск по имени склада">
+                    <button type="submit">Поиск</button>
                 </form>
             </td>
         </tr>
@@ -76,7 +76,7 @@
             <td>
                 <form th:action="@{'/warehouses/' + ${warehouse.id}}" method="post">
                     <input type="hidden" name="_method" value="delete">
-                    <button type="submit">Delete</button>
+                    <button type="submit">Удалить</button>
                 </form>
             </td>
         </tr>

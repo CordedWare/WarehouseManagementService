@@ -27,7 +27,7 @@ public class OrderController {
         model.addAttribute("order", new Order());
         model.addAttribute("orders", orderService.getAllOrders());
         model.addAttribute("productss",productRepository.findAll());
-        return "orders";
+        return "/order/orders";
     }
 
     @PostMapping("/createOrder")

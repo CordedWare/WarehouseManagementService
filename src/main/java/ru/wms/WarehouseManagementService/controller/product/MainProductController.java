@@ -19,21 +19,12 @@ import java.util.Optional;
 @RequestMapping("/products")
 public class MainProductController {
     @Autowired
-    private final ProductService productService;
+    private ProductService productService;
     @Autowired
-    private final UserRepository userRepository;
-    @Autowired
-    private final ProductRepository productRepository;
+    private ProductRepository productRepository;
     @Autowired
     private WarehouseService warehouseService;
 
-    @Autowired
-    public MainProductController(ProductService productService, UserRepository userRepository, ProductRepository productRepository, WarehouseService warehouseService) {
-        this.productService = productService;
-        this.userRepository = userRepository;
-        this.productRepository = productRepository;
-        this.warehouseService = warehouseService;
-    }
 
     @GetMapping
     public String products(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
@@ -45,7 +36,7 @@ public class MainProductController {
         model.addAttribute("products", productList);
         model.addAttribute("product", new Product());
 
-        return "products";
+        return "/product/products";
     }
 
     @GetMapping("/{id}")
