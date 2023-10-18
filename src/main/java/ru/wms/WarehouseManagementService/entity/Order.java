@@ -16,21 +16,29 @@ import java.util.List;
 @Entity(name = "app_order")
 @ToString
 public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private int quantity;
+
     private boolean delivery;
+
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
     @Column(name = "total_cost")
     private BigDecimal totalCost;
+
     @Column(name = "creation_date", columnDefinition = "DATE")
     @CreationTimestamp
     private LocalDateTime creationDate;
+
     @NotNull
     @Column
     private String name;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -38,4 +46,5 @@ public class Order {
     @NotNull
     @ManyToMany
     private List<Product> products;
+
 }

@@ -21,15 +21,10 @@ import ru.wms.WarehouseManagementService.service.WarehouseService;
 public class CreateProductController {
 
     @Autowired
-    private final ProductService productService;
+    private ProductService productService;
     @Autowired
     private WarehouseService warehouseService;
 
-    @Autowired
-    public CreateProductController(ProductService productService, WarehouseService warehouseService) {
-        this.productService = productService;
-        this.warehouseService = warehouseService;
-    }
 
     @GetMapping
     public String createProducts(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
@@ -41,11 +36,11 @@ public class CreateProductController {
         model.addAttribute("products", productList);
         model.addAttribute("product", new Product());
 
-        return "createProduct";
+        return "/product/createProduct";
     }
 
     @PostMapping
-    public Product createProduct(
+    public String createProduct(
             @ModelAttribute("product")
             @Valid Product product,
             @Valid Warehouse warehouse,
@@ -59,9 +54,8 @@ public class CreateProductController {
 
         product.setUser(user);
         product.setWarehouse(warehouse);
+        productService.saveProduct(product);
 
-        var savedProduct = productService.saveProduct(product);
-
-        return savedProduct;
+        return "redirect:/products";
     }
 }

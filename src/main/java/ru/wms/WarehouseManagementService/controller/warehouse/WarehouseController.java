@@ -28,7 +28,7 @@ public class WarehouseController {
         model.addAttribute("warehouses", warehousesList);
         model.addAttribute("warehouse", new Warehouse());
 
-        return "warehouses";
+        return "/warehouse/warehouses";
     }
 
     @PostMapping
@@ -61,7 +61,7 @@ public class WarehouseController {
         model.addAttribute("filter", nameFilter);
         model.addAttribute("warehouse", new Warehouse());
 
-        return "warehouses";
+        return "/warehouse/warehouses";
     }
 
     @PostMapping("/{id}")
