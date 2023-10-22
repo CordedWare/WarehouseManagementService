@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Employees</title>
+</head>
+<body>
+<form th:action="@{/employees}" method="post" th:object="${employee}">
+    <label for="create_firstname">Имя:
+        <input id="create_firstname" type="text" name="firstname" th:value="${employee.firstname}">
+    </label>
+
+    <label for="create_firstname">Фамилия:
+        <input id="create_lastname" type="text" name="lastname" th:value="${employee.lastname}" >
+    </label>
+
+    <label for="create_password">Создайте пароль:
+        <input id="create_password" type="password" name="password" th:value="${employee.password}">
+    </label>
+
+    <button type="submit">Зарегистрировать работника</button>
+</form>
+
+<form action="/employees" method="get">
+    <br><label for="firstname">Имя:
+        <input id="firstname" type="text" name="firstname">
+    </label>
+
+    <label for="lastname">Фамилия:
+        <input id="lastname" type="text" name="lastname">
+    </label>
+
+    <button type="submit">Поиск</button>
+</form>
+</body>
+</html>
