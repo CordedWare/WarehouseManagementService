@@ -5,32 +5,38 @@
     <title>Employees</title>
 </head>
 <body>
-<form th:action="@{/employees}" method="post" th:object="${employee}">
-    <label for="create_firstname">Имя:
-        <input id="create_firstname" type="text" name="firstname" th:value="${employee.firstname}">
+<form th:action="@{employees}" method="post">
+    <label for="create_username">Email:
+        <input id="create_username" type="text" name="username">
     </label>
 
-    <label for="create_firstname">Фамилия:
-        <input id="create_lastname" type="text" name="lastname" th:value="${employee.lastname}" >
+    <label for="create_firstname">Имя:
+        <input id="create_firstname" type="text" name="firstname">
+    </label>
+
+    <label for="create_lastname">Фамилия:
+        <input id="create_lastname" type="text" name="lastname">
     </label>
 
     <label for="create_password">Создайте пароль:
-        <input id="create_password" type="password" name="password" th:value="${employee.password}">
+        <input id="create_password" type="password" name="password">
     </label>
 
     <button type="submit">Зарегистрировать работника</button>
 </form>
 
-<form action="/employees" method="get">
-    <br><label for="firstname">Имя:
-        <input id="firstname" type="text" name="firstname">
-    </label>
+<table id="saveTableEmployee">
+    <tr th:if="${#lists.isEmpty(employees)}">
+        <td colspan="2">
+            Список работников пуст
+        </td>
+    </tr>
+    <tr  th:if="${not #lists.isEmpty(employees)}">
+        <td th:text="${employees[employees.size() - 1].username}">username</td>
+        <td th:text="${employees[employees.size() - 1].firstname}">firstname</td>
+        <td th:text="${employees[employees.size() - 1].lastname}">lastname</td>
+    </tr>
+</table>
 
-    <label for="lastname">Фамилия:
-        <input id="lastname" type="text" name="lastname">
-    </label>
-
-    <button type="submit">Поиск</button>
-</form>
 </body>
 </html>
