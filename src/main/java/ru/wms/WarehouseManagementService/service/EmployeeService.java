@@ -14,8 +14,8 @@ public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
-    public List<Employee> getEmployee(String firstname) {
-        return employeeRepository.findAllByFirstname(firstname);
+    public List<Employee> findAllEmployee() {
+        return employeeRepository.findAll();
     }
 
     public Employee create(Employee employee) {

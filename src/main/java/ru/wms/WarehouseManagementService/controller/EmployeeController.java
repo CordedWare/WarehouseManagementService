@@ -20,17 +20,14 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping
-    public String workers(Model model, Employee employee) {
-
-        List<Employee> employees = employeeService.getEmployee(employee.getFirstname());
-
-        model.addAttribute("employees", employees);
+    public String getEmployee(Model model) {
+       model.addAttribute("employees", employeeService.findAllEmployee());
         return "/employees";
     }
 
     @PostMapping
-    public String create(@ModelAttribute Employee employee) {
+    public String createEmployee(Employee employee) {
         employeeService.create(employee);
-        return "/employees";
+        return "redirect:/employees";
     }
 }
