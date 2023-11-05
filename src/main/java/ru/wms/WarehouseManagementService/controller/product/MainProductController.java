@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.wms.WarehouseManagementService.entity.Product;
 import ru.wms.WarehouseManagementService.entity.Warehouse;
 import ru.wms.WarehouseManagementService.repository.ProductRepository;
-import ru.wms.WarehouseManagementService.repository.UserRepository;
 import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.ProductService;
 import ru.wms.WarehouseManagementService.service.WarehouseService;

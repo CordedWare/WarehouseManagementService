@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.wms.WarehouseManagementService.dto.UserRegistrationDTO;
+import ru.wms.WarehouseManagementService.entity.Customer;
 import ru.wms.WarehouseManagementService.service.MailSenderService;
 import ru.wms.WarehouseManagementService.service.UserService;
 
@@ -21,11 +22,12 @@ public class SignUpController {
     @GetMapping("/sign-up")
     public String signUpPage(Model model) {
         model.addAttribute("user", new UserRegistrationDTO());
+        model.addAttribute("customer", new Customer());
         return "sign-up";
     }
 
     @PostMapping("/sign-up")
-    public String userRegistration(UserRegistrationDTO userDTO) {
+    public String userRegistration(UserRegistrationDTO userDTO, Customer customer) {
 
         if(!isCorrectUserDTO(userDTO)){
             return "redirect:/sign-up?validate_error";
@@ -35,7 +37,7 @@ public class SignUpController {
             return "redirect:/sign-up?user_exist";
         }
 
-        var newUser = userService.registerUser(userDTO);
+        var newUser = userService.registerUser(userDTO, customer);
 
 //        mailSender.sendActivationCode(newUser);
 

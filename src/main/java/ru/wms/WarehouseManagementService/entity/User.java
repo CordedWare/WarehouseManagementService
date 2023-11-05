@@ -10,7 +10,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity(name = "app_user")
+@Entity(name = "user_t")
 public class User {
 
     @Id
@@ -18,22 +18,10 @@ public class User {
     private long id;
 
     @Column(nullable = false)
-    private String username;
+    private String username; // TODO: пока необходимости в username нет, т.к. логинимся через почту, возможно потом стоит убрать
 
     @Column(nullable = false)
     private String password;
-
-    @Column
-    private String fullName;
-
-    @Column
-    private String nameOrg;
-
-    @Column
-    private String addressOrg;
-
-    @Column
-    private String contactInfoOrg;
 
     @Column(nullable = false)
     private String email;
@@ -43,9 +31,8 @@ public class User {
 
     private String activationCode;
 
-
     @ElementCollection(targetClass = Authority.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_authorities", joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable(name = "user_authorities_t", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Authority> authorities;
 }

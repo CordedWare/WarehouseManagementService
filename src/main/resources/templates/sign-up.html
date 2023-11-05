@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="container">
-    <form name="f" th:action="@{/sign-up}" th:object="${user}" method="post">
+    <form name="f" th:action="@{/sign-up}" th:object="${customer}" method="post">
         <div th:if="${param.user_exist}" class="alert alert-danger">
             Пользователь с такой почтой уже существует.
         </div>
@@ -17,25 +17,35 @@
             Невалидные данные
         </div>
         <div>
-            <label for="name">Имя</label>
-            <input type="text" class="form-control" id="name" th:field="*{username}" name="name"
-                   placeholder="имя">
+            <label for="login">Логин</label>
+            <input type="text" class="form-control" id="login" th:field="*{user.username}" name="login"
+                   placeholder="логин">
         </div>
         <div>
             <label for="password">Пароль</label>
-            <input type="password" class="form-control" id="password" th:field="*{password}" name="password"
+            <input type="password" class="form-control" id="password" th:field="*{user.password}" name="password"
                    placeholder="пароль">
         </div>
         <div>
             <label for="email">Почта</label>
-            <input type="email" class="form-control" id="email" th:field="*{email}" name="email"
+            <input type="email" class="form-control" id="email" th:field="*{user.email}" name="email"
                    placeholder="some@some.com">
+        </div>
+        <div>
+            <label for="fullName">ФИО</label>
+            <input type="fullName" class="form-control" id="fullName" th:field="*{fullName}" name="fullName"
+                   placeholder="ФИО">
+        </div>
+        <div>
+            <label for="nameOrg">Имя организации</label>
+            <input type="nameOrg" class="form-control" id="nameOrg" th:field="*{nameOrg}" name="nameOrg"
+                   placeholder="Имя организации">
         </div>
         <div>
             <button type="submit">Зарегистрироваться</button>
         </div>
     </form>
-    <h3><a href="/login">Вернутся назад</a></h3>
+    <h3><a href="/home">Вернутся назад</a></h3>
 
 
 

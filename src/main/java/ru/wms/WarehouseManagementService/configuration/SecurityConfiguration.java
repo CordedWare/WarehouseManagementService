@@ -25,11 +25,11 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/sign-up","/logout","/login","/activate/*").permitAll()
+                        .requestMatchers("/home", "/sign-up","/logout","/login","/activate/*").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
-                        .loginPage("/login")
+                        .loginPage("/home")
                         .defaultSuccessUrl("http://localhost:8080/")
                         .permitAll()
                         .usernameParameter("email")
