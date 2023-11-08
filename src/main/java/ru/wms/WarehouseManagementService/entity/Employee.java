@@ -18,15 +18,12 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String username;
-
-    private String email;
-
     private String firstname;
 
     private String lastname;
 
-    private String password;
+    private String patronymic;
+
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)

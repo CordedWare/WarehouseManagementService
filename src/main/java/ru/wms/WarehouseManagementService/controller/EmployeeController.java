@@ -23,14 +23,21 @@ public class EmployeeController {
     @GetMapping
     public String getEmployee(Model model) {
        model.addAttribute("employees", employeeService.findAllEmployee());
+        model.addAttribute("employee", new Employee());
         return "/employees";
     }
 
     @PostMapping
-    public String createEmployee(UserRegistrationDTO userRegistrationDTO, Employee employee) {
-        employeeService.createEmployee(employee);
-        return "redirect:/employees";
+    public String createEmployee(Employee employee) {
+        var newEmployee = employeeService.createEmployee(employee);
+
+        return String.format("redirect:/login?activate_email=%s", newEmployee.getActivationCode());
     }
+
+//    @PostMapping
+//    public void deleteEmployee(Employee employee) {
+//        employeeService.deleteEmployee(employee);
+//    }
 
 
 }

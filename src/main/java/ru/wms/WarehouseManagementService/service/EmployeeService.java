@@ -27,31 +27,29 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public Employee create(Employee employee) {
-        return Optional.of(employee).map(w -> employeeRepository.save(w)).orElseThrow();
-    }
-
     public User createEmployee(Employee employee) {
         var newUser = new User();
         var newEmployee = new Employee();
 
-        newUser.setUsername(employee.getUsername());
-        newUser.setEmail(employee.getEmail());
+        newUser.setUsername(employee.getUser().getUsername());
+        newUser.setEmail(employee.getUser().getEmail());
         newUser.setAuthorities(Collections.singleton(Authority.EMPLOYEE));
         newUser.setActive(false);
         newUser.setActivationCode(UUID.randomUUID().toString());
-        newUser.setPassword(SecurityConfiguration.passwordEncoder().encode(employee.getPassword()));
+        newUser.setPassword(SecurityConfiguration.passwordEncoder().encode(employee.getUser().getPassword()));
 
         newEmployee.setUser(newUser);
-        newEmployee.setUsername(employee.getUsername());
-        newEmployee.setEmail(employee.getEmail());
         newEmployee.setFirstname(employee.getFirstname());
         newEmployee.setLastname(employee.getLastname());
-        newEmployee.setPassword(employee.getPassword());
 
         userRepository.save(newUser);
         employeeRepository.save(newEmployee);
 
         return newUser;
+    }
+
+    public void deleteEmployee(Employee employee) {
+        userRepository.delete(employee.getUser());
+        employeeRepository.delete(employee);
     }
 }
