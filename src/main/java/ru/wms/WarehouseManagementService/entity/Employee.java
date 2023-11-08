@@ -5,9 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.wms.WarehouseManagementService.security.Authority;
-
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -18,16 +15,22 @@ import java.util.Set;
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String username;
+
+    private String email;
 
     private String firstname;
 
     private String lastname;
 
     private String password;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
 
 }

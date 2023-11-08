@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.wms.WarehouseManagementService.dto.UserRegistrationDTO;
 import ru.wms.WarehouseManagementService.entity.Employee;
 import ru.wms.WarehouseManagementService.service.EmployeeService;
 
@@ -26,8 +27,10 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public String createEmployee(Employee employee) {
-        employeeService.create(employee);
+    public String createEmployee(UserRegistrationDTO userRegistrationDTO, Employee employee) {
+        employeeService.createEmployee(employee);
         return "redirect:/employees";
     }
+
+
 }
