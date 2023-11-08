@@ -10,6 +10,10 @@
         <input id="create_username" type="text" name="username">
     </label>
 
+    <label for="create_email">Email:
+        <input id="create_email" type="text" name="email">
+    </label>
+
     <label for="create_firstname">Имя:
         <input id="create_firstname" type="text" name="firstname">
     </label>
@@ -22,7 +26,7 @@
         <input id="create_password" type="password" name="password">
     </label>
 
-    <button type="submit">Зарегистрировать работника</button>
+    <button id="saveButtonEmployee" type="submit">Зарегистрировать работника</button>
 </form>
 
 <table id="saveTableEmployee">
@@ -32,11 +36,24 @@
         </td>
     </tr>
     <tr  th:if="${not #lists.isEmpty(employees)}">
-        <td th:text="${employees[employees.size() - 1].username}">username</td>
-        <td th:text="${employees[employees.size() - 1].firstname}">firstname</td>
-        <td th:text="${employees[employees.size() - 1].lastname}">lastname</td>
+        <td th:text="${employees[employees.size() - 1].getEmail}">username зарегистрированн</td>
     </tr>
 </table>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var saveTable = document.getElementById("saveTableEmployee");
+        var saveButton = document.getElementById("saveButtonEmployee");
+
+
+        // saveButton.addEventListener("click", function () {
+        //     saveTable.style.display = "table";
+        // },);
+        setTimeout(function() {
+            saveTable.style.display = "none";
+        }, 5000);
+    });
+</script>
 
 </body>
 </html>

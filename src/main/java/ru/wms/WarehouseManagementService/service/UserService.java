@@ -32,14 +32,14 @@ public class UserService {
         if (userRegistrationDTO.getUsername() != null) {
             newUser.setUsername(userRegistrationDTO.getUsername());
             newUser.setEmail(userRegistrationDTO.getEmail());
-            newUser.setAuthorities(Collections.singleton(Authority.USER));
+            newUser.setAuthorities(Collections.singleton(Authority.CUSTOMER));
             newUser.setActive(false);
             newUser.setActivationCode(UUID.randomUUID().toString());
             newUser.setPassword(SecurityConfiguration.passwordEncoder().encode(userRegistrationDTO.getPassword()));
         } else {
             newUser.setUsername(customer.getUser().getUsername());
             newUser.setEmail(customer.getUser().getEmail());
-            newUser.setAuthorities(Collections.singleton(Authority.USER));
+            newUser.setAuthorities(Collections.singleton(Authority.CUSTOMER));
             newUser.setActive(false);
             newUser.setActivationCode(UUID.randomUUID().toString());
             newUser.setPassword(SecurityConfiguration.passwordEncoder().encode(customer.getUser().getPassword()));
