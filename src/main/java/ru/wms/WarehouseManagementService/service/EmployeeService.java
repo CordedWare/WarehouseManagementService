@@ -23,8 +23,8 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final UserRepository userRepository;
 
-    public List<Employee> findAllEmployee() {
-        return employeeRepository.findAll();
+    public List<Employee> findMyEmployee(User user) {
+        return employeeRepository.findAllByUser(user);
     }
 
     public User createEmployee(Employee employee) {
