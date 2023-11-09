@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.entity.Order;
 import ru.wms.WarehouseManagementService.entity.OrderStatus;
+import ru.wms.WarehouseManagementService.entity.User;
 import ru.wms.WarehouseManagementService.repository.OrderRepository;
 
 import java.math.BigDecimal;
@@ -41,5 +42,9 @@ public class OrderService {
 
     public Order findOrder(Long id){
         return orderRepo.findOrderById(id);
+    }
+
+    public List<Order> getAllMyOrders(User user) {
+        return orderRepo.findAllByUser(user);
     }
 }

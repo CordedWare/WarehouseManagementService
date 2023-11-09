@@ -3,6 +3,7 @@ package ru.wms.WarehouseManagementService.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.entity.Product;
+import ru.wms.WarehouseManagementService.entity.User;
 import ru.wms.WarehouseManagementService.repository.ProductRepository;
 
 import java.util.List;
@@ -46,6 +47,9 @@ public class ProductService {
 
     public Iterable<Product> getAllProducts() {
         return productRepository.findAll();
+    }
+    public Iterable<Product> getAllMyProducts(User user) {
+        return productRepository.findAllByUser(user);
     }
 
     public Product saveProduct(Product product) {

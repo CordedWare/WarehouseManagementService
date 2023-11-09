@@ -29,7 +29,7 @@ public class MainProductController {
     public String products(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
         var user = userPrincipal.getUser();
 
-        Iterable<Product> productList = productService.getAllProducts();
+        Iterable<Product> productList = productService.getAllMyProducts(user);
         Iterable<Warehouse> warehouseList = warehouseService.getAllWarehouses(user);
         model.addAttribute("warehouses", warehouseList);
         model.addAttribute("products", productList);

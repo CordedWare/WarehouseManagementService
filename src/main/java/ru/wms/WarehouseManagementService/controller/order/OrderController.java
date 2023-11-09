@@ -23,10 +23,10 @@ public class OrderController {
     private ProductRepository productRepository;
 
     @GetMapping
-    public String orders(Model model) {
+    public String orders(@AuthenticationPrincipal UserPrincipal userPrincipal,Model model) {
         model.addAttribute("order", new Order());
-        model.addAttribute("orders", orderService.getAllOrders());
-        model.addAttribute("productss",productRepository.findAll());
+        model.addAttribute("orders", orderService.getAllMyOrders(userPrincipal.getUser()));
+        model.addAttribute("productss",productRepository.findAllByUser(userPrincipal.getUser()));
         return "/order/orders";
     }
 
