@@ -33,7 +33,7 @@ public class EmployeeService {
 
         newUser.setUsername(employee.getUser().getUsername());
         newUser.setEmail(employee.getUser().getEmail());
-        newUser.setAuthorities(Collections.singleton(Authority.EMPLOYEE));
+        newUser.setAuthorities(Collections.singleton(Authority.ROLE_EMPLOYEE));
         newUser.setActive(false);
         newUser.setActivationCode(UUID.randomUUID().toString());
         newUser.setPassword(SecurityConfiguration.passwordEncoder().encode(employee.getUser().getPassword()));

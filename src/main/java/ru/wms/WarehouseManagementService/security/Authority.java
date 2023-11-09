@@ -3,9 +3,9 @@ package ru.wms.WarehouseManagementService.security;
 import org.springframework.security.core.GrantedAuthority;
 
 public enum Authority implements GrantedAuthority {
-    CUSTOMER,
-    ADMIN,
-    EMPLOYEE,
+    ROLE_CUSTOMER,
+    ROLE_ADMIN,
+    ROLE_EMPLOYEE,
 
     ACCESS_TEST1,
     ACCESS_TEST2;

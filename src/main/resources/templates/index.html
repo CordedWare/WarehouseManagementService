@@ -24,7 +24,7 @@
 
     <a href="/orders">Создать заказ</a> <br>
 
-    <a href="/employees">Создать работника</a> <br>
+    <a href="/employees" sec:authorize="hasAuthority('ROLE_CUSTOMER')">Создать работника</a> <br>
 
     <hr/>
 

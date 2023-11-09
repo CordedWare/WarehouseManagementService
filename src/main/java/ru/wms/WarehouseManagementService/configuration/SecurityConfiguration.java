@@ -26,6 +26,7 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/home", "/sign-up","/logout","/login","/activate/*").permitAll()
+                        .requestMatchers("/employees").hasAuthority("ROLE_CUSTOMER ")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form

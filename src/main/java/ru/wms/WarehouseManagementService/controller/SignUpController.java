@@ -28,7 +28,8 @@ public class SignUpController {
 
     @PostMapping("/sign-up")
     public String userRegistration(UserRegistrationDTO userDTO, Customer customer) {
-
+        System.out.println(userDTO);
+        System.out.println(customer);
         if(!isCorrectUserDTO(userDTO)){
             return "redirect:/sign-up?validate_error";
         }
