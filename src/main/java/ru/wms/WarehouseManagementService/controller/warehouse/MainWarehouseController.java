@@ -1,11 +1,9 @@
 package ru.wms.WarehouseManagementService.controller.warehouse;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.wms.WarehouseManagementService.entity.Warehouse;
 import ru.wms.WarehouseManagementService.repository.WarehouseRepository;
@@ -17,10 +15,11 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/warehouses")
-public class WarehouseController {
+public class MainWarehouseController {
 
     @Autowired
     private WarehouseService warehouseService;
+
     @Autowired
     private WarehouseRepository warehouseRepository;
 
@@ -31,23 +30,6 @@ public class WarehouseController {
         model.addAttribute("warehouse", new Warehouse());
 
         return "/warehouse/warehouses";
-    }
-
-    @PostMapping
-    public String createWarehouse(
-            @ModelAttribute("warehouse")
-            @Valid Warehouse warehouse,
-            BindingResult bindingResult,
-            @AuthenticationPrincipal UserPrincipal userPrincipal
-    ) {
-        if (bindingResult.hasErrors()) {
-            throw new IllegalArgumentException("Invalid warehouse data");
-        }
-
-        var user = userPrincipal.getUser();
-        warehouseService.saveWarehouse(warehouse, user);
-
-        return "redirect:/warehouses";
     }
 
     @GetMapping("/{id}")
@@ -69,6 +51,7 @@ public class WarehouseController {
     @PostMapping("/{id}")
     public String deleteWarehouse(@PathVariable Long id) {
         warehouseService.deleteWarehouseById(id);
+
         return "redirect:/warehouses";
     }
 }

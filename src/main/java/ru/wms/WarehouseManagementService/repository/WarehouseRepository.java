@@ -17,5 +17,4 @@ public interface WarehouseRepository extends CrudRepository<Warehouse, Long> {
     List<Warehouse> findByNameContaining(String name);
 
     List<Warehouse> findByAddressContaining(String address);
-
 }

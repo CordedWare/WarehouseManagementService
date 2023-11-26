@@ -15,7 +15,6 @@ public class SignUpController {
 
     @Autowired
     private UserService userService;
-
     @Autowired
     private MailSenderService mailSender;
 
@@ -23,6 +22,7 @@ public class SignUpController {
     public String signUpPage(Model model) {
         model.addAttribute("user", new UserRegistrationDTO());
         model.addAttribute("customer", new Customer());
+
         return "sign-up";
     }
 
@@ -30,13 +30,11 @@ public class SignUpController {
     public String userRegistration(UserRegistrationDTO userDTO, Customer customer) {
         System.out.println(userDTO);
         System.out.println(customer);
-        if(!isCorrectUserDTO(userDTO)){
+        if(!isCorrectUserDTO(userDTO))
             return "redirect:/sign-up?validate_error";
-        }
 
-        if(userService.isUserExist(userDTO)){
+        if(userService.isUserExist(userDTO))
             return "redirect:/sign-up?user_exist";
-        }
 
         var newUser = userService.registerUserCustomer(userDTO, customer);
 

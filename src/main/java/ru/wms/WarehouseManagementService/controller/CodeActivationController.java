@@ -16,6 +16,7 @@ public class CodeActivationController {
     public String activateEmail(@PathVariable String code) {
         if (userService.activateUser(code))
             return "redirect:/login?activate_success";
+
         return "redirect:/login?activate_fail";
     }
 }
