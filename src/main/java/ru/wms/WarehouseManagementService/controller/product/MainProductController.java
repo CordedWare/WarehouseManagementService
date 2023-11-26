@@ -29,6 +29,7 @@ public class MainProductController {
         var user = userPrincipal.getUser();
         Iterable<Product> productList = productService.getAllMyProducts(user);
         Iterable<Warehouse> warehouseList = warehouseService.getAllWarehouses(user);
+
         model.addAttribute("warehouses", warehouseList);
         model.addAttribute("products", productList);
         model.addAttribute("product", new Product());

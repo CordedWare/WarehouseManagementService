@@ -12,10 +12,12 @@ import java.util.List;
 
 @Service
 public class OrderService {
+
     @Autowired
     private OrderRepository orderRepo;
 
     public List<Order> getAllOrders() {
+
         return orderRepo.findAll();
     }
 
@@ -41,10 +43,12 @@ public class OrderService {
     }
 
     public Order findOrder(Long id){
+
         return orderRepo.findOrderById(id);
     }
 
     public List<Order> getAllMyOrders(User user) {
+
         return orderRepo.findAllByUser(user);
     }
 }

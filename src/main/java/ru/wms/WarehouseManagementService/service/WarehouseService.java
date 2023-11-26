@@ -14,11 +14,13 @@ public class WarehouseService {
     private WarehouseRepository warehouseRepository;
 
     public Iterable<Warehouse> getAllWarehouses(User user) {
+
         return warehouseRepository.findAllByUser(user);
     }
 
     public Warehouse saveWarehouse(Warehouse warehouse, User user) {
         warehouse.setUser(user);
+
         return warehouseRepository.save(warehouse);
     }
 

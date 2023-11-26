@@ -27,6 +27,7 @@ public class OrderController {
         model.addAttribute("order", new Order());
         model.addAttribute("orders", orderService.getAllMyOrders(userPrincipal.getUser()));
         model.addAttribute("productss", productRepository.findAllByUser(userPrincipal.getUser()));
+
         return "/order/orders";
     }
 
@@ -40,12 +41,14 @@ public class OrderController {
         }
         order.setUser(userPrincipal.getUser());
         orderService.saveNewOrder(order);
+
         return "redirect:/orders";
     }
 
 
     @GetMapping("/{id}")
     public Order getOrderById(@PathVariable Long id) {
+
         return orderService.findOrder(id);
     }
 }

@@ -46,22 +46,27 @@ public class ProductService {
     }
 
     public Iterable<Product> getAllProducts() {
+
         return productRepository.findAll();
     }
 
     public Iterable<Product> getAllMyProducts(User user) {
+
         return productRepository.findAllByUser(user);
     }
 
     public Product saveProduct(Product product) {
+
         return productRepository.save(product);
     }
 
     public List<Product> getProductsByName(String name) {
+
         return productRepository.findByName(name);
     }
 
     public void deleteProductById(Long id) {
+
         productRepository.deleteById(id);
     }
 }

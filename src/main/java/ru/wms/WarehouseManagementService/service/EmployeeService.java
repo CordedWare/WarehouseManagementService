@@ -3,8 +3,6 @@ package ru.wms.WarehouseManagementService.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.configuration.SecurityConfiguration;
-import ru.wms.WarehouseManagementService.dto.UserRegistrationDTO;
-import ru.wms.WarehouseManagementService.entity.Customer;
 import ru.wms.WarehouseManagementService.entity.Employee;
 import ru.wms.WarehouseManagementService.entity.User;
 import ru.wms.WarehouseManagementService.repository.EmployeeRepository;
@@ -13,7 +11,6 @@ import ru.wms.WarehouseManagementService.security.Authority;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -24,6 +21,7 @@ public class EmployeeService {
     private final UserRepository userRepository;
 
     public List<Employee> findMyEmployee(User user) {
+
         return employeeRepository.findAllByUser(user);
     }
 

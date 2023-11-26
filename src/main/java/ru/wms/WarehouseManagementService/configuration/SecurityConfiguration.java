@@ -3,7 +3,6 @@ package ru.wms.WarehouseManagementService.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Role;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -11,7 +10,6 @@ import org.springframework.security.config.annotation.web.configurers.LogoutConf
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import ru.wms.WarehouseManagementService.security.Authority;
 import ru.wms.WarehouseManagementService.service.UserPrincipalDetailsService;
 
 @Configuration
@@ -36,12 +34,14 @@ public class SecurityConfiguration {
                         .usernameParameter("email")
                 )
                 .logout(LogoutConfigurer::permitAll);
+
         return http.build();
     }
 
     @Bean
     DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         daoAuthenticationProvider.setUserDetailsService(this.userPrincipalDetailsService);
 
@@ -50,6 +50,7 @@ public class SecurityConfiguration {
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
+
         return new BCryptPasswordEncoder();
     }
 }

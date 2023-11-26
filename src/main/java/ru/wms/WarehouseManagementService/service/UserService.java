@@ -23,6 +23,7 @@ public class UserService {
     private CustomerRepository customerRepository;
 
     public boolean isUserExist(UserRegistrationDTO userRegistrationDTO) {
+
         return userRepository.findByEmail(userRegistrationDTO.getEmail()).isPresent();
     }
 

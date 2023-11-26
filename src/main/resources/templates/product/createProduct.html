@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Products</title>
+    <title>Product</title>
 </head>
 <body>
 
@@ -17,6 +17,9 @@
         </p>
     <hr>
 
+    <hr>
+        <h2>Создать товар</h2>
+    <hr>
     <form th:action="@{/createProduct}" th:object="${product}" method="post">
         <label>Имя: <input type="text" th:field="*{name}" id="name" required /></label><br>
         <label>Описание: <input type="text" th:field="*{description}" id="description" required /></label><br>
