@@ -36,7 +36,7 @@ public class MailSenderService {
                     user.getUsername(),
                     user.getActivationCode()
             );
-           send(user.getEmail(), "Activation code", message);
+            send(user.getEmail(), "Activation code", message);
         }
     }
 }

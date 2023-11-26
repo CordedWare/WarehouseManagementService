@@ -24,11 +24,9 @@ public class MainProductController {
     @Autowired
     private WarehouseService warehouseService;
 
-
     @GetMapping
     public String products(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
         var user = userPrincipal.getUser();
-
         Iterable<Product> productList = productService.getAllMyProducts(user);
         Iterable<Warehouse> warehouseList = warehouseService.getAllWarehouses(user);
         model.addAttribute("warehouses", warehouseList);
@@ -39,10 +37,10 @@ public class MainProductController {
     }
 
     @GetMapping("/{id}")
-    public String getProductsByName(@RequestParam(name = "filter", required = false, defaultValue = "") String filter, Model model) {
-        Iterable<Product> productList = productRepository.findAll();
-        if (filter != null && !filter.isEmpty()) {
-            productList = productRepository.findByNameContaining(filter);
+    public String getProductsByName(@RequestParam(name = "filter", required = false, defaultValue = "") Optional<String> filter, Model model) {
+        Iterable<Product> productList;
+        if (filter.isPresent() && !filter.isEmpty()) {
+            productList = productRepository.findByNameContaining(filter.get());
         } else {
             productList = productRepository.findAll();
         }

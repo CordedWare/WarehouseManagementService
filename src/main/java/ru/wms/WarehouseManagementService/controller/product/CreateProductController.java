@@ -25,7 +25,6 @@ public class CreateProductController {
     @Autowired
     private WarehouseService warehouseService;
 
-
     @GetMapping
     public String createProducts(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
         var user = userPrincipal.getUser();

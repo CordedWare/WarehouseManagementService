@@ -23,8 +23,8 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping
-    public String getEmployee(@AuthenticationPrincipal UserPrincipal userPrincipal,Model model) {
-       model.addAttribute("employees", employeeService.findMyEmployee(userPrincipal.getUser()));
+    public String getEmployee(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model) {
+        model.addAttribute("employees", employeeService.findMyEmployee(userPrincipal.getUser()));
         model.addAttribute("employee", new Employee());
         return "/employees";
     }

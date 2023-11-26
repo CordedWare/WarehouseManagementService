@@ -37,9 +37,24 @@
                    placeholder="ФИО">
         </div>
         <div>
+            <label for="telephone">Контактный телефон</label>
+            <input type="telephone" class="form-control" id="telephone" th:field="*{telephone}" name="telephone"
+                   placeholder="Контактный телефон">
+        </div>
+        <div>
             <label for="nameOrg">Имя организации</label>
             <input type="nameOrg" class="form-control" id="nameOrg" th:field="*{nameOrg}" name="nameOrg"
                    placeholder="Имя организации">
+        </div>
+        <div>
+            <label for="addressOrg">Адрес организации</label>
+            <input type="addressOrg" class="form-control" id="addressOrg" th:field="*{addressOrg}" name="addressOrg"
+                   placeholder="Адрес организации">
+        </div>
+        <div>
+            <label for="contactInfoOrg">Контактная информация</label>
+            <input type="contactInfoOrg" class="form-control" id="contactInfoOrg" th:field="*{contactInfoOrg}" name="contactInfoOrg"
+                   placeholder="Контактная информация">
         </div>
         <div>
             <button type="submit">Зарегистрироваться</button>

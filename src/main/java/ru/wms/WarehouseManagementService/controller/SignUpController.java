@@ -38,7 +38,7 @@ public class SignUpController {
             return "redirect:/sign-up?user_exist";
         }
 
-        var newUser = userService.registerUser(userDTO, customer);
+        var newUser = userService.registerUserCustomer(userDTO, customer);
 
 //        mailSender.sendActivationCode(newUser);
 
