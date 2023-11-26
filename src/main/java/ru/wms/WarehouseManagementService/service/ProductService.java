@@ -48,6 +48,7 @@ public class ProductService {
     public Iterable<Product> getAllProducts() {
         return productRepository.findAll();
     }
+
     public Iterable<Product> getAllMyProducts(User user) {
         return productRepository.findAllByUser(user);
     }

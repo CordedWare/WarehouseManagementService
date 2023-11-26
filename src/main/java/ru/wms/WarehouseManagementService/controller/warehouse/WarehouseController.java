@@ -12,6 +12,8 @@ import ru.wms.WarehouseManagementService.repository.WarehouseRepository;
 import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.WarehouseService;
 
+import java.util.Optional;
+
 
 @Controller
 @RequestMapping("/warehouses")
@@ -49,10 +51,10 @@ public class WarehouseController {
     }
 
     @GetMapping("/{id}")
-    public String getWarehousesByName(@RequestParam(name = "filter", required = false, defaultValue = "") String nameFilter, Model model) {
+    public String getWarehousesByName(@RequestParam(name = "filter", required = false, defaultValue = "") Optional<String> nameFilter, Model model) {
         Iterable<Warehouse> warehouseList = warehouseRepository.findAll();
-        if (nameFilter != null && !nameFilter.isEmpty()) {
-            warehouseList = warehouseRepository.findByNameContaining(nameFilter);
+        if (nameFilter.isPresent() && !nameFilter.isEmpty()) {
+            warehouseList = warehouseRepository.findByNameContaining(nameFilter.get());
         } else {
             warehouseList = warehouseRepository.findAll();
         }
