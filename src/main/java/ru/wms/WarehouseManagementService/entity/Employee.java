@@ -28,5 +28,9 @@ public class Employee {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @OneToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private User customer;
+
 
 }

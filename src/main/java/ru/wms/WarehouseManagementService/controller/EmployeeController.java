@@ -1,6 +1,6 @@
 package ru.wms.WarehouseManagementService.controller;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,14 +11,16 @@ import ru.wms.WarehouseManagementService.entity.Employee;
 import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.EmployeeService;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/employees")
-@RequiredArgsConstructor
 public class EmployeeController {
 
+    @Autowired
     private final EmployeeService employeeService;
+
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     @GetMapping
     public String getEmployee(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model) {
@@ -29,8 +31,8 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public String createEmployee(Employee employee) {
-        var newEmployee = employeeService.createEmployee(employee);
+    public String createEmployee(@AuthenticationPrincipal UserPrincipal userPrincipal,Employee employee) {
+        var newEmployee = employeeService.createEmployee(employee,userPrincipal.getUser());
 
         return String.format("redirect:/login?activate_email=%s", newEmployee.getActivationCode());
     }

@@ -18,7 +18,7 @@ public class User {
     private long id;
 
     @Column(nullable = false)
-    private String username; // TODO: пока необходимости в username нет, т.к. логинимся через почту, возможно потом стоит убрать
+    private String username;
 
     @Column(nullable = false)
     private String password;

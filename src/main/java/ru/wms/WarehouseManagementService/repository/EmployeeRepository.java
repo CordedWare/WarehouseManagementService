@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-    List<Employee> findAllByUser(User user);
+    List<Employee> findAllByCustomer(User customer);
 }

@@ -21,11 +21,10 @@ public class EmployeeService {
     private final UserRepository userRepository;
 
     public List<Employee> findMyEmployee(User user) {
-
-        return employeeRepository.findAllByUser(user);
+        return employeeRepository.findAllByCustomer(user);
     }
 
-    public User createEmployee(Employee employee) {
+    public User createEmployee(Employee employee, User customer) {
         var newUser = new User();
         var newEmployee = new Employee();
 
@@ -39,6 +38,8 @@ public class EmployeeService {
         newEmployee.setUser(newUser);
         newEmployee.setFirstname(employee.getFirstname());
         newEmployee.setLastname(employee.getLastname());
+
+        newEmployee.setCustomer(customer);
 
         userRepository.save(newUser);
         employeeRepository.save(newEmployee);
