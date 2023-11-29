@@ -1,5 +1,6 @@
 package ru.wms.WarehouseManagementService.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -28,7 +29,7 @@ public class Warehouse {
 
     @Column(name = "creation_date", columnDefinition = "DATE")
     private LocalDate creationDate;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;

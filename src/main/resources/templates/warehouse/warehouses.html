@@ -17,7 +17,7 @@
         </p>
     <hr>
 
-    <h4><a href="/createWarehouse">Зарегистрировать склад</a></h4>
+    <h4><a href="/createWarehouse" sec:authorize="hasRole('CUSTOMER')">Зарегистрировать склад</a></h4>
 
     <tr>
         <td colspan="7">

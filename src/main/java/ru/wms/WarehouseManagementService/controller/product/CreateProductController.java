@@ -27,9 +27,9 @@ public class CreateProductController {
 
     @GetMapping
     public String createProducts(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
-        var user = userPrincipal.getCustomer();
-        Iterable<Product> productList = productService.getAllProducts();
-        Iterable<Warehouse> warehouseList = warehouseService.getAllWarehouses(user);
+        var user = userPrincipal.getUser();
+        Iterable<Product> productList = productService.getAllMyProducts(user);
+        Iterable<Warehouse> warehouseList = warehouseService.getAllMyWarehouses(user);
 
         model.addAttribute("warehouses", warehouseList);
         model.addAttribute("products", productList);

@@ -1,5 +1,6 @@
 package ru.wms.WarehouseManagementService.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -18,9 +19,11 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
+
 
     @ManyToOne
     @JoinColumn(name = "warehouse_id", nullable = false)
@@ -39,4 +42,18 @@ public class Product {
 
     @Column(name = "creation_date", columnDefinition = "DATE")
     private LocalDate creationDate;
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", warehouse=" + warehouse.getName() +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", category='" + category + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", creationDate=" + creationDate +
+                '}';
+    }
 }

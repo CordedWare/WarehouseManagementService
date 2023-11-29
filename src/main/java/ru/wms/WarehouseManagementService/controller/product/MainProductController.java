@@ -26,9 +26,9 @@ public class MainProductController {
 
     @GetMapping
     public String products(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
-        var user = userPrincipal.getCustomer();
+        var user = userPrincipal.getUser();
         Iterable<Product> productList = productService.getAllMyProducts(user);
-        Iterable<Warehouse> warehouseList = warehouseService.getAllWarehouses(user);
+        Iterable<Warehouse> warehouseList = warehouseService.getAllMyWarehouses(user);
 
         model.addAttribute("warehouses", warehouseList);
         model.addAttribute("products", productList);
@@ -65,7 +65,6 @@ public class MainProductController {
 
         if (productOptional.isPresent()) {
             model.addAttribute("product", productOptional.get());
-
             return "edit-product";
         } else {
             throw new RuntimeException("Product not found with id: " + id);

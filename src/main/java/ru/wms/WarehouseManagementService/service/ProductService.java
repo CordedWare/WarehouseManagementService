@@ -2,6 +2,7 @@ package ru.wms.WarehouseManagementService.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.wms.WarehouseManagementService.entity.Employee;
 import ru.wms.WarehouseManagementService.entity.Product;
 import ru.wms.WarehouseManagementService.entity.User;
 import ru.wms.WarehouseManagementService.repository.ProductRepository;
@@ -51,6 +52,8 @@ public class ProductService {
     }
 
     public Iterable<Product> getAllMyProducts(User user) {
+        if(user instanceof Employee employee)
+            return productRepository.findAllByOwner(employee.getCustomer());
 
         return productRepository.findAllByOwner(user);
     }
@@ -69,4 +72,6 @@ public class ProductService {
 
         productRepository.deleteById(id);
     }
+
+
 }

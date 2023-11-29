@@ -11,6 +11,7 @@ import ru.wms.WarehouseManagementService.entity.Order;
 import ru.wms.WarehouseManagementService.repository.ProductRepository;
 import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.OrderService;
+import ru.wms.WarehouseManagementService.service.ProductService;
 
 
 @Controller
@@ -20,13 +21,13 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
     @Autowired
-    private ProductRepository productRepository;
+    private ProductService productService;
 
     @GetMapping
     public String orders(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model) {
         model.addAttribute("order", new Order());
         model.addAttribute("orders", orderService.getAllMyOrders(userPrincipal.getUser()));
-        model.addAttribute("productss", productRepository.findAllByOwner(userPrincipal.getUser()));
+        model.addAttribute("productss", productService.getAllMyProducts(userPrincipal.getUser()));
 
         return "/order/orders";
     }

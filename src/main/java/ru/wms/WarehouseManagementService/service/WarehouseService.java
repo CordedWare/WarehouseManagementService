@@ -14,7 +14,7 @@ public class WarehouseService {
     @Autowired
     private WarehouseRepository warehouseRepository;
 
-    public Iterable<Warehouse> getAllWarehouses(User user) {
+    public Iterable<Warehouse> getAllMyWarehouses(User user) {
         if(user instanceof Employee emp){
             return warehouseRepository.findAllByOwner(emp.getCustomer());
         }

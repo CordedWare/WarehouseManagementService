@@ -1,5 +1,6 @@
 package ru.wms.WarehouseManagementService.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -38,7 +39,7 @@ public class Order {
     @NotNull
     @Column
     private String name;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
