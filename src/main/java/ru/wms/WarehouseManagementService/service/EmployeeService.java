@@ -3,6 +3,7 @@ package ru.wms.WarehouseManagementService.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.configuration.SecurityConfiguration;
+import ru.wms.WarehouseManagementService.entity.Customer;
 import ru.wms.WarehouseManagementService.entity.Employee;
 import ru.wms.WarehouseManagementService.entity.User;
 import ru.wms.WarehouseManagementService.repository.EmployeeRepository;
@@ -18,37 +19,26 @@ import java.util.UUID;
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
-    private final UserRepository userRepository;
 
-    public List<Employee> findMyEmployee(User user) {
-        return employeeRepository.findAllByCustomer(user);
+    public List<Employee> findMyEmployee(Customer customer) {
+        return employeeRepository.findAllByCustomer(customer);
     }
 
-    public User createEmployee(Employee employee, User customer) {
-        var newUser = new User();
-        var newEmployee = new Employee();
+    public Employee createEmployee(Employee employee, Customer customer) {
 
-        newUser.setUsername(employee.getUser().getUsername());
-        newUser.setEmail(employee.getUser().getEmail());
-        newUser.setAuthorities(Collections.singleton(Authority.ROLE_EMPLOYEE));
-        newUser.setActive(false);
-        newUser.setActivationCode(UUID.randomUUID().toString());
-        newUser.setPassword(SecurityConfiguration.passwordEncoder().encode(employee.getUser().getPassword()));
+        employee.setAuthorities(Collections.singleton(Authority.ROLE_EMPLOYEE));
+        employee.setActive(false);
+        employee.setActivationCode(UUID.randomUUID().toString());
+        employee.setPassword(SecurityConfiguration.passwordEncoder().encode(employee.getPassword()));
+        employee.setCustomer(customer);
 
-        newEmployee.setUser(newUser);
-        newEmployee.setFirstname(employee.getFirstname());
-        newEmployee.setLastname(employee.getLastname());
+        employeeRepository.save(employee);
 
-        newEmployee.setCustomer(customer);
-
-        userRepository.save(newUser);
-        employeeRepository.save(newEmployee);
-
-        return newUser;
+        return employee;
     }
 
     public void deleteEmployee(Employee employee) {
-        userRepository.delete(employee.getUser());
-        employeeRepository.delete(employee);
+//        userRepository.delete(employee.getUser());
+//        employeeRepository.delete(employee);
     }
 }

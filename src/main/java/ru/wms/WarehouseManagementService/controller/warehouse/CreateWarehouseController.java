@@ -23,7 +23,7 @@ public class CreateWarehouseController {
 
     @GetMapping
     public String CreateWarehouses(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
-        Iterable<Warehouse> warehousesList = warehouseService.getAllWarehouses(userPrincipal.getUser());
+        Iterable<Warehouse> warehousesList = warehouseService.getAllWarehouses(userPrincipal.getCustomer());
 
         model.addAttribute("warehouses", warehousesList);
         model.addAttribute("warehouse", new Warehouse());
@@ -41,9 +41,9 @@ public class CreateWarehouseController {
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException("Invalid warehouse data");
         }
-        var user = userPrincipal.getUser();
+        var customer = userPrincipal.getCustomer();
 
-        warehouseService.saveWarehouse(warehouse, user);
+        warehouseService.saveWarehouse(warehouse, customer);
 
         return "redirect:/warehouses";
     }

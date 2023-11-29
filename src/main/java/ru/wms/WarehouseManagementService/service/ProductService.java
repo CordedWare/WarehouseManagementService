@@ -52,7 +52,7 @@ public class ProductService {
 
     public Iterable<Product> getAllMyProducts(User user) {
 
-        return productRepository.findAllByUser(user);
+        return productRepository.findAllByOwner(user);
     }
 
     public Product saveProduct(Product product) {

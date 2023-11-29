@@ -26,7 +26,7 @@ public class MainProductController {
 
     @GetMapping
     public String products(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
-        var user = userPrincipal.getUser();
+        var user = userPrincipal.getCustomer();
         Iterable<Product> productList = productService.getAllMyProducts(user);
         Iterable<Warehouse> warehouseList = warehouseService.getAllWarehouses(user);
 

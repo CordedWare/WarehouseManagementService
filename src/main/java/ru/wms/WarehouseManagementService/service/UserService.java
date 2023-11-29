@@ -18,7 +18,7 @@ import java.util.UUID;
 public class UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository<User,Long> userRepository;
     @Autowired
     private CustomerRepository customerRepository;
 
@@ -31,40 +31,13 @@ public class UserService {
      * Логика принципала как User с ролями и Customer как сущность заказчика разделены для атомарности.
      * TODO: Возможно придется вынести отдельно регистрацию Customer, если поменяется бизнес-логика
      */
-    public User registerUserCustomer(UserRegistrationDTO userRegistrationDTO, Customer customer) {
-        var newUser = new User();
-        var newCustomer = new Customer();
-        Optional<String> usernameOpt = Optional.ofNullable(userRegistrationDTO.getUsername());
-
-        usernameOpt.ifPresentOrElse(
-                username -> {
-                    newUser.setUsername(userRegistrationDTO.getUsername());
-                    newUser.setEmail(userRegistrationDTO.getEmail());
-                    newUser.setAuthorities(Collections.singleton(Authority.ROLE_CUSTOMER));
-                    newUser.setActive(false);
-                    newUser.setActivationCode(UUID.randomUUID().toString());
-                    newUser.setPassword(SecurityConfiguration.passwordEncoder().encode(userRegistrationDTO.getPassword()));
-                },
-                () -> {
-                    newUser.setUsername(customer.getUser().getUsername());
-                    newUser.setEmail(customer.getUser().getEmail());
-                    newUser.setAuthorities(Collections.singleton(Authority.ROLE_CUSTOMER));
-                    newUser.setActive(false);
-                    newUser.setActivationCode(UUID.randomUUID().toString());
-                    newUser.setPassword(SecurityConfiguration.passwordEncoder().encode(customer.getUser().getPassword()));
-                }
-        );
-        newCustomer.setUser(newUser);
-        newCustomer.setFullName(customer.getFullName());
-        newCustomer.setTelephone(customer.getTelephone());
-        newCustomer.setNameOrg(customer.getNameOrg());
-        newCustomer.setAddressOrg(customer.getAddressOrg());
-        newCustomer.setContactInfoOrg(customer.getContactInfoOrg());
-
-        userRepository.save(newUser);
-        customerRepository.save(newCustomer);
-
-        return newUser;
+    public Customer registerUserCustomer(Customer customer) {
+        customer.setAuthorities(Collections.singleton(Authority.ROLE_CUSTOMER));
+        customer.setActive(false);
+        customer.setActivationCode(UUID.randomUUID().toString());
+        customer.setPassword(SecurityConfiguration.passwordEncoder().encode(customer.getPassword()));
+        customerRepository.save(customer);
+        return customer;
     }
 
 

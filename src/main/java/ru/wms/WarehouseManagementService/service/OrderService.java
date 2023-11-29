@@ -49,6 +49,6 @@ public class OrderService {
 
     public List<Order> getAllMyOrders(User user) {
 
-        return orderRepo.findAllByUser(user);
+        return orderRepo.findAllByOwner(user);
     }
 }

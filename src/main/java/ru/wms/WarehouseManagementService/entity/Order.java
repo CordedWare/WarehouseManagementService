@@ -40,8 +40,8 @@ public class Order {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
 
     @NotNull
     @ManyToMany

@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface WarehouseRepository extends CrudRepository<Warehouse, Long> {
 
-    List<Warehouse> findAllByUser(User user);
+    List<Warehouse> findAllByOwner(User user);
 
     List<Warehouse> findByName(String name);
 

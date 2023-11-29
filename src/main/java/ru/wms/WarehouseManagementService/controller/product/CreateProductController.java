@@ -27,7 +27,7 @@ public class CreateProductController {
 
     @GetMapping
     public String createProducts(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
-        var user = userPrincipal.getUser();
+        var user = userPrincipal.getCustomer();
         Iterable<Product> productList = productService.getAllProducts();
         Iterable<Warehouse> warehouseList = warehouseService.getAllWarehouses(user);
 
@@ -49,9 +49,8 @@ public class CreateProductController {
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException("Invalid product data");
         }
-        var user = userPrincipal.getUser();
 
-        product.setUser(user);
+        product.setOwner(userPrincipal.getUser());
         product.setWarehouse(warehouse);
         productService.saveProduct(product);
 

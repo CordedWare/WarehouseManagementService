@@ -3,20 +3,14 @@ package ru.wms.WarehouseManagementService.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
 @Entity(name = "customer_t")
-public class Customer {
+public class Customer extends User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
-    @Column
-    private String fullName;
 
     @Column
     private Integer telephone;
@@ -30,7 +24,13 @@ public class Customer {
     @Column
     private String contactInfoOrg;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "pass=" + getPassword() +
+                ", ema='" + getEmail() + '\'' +
+                ", addressOrg='" + addressOrg + '\'' +
+                ", contactInfoOrg='" + contactInfoOrg + '\'' +
+                '}';
+    }
 }

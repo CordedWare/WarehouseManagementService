@@ -5,12 +5,13 @@ import lombok.*;
 import ru.wms.WarehouseManagementService.security.Authority;
 
 import java.util.Set;
-
+@ToString
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Entity(name = "user_t")
+@Entity
+@Table(name = "user_t")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 
     @Id
@@ -18,7 +19,12 @@ public class User {
     private long id;
 
     @Column(nullable = false)
-    private String username;
+    private String firstname;
+    @Column(nullable = false)
+    private String lastname;
+    @Column(nullable = true)
+    private String patronymic;
+
 
     @Column(nullable = false)
     private String password;

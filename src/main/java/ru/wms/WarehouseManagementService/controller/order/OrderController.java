@@ -26,7 +26,7 @@ public class OrderController {
     public String orders(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model) {
         model.addAttribute("order", new Order());
         model.addAttribute("orders", orderService.getAllMyOrders(userPrincipal.getUser()));
-        model.addAttribute("productss", productRepository.findAllByUser(userPrincipal.getUser()));
+        model.addAttribute("productss", productRepository.findAllByOwner(userPrincipal.getUser()));
 
         return "/order/orders";
     }
@@ -39,7 +39,7 @@ public class OrderController {
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException("Invalid order data");
         }
-        order.setUser(userPrincipal.getUser());
+        order.setOwner(userPrincipal.getUser());
         orderService.saveNewOrder(order);
 
         return "redirect:/orders";

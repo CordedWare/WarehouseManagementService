@@ -17,23 +17,28 @@
             Невалидные данные
         </div>
         <div>
-            <label for="login">Логин</label>
-            <input type="text" class="form-control" id="login" th:field="*{user.username}" name="login"
-                   placeholder="логин">
-        </div>
-        <div>
             <label for="password">Пароль</label>
-            <input type="password" class="form-control" id="password" th:field="*{user.password}" name="password"
+            <input type="password" class="form-control" id="password" th:field="*{password}" name="password"
                    placeholder="пароль">
         </div>
         <div>
             <label for="email">Почта</label>
-            <input type="email" class="form-control" id="email" th:field="*{user.email}" name="email"
+            <input type="email" class="form-control" id="email" th:field="*{email}" name="email"
                    placeholder="some@some.com">
         </div>
         <div>
-            <label for="fullName">ФИО</label>
-            <input type="fullName" class="form-control" id="fullName" th:field="*{fullName}" name="fullName"
+            <label for="firstname">Имя</label>
+            <input type="text" class="form-control" id="firstname" th:field="*{firstname}" name="firstname"
+                   placeholder="ФИО">
+        </div>
+        <div>
+            <label for="lastname">Фамилия</label>
+            <input type="text" class="form-control" id="lastname" th:field="*{lastname}" name="lastname"
+                   placeholder="ФИО">
+        </div>
+        <div>
+            <label for="patronymic">Отчество</label>
+            <input type="text" class="form-control" id="patronymic" th:field="*{patronymic}" name="patronymic"
                    placeholder="ФИО">
         </div>
         <div>

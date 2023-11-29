@@ -20,23 +20,22 @@ public class SignUpController {
 
     @GetMapping("/sign-up")
     public String signUpPage(Model model) {
-        model.addAttribute("user", new UserRegistrationDTO());
         model.addAttribute("customer", new Customer());
 
         return "sign-up";
     }
 
     @PostMapping("/sign-up")
-    public String userRegistration(UserRegistrationDTO userDTO, Customer customer) {
-        System.out.println(userDTO);
-        System.out.println(customer);
-        if(!isCorrectUserDTO(userDTO))
-            return "redirect:/sign-up?validate_error";
+    public String userRegistration(Customer customer) {
 
-        if(userService.isUserExist(userDTO))
-            return "redirect:/sign-up?user_exist";
+//        System.out.println(customer);
+//        if(!isCorrectUserDTO(userDTO))
+//            return "redirect:/sign-up?validate_error";
+//
+//        if(userService.isUserExist(userDTO))
+//            return "redirect:/sign-up?user_exist";
 
-        var newUser = userService.registerUserCustomer(userDTO, customer);
+        var newUser = userService.registerUserCustomer(customer);
 
 //        mailSender.sendActivationCode(newUser);
 

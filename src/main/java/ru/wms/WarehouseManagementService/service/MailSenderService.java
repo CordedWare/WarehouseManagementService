@@ -33,7 +33,7 @@ public class MailSenderService {
             String message = String.format(
                     "Здравствуйте, %s! \n" +
                             "Добро пожаловать в сервис WarehouseManagementWebservice. Пожалуйста, перейдите по ссылке: http://localhost:8080/index/%s",
-                    user.getUsername(),
+                    user.getFirstname(),
                     user.getActivationCode()
             );
             send(user.getEmail(), "Activation code", message);

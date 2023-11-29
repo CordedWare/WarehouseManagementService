@@ -30,6 +30,6 @@ public class Warehouse {
     private LocalDate creationDate;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
 }

@@ -19,8 +19,8 @@ public class Product {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
 
     @ManyToOne
     @JoinColumn(name = "warehouse_id", nullable = false)
