@@ -12,6 +12,14 @@
 <div class="container">
     <h2>Вы вошли в систему как <span sec:authentication="name"></span></h2>
 
+    <div>
+        <a href="/orders?status=NEW">Новые заказы</a>
+        <a href="/orders?status=PROCESSING">Заказы в процессе обработки</a>
+        <a href="/orders?status=COMPLETED">Завершенные заказы</a>
+    </div>
+
+    <hr>
+
     <div sec:authorize="hasRole('CUSTOMER')">
         <hr>
         <p>
@@ -67,7 +75,7 @@
         <td sec:authorize="hasRole('EMPLOYEE')" >
             <form  th:action="@{/orders/process}" th:object="${orderDTO}"  method="post">
                 <input type="hidden"  th:value="${order_.id}" id="id" name="id"/>
-                <input type="submit" value="Submit" />
+                <input type="submit" value="Взять" />
             </form>
         </td>
 

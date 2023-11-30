@@ -26,9 +26,9 @@ public class OrderController {
     private ProductService productService;
 
     @GetMapping
-    public String orders(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model) {
+    public String orders(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model,@RequestParam(name = "status",required = false,defaultValue = "NEW") OrderStatus status) {
         model.addAttribute("order", new Order());
-        model.addAttribute("orders", orderService.getAllMyOrders(userPrincipal.getUser()));
+        model.addAttribute("orders", orderService.getAllMyOrders(userPrincipal.getUser(),status));
         model.addAttribute("productss", productService.getAllMyProducts(userPrincipal.getUser()));
         model.addAttribute("orderDTO", new OrderDTO());
 

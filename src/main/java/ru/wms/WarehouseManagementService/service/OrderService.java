@@ -49,11 +49,11 @@ public class OrderService {
         return orderRepo.findOrderById(id);
     }
 
-    public List<Order> getAllMyOrders(User user) {
+    public List<Order> getAllMyOrders(User user,OrderStatus status) {
         if(user instanceof Employee employee)
-            return orderRepo.findAllByOwner(employee.getCustomer());
+            return orderRepo.findAllByOwnerAndStatus(employee.getCustomer(),status);
 
-        return orderRepo.findAllByOwner(user);
+        return orderRepo.findAllByOwnerAndStatus(user,status);
     }
 
     public void changeStatus(OrderDTO orderDTO, OrderStatus orderStatus) {
