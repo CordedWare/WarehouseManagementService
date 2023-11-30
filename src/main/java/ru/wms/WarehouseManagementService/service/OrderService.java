@@ -3,6 +3,7 @@ package ru.wms.WarehouseManagementService.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.dto.OrderDTO;
+import ru.wms.WarehouseManagementService.dto.OrderMoveDTO;
 import ru.wms.WarehouseManagementService.entity.Employee;
 import ru.wms.WarehouseManagementService.entity.Order;
 import ru.wms.WarehouseManagementService.entity.OrderStatus;
@@ -10,6 +11,7 @@ import ru.wms.WarehouseManagementService.entity.User;
 import ru.wms.WarehouseManagementService.repository.OrderRepository;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -17,6 +19,10 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepo;
+    @Autowired
+    private WarehouseService warehouseService;
+    @Autowired
+    private ProductService productService;
 
     public List<Order> getAllOrders() {
 
@@ -30,8 +36,7 @@ public class OrderService {
         order.setStatus(OrderStatus.NEW);
 
         var totalCost = BigDecimal.ZERO;
-        for(var p : order.getProducts())
-        {
+        for (var p : order.getProducts()) {
             var price = p.getPrice();
             var q = p.getQuantity();
             var quant = new BigDecimal(q);
@@ -41,6 +46,10 @@ public class OrderService {
 
         order.setTotalCost(totalCost);
 
+        for (var p : order.getProducts())
+        {
+            p.setOrderSet(Collections.singleton(order));
+        }
         return orderRepo.save(order);
     }
 
@@ -59,6 +68,21 @@ public class OrderService {
     public void changeStatus(OrderDTO orderDTO, OrderStatus orderStatus) {
         var order = orderRepo.findOrderById(orderDTO.getId());
         order.setStatus(orderStatus);
+
+
         orderRepo.save(order);
+    }
+
+    public Order getById(Long orderId) {
+        return orderRepo.findOrderById(orderId);
+    }
+
+    public void moveToOtherWarehouse(OrderMoveDTO orderMoveDTO) {
+        var order = orderRepo.findOrderById(orderMoveDTO.getOrderId());
+        var warehouse = warehouseService.getWarehouse(orderMoveDTO.getWarehouseId());
+        var products = order.getProducts();
+
+        productService.move(products,warehouse);
+
     }
 }

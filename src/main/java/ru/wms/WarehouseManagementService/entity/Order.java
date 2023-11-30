@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -55,5 +56,15 @@ public class Order {
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private Set<Product> products;
+
+    public boolean isNEW(){
+        return status==OrderStatus.NEW;
+    }
+    public boolean isPROCESSING(){
+        return status==OrderStatus.PROCESSING;
+    }
+    public boolean isCOMPLETED(){
+        return status==OrderStatus.COMPLETED;
+    }
 
 }

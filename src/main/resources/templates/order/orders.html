@@ -47,13 +47,13 @@
             <th>Id</th>
             <th>Имя</th>
             <th>Количество</th>
-            <th>Доставлено</th>
             <th>Статус</th>
             <th>Общая стоимость</th>
             <th>Дата создания</th>
             <th>Описание</th>
             <th>Товары</th>
-            <th sec:authorize="hasRole('EMPLOYEE')">Взять в обработку</th>
+            <th sec:authorize="hasRole('EMPLOYEE')" >Взять в обработку</th>
+            <th sec:authorize="hasRole('EMPLOYEE')" >Завершить заказ</th>
         </tr>
         </thead>
     <tbody>
@@ -62,9 +62,8 @@
         <td th:text="${order_.id}"></td>
         <td th:text="${order_.name}"></td>
         <td th:text="${order_.quantity}"></td>
-        <td th:text="${order_.delivery}"></td>
         <td th:text="${order_.status}"></td>
-        <td th:text="${order.totalCost}"></td>
+        <td th:text="${order_.totalCost}"></td>
         <td th:text="${order_.creationDate}"></td>
         <td th:text="${order_.description}"></td>
         <td>
@@ -74,11 +73,17 @@
         </td>
         <td sec:authorize="hasRole('EMPLOYEE')" >
             <form  th:action="@{/orders/process}" th:object="${orderDTO}"  method="post">
-                <input type="hidden"  th:value="${order_.id}" id="id" name="id"/>
+
+                <input type="hidden"  th:value="${order_.id}" id="processid" name="id"/>
                 <input type="submit" value="Взять" />
             </form>
         </td>
-
+        <td sec:authorize="hasRole('EMPLOYEE')" >
+            <form  th:action="@{/orders/competed}" th:object="${orderDTO}"  method="post">
+                <input type="hidden"  th:value="${order_.id}" id="competedid" name="id"/>
+                <input type="submit" value="Завершить" />
+            </form>
+        </td>
         <br>
     </tr>
     </tbody>

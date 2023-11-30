@@ -29,4 +29,8 @@ public class WarehouseService {
     public void deleteWarehouseById(Long id) {
         warehouseRepository.deleteById(id);
     }
+
+    public Warehouse getWarehouse(Long warehouseId) {
+        return warehouseRepository.findById(warehouseId).get();
+    }
 }

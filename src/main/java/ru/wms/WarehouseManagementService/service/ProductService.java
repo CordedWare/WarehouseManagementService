@@ -2,13 +2,12 @@ package ru.wms.WarehouseManagementService.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.wms.WarehouseManagementService.entity.Employee;
-import ru.wms.WarehouseManagementService.entity.Product;
-import ru.wms.WarehouseManagementService.entity.User;
+import ru.wms.WarehouseManagementService.entity.*;
 import ru.wms.WarehouseManagementService.repository.ProductRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ProductService {
@@ -73,5 +72,12 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
+
+    public void move(Set<Product> products, Warehouse warehouse) {
+        for(var product : products){
+            product.setWarehouse(warehouse);;
+        }
+        productRepository.saveAll(products);
+    }
 
 }

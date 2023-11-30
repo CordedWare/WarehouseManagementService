@@ -6,7 +6,8 @@ import ru.wms.WarehouseManagementService.security.Authority;
 
 import java.util.Set;
 @ToString
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
