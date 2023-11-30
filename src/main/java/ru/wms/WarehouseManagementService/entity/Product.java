@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -28,6 +29,9 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "warehouse_id", nullable = false)
     private Warehouse warehouse;
+
+    @ManyToMany(mappedBy = "products")
+    private Set<Order> orderSet;
 
     @Size(min = 2, message = "Имя должно содержать не менее 2 символов")
     private String name;

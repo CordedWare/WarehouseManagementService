@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -29,8 +30,12 @@ public class Warehouse {
 
     @Column(name = "creation_date", columnDefinition = "DATE")
     private LocalDate creationDate;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
+
+    @OneToMany(mappedBy = "warehouse")
+    private Set<Product> productSet;
 }

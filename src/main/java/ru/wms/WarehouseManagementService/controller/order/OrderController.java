@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.wms.WarehouseManagementService.dto.OrderDTO;
 import ru.wms.WarehouseManagementService.entity.Order;
+import ru.wms.WarehouseManagementService.entity.OrderStatus;
 import ru.wms.WarehouseManagementService.repository.ProductRepository;
 import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.OrderService;
@@ -28,6 +30,7 @@ public class OrderController {
         model.addAttribute("order", new Order());
         model.addAttribute("orders", orderService.getAllMyOrders(userPrincipal.getUser()));
         model.addAttribute("productss", productService.getAllMyProducts(userPrincipal.getUser()));
+        model.addAttribute("orderDTO", new OrderDTO());
 
         return "/order/orders";
     }
@@ -42,7 +45,13 @@ public class OrderController {
         }
         order.setOwner(userPrincipal.getUser());
         orderService.saveNewOrder(order);
+        return "redirect:/orders";
+    }
 
+    @PostMapping("/process")
+    public String processOrder(@ModelAttribute("order")
+                              @Valid OrderDTO orderDTO) {
+        orderService.changeStatus(orderDTO, OrderStatus.PROCESSING);
         return "redirect:/orders";
     }
 

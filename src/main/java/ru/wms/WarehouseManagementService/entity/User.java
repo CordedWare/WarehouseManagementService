@@ -41,4 +41,15 @@ public class User {
     @CollectionTable(name = "user_authorities_t", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Authority> authorities;
+
+
+    @OneToMany(mappedBy = "owner")
+    private Set<Warehouse> warehouseSet;
+
+    @OneToMany(mappedBy = "owner")
+    private Set<Product> products;
+
+    @OneToMany(mappedBy = "owner")
+    private Set<Order> orders;
+
 }

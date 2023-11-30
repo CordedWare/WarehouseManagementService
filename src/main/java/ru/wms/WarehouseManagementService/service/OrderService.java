@@ -2,6 +2,7 @@ package ru.wms.WarehouseManagementService.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.wms.WarehouseManagementService.dto.OrderDTO;
 import ru.wms.WarehouseManagementService.entity.Employee;
 import ru.wms.WarehouseManagementService.entity.Order;
 import ru.wms.WarehouseManagementService.entity.OrderStatus;
@@ -53,5 +54,11 @@ public class OrderService {
             return orderRepo.findAllByOwner(employee.getCustomer());
 
         return orderRepo.findAllByOwner(user);
+    }
+
+    public void changeStatus(OrderDTO orderDTO, OrderStatus orderStatus) {
+        var order = orderRepo.findOrderById(orderDTO.getId());
+        order.setStatus(orderStatus);
+        orderRepo.save(order);
     }
 }

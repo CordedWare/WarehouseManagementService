@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -29,6 +30,8 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    private String description;
+
     @Column(name = "total_cost")
     private BigDecimal totalCost;
 
@@ -39,13 +42,18 @@ public class Order {
     @NotNull
     @Column
     private String name;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
     @NotNull
-    @ManyToMany
-    private List<Product> products;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "order_product",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private Set<Product> products;
 
 }

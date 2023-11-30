@@ -12,22 +12,25 @@
 <div class="container">
     <h2>Вы вошли в систему как <span sec:authentication="name"></span></h2>
 
-    <hr>
+    <div sec:authorize="hasRole('CUSTOMER')">
+        <hr>
         <p>
-         Раздел управления заказами
+            Раздел управления заказами
         </p>
-    <p>
-    <form th:action="@{/orders/createOrder}" th:object="${order}" method="post">
-        <label>Название: <input type="text" th:field="*{name}" required /></label><br>
-        <label>Добавьте товары:
-            <select th:field="*{products}" multiple required>
-                <option th:each="product : ${productss}" th:value="${product.id}" th:text="${product}"></option>
-            </select>
-        </label><br>
-        <input type="submit" value="Оформить заказ" />
-    </form>
-    <a href="/orders">Отменить оформление заказа</a>
-    </p>
+        <p>
+        <form th:action="@{/orders/createOrder}" th:object="${order}" method="post">
+            <label>Название: <input type="text" th:field="*{name}" required /></label><br>
+            <label>Описание: <input type="text" th:field="*{description}" required /></label><br>
+            <label>Добавьте товары:
+                <select th:field="*{products}" multiple required>
+                    <option th:each="product : ${productss}" th:value="${product.id}" th:text="${product}"></option>
+                </select>
+            </label><br>
+            <input type="submit" value="Оформить заказ" />
+        </form>
+        <a href="/orders">Отменить оформление заказа</a>
+    </div>
+
     <hr>
 
     <table>
@@ -40,24 +43,34 @@
             <th>Статус</th>
             <th>Общая стоимость</th>
             <th>Дата создания</th>
+            <th>Описание</th>
             <th>Товары</th>
+            <th sec:authorize="hasRole('EMPLOYEE')">Взять в обработку</th>
         </tr>
         </thead>
     <tbody>
 
-    <tr th:each="order : ${orders}">
-        <td th:text="${order.id}"></td>
-        <td th:text="${order.name}"></td>
-        <td th:text="${order.quantity}"></td>
-        <td th:text="${order.delivery}"></td>
-        <td th:text="${order.status}"></td>
+    <tr th:each="order_ : ${orders}">
+        <td th:text="${order_.id}"></td>
+        <td th:text="${order_.name}"></td>
+        <td th:text="${order_.quantity}"></td>
+        <td th:text="${order_.delivery}"></td>
+        <td th:text="${order_.status}"></td>
         <td th:text="${order.totalCost}"></td>
-        <td th:text="${order.creationDate}"></td>
+        <td th:text="${order_.creationDate}"></td>
+        <td th:text="${order_.description}"></td>
         <td>
             <select>
-                <option th:each="product : ${order.getProducts()}" th:value="${product.id}" th:text="${product.name}"></option>
+                <option th:each="product : ${order_.getProducts()}" th:value="${product.id}" th:text="${product.name}"></option>
             </select>
         </td>
+        <td sec:authorize="hasRole('EMPLOYEE')" >
+            <form  th:action="@{/orders/process}" th:object="${orderDTO}"  method="post">
+                <input type="hidden"  th:value="${order_.id}" id="id" name="id"/>
+                <input type="submit" value="Submit" />
+            </form>
+        </td>
+
         <br>
     </tr>
     </tbody>
