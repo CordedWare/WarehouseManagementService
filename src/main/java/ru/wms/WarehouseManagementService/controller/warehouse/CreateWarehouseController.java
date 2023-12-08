@@ -18,6 +18,10 @@ import ru.wms.WarehouseManagementService.service.WarehouseService;
 @RequestMapping("/createWarehouse")
 public class CreateWarehouseController {
 
+    /**
+     * Контроллер создания склада
+     */
+
     @Autowired
     private WarehouseService warehouseService;
 
@@ -50,4 +54,5 @@ public class CreateWarehouseController {
 
         return "redirect:/warehouses";
     }
+
 }

@@ -13,6 +13,10 @@ import ru.wms.WarehouseManagementService.service.UserService;
 @Controller
 public class SignUpController {
 
+    /**
+     * Контроллер авторизации и регистрации
+     */
+
     @Autowired
     private UserService userService;
 

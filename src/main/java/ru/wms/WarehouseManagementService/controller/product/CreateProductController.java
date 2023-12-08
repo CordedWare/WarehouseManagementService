@@ -20,6 +20,10 @@ import ru.wms.WarehouseManagementService.service.WarehouseService;
 @RequestMapping("/createProduct")
 public class CreateProductController {
 
+    /**
+     * Контроллер создания товара
+     */
+
     @Autowired
     private ProductService productService;
 
@@ -60,4 +64,5 @@ public class CreateProductController {
 
         return "redirect:/products";
     }
+
 }

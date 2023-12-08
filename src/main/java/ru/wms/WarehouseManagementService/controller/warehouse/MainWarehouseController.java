@@ -17,6 +17,10 @@ import java.util.Optional;
 @RequestMapping("/warehouses")
 public class MainWarehouseController {
 
+    /**
+     * Основной контроллер склада
+     */
+
     @Autowired
     private WarehouseService warehouseService;
 
@@ -64,4 +68,5 @@ public class MainWarehouseController {
 
         return "redirect:/warehouses";
     }
+
 }

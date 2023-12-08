@@ -12,6 +12,7 @@ import java.util.Collection;
 @Getter
 @NoArgsConstructor
 public class UserPrincipal implements UserDetails {
+
     private User user;
 
     public UserPrincipal(User user) {

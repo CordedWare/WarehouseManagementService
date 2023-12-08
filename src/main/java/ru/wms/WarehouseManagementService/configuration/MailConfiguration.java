@@ -11,6 +11,11 @@ import java.util.Properties;
 @Configuration
 public class MailConfiguration {
 
+    /**
+     * Конфигурация почтового сервиса для отправки уведомлений клиентам на почту во время регистрации.
+     * Сервис рассчитан на расширение функционала, чтобы приходили уведомления о разных статусах заказов.
+     * */
+
     @Value("${spring.mail.host}")
     private String host;
 
@@ -45,4 +50,5 @@ public class MailConfiguration {
 
         return mailSender;
     }
+
 }

@@ -40,4 +40,5 @@ public class Warehouse {
 
     @OneToMany(mappedBy = "warehouse")
     private List<Product> productSet;
+
 }

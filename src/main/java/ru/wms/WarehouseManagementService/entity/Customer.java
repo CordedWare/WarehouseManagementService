@@ -3,7 +3,6 @@ package ru.wms.WarehouseManagementService.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -34,4 +33,5 @@ public class Customer extends User {
                 ", contactInfoOrg='" + contactInfoOrg + '\'' +
                 '}';
     }
+
 }
