@@ -5,6 +5,7 @@ import lombok.*;
 import ru.wms.WarehouseManagementService.security.Authority;
 
 import java.util.Set;
+
 @ToString
 @Getter
 @Setter
@@ -21,11 +22,12 @@ public class User {
 
     @Column(nullable = false)
     private String firstname;
+
     @Column(nullable = false)
     private String lastname;
+
     @Column(nullable = true)
     private String patronymic;
-
 
     @Column(nullable = false)
     private String password;
@@ -42,7 +44,6 @@ public class User {
     @CollectionTable(name = "user_authorities_t", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Authority> authorities;
-
 
     @OneToMany(mappedBy = "owner")
     private Set<Warehouse> warehouseSet;

@@ -12,9 +12,8 @@ import lombok.*;
 @Entity(name = "customer_t")
 public class Customer extends User {
 
-
     @Column
-    private Integer telephone;
+    private Long telephone;
 
     @Column
     private String nameOrg;
@@ -27,6 +26,7 @@ public class Customer extends User {
 
     @Override
     public String toString() {
+
         return "Customer{" +
                 "pass=" + getPassword() +
                 ", ema='" + getEmail() + '\'' +

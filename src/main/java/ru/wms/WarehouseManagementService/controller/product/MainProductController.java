@@ -19,13 +19,18 @@ import java.util.Optional;
 public class MainProductController {
     @Autowired
     private ProductService productService;
+
     @Autowired
     private ProductRepository productRepository;
+
     @Autowired
     private WarehouseService warehouseService;
 
     @GetMapping
-    public String products(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
+    public String products(
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
+            Model model
+    ) {
         var user = userPrincipal.getUser();
         Iterable<Product> productList = productService.getAllMyProducts(user);
         Iterable<Warehouse> warehouseList = warehouseService.getAllMyWarehouses(user);
@@ -38,7 +43,13 @@ public class MainProductController {
     }
 
     @GetMapping("/{id}")
-    public String getProductsByName(@RequestParam(name = "filter", required = false, defaultValue = "") Optional<String> filter, Model model) {
+    public String getProductsByName(
+            @RequestParam(
+                    name = "filter",
+                    required = false,
+                    defaultValue = "")
+            Optional<String> filter, Model model
+    ) {
         Iterable<Product> productList;
         if (filter.isPresent() && !filter.isEmpty()) {
             productList = productRepository.findByNameContaining(filter.get());
@@ -60,7 +71,10 @@ public class MainProductController {
     }
 
     @GetMapping("/{id}/edit")
-    public String showEditProductForm(@PathVariable("id") Long id, Model model) {
+    public String showEditProductForm(
+            @PathVariable("id") Long id,
+            Model model
+    ) {
         Optional<Product> productOptional = Optional.ofNullable(productService.getProductById(id));
 
         if (productOptional.isPresent()) {
@@ -72,7 +86,11 @@ public class MainProductController {
     }
 
     @PostMapping("/{id}/edit")
-    public String saveEditedProduct(@PathVariable("id") Long id, @ModelAttribute("product") Product product) {
+    public String saveEditedProduct(
+            @PathVariable("id") Long id,
+            @ModelAttribute("product")
+            Product product
+    ) {
         productService.updateProduct(id, product);
 
         return "redirect:/products";

@@ -19,6 +19,7 @@ public class UserService {
 
     @Autowired
     private UserRepository<User,Long> userRepository;
+
     @Autowired
     private CustomerRepository customerRepository;
 
@@ -40,7 +41,6 @@ public class UserService {
         return customer;
     }
 
-
     public boolean activateUser(String code) {
         var optionalUser = userRepository.findByActivationCode(code);
 
@@ -55,4 +55,5 @@ public class UserService {
 
         return optionalUser.isPresent();
     }
+
 }

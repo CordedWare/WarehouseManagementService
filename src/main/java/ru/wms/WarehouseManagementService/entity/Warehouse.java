@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -38,5 +39,5 @@ public class Warehouse {
     private User owner;
 
     @OneToMany(mappedBy = "warehouse")
-    private Set<Product> productSet;
+    private List<Product> productSet;
 }

@@ -22,11 +22,15 @@ public class CreateProductController {
 
     @Autowired
     private ProductService productService;
+
     @Autowired
     private WarehouseService warehouseService;
 
     @GetMapping
-    public String createProducts(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
+    public String createProducts(
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
+            Model model
+    ) {
         var user = userPrincipal.getUser();
         Iterable<Product> productList = productService.getAllMyProducts(user);
         Iterable<Warehouse> warehouseList = warehouseService.getAllMyWarehouses(user);

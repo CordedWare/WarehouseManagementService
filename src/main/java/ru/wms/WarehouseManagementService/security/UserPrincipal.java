@@ -12,15 +12,14 @@ import java.util.Collection;
 @Getter
 @NoArgsConstructor
 public class UserPrincipal implements UserDetails {
-
     private User user;
 
     public UserPrincipal(User user) {
         this.user = user;
     }
 
+    public Customer getCustomer() {
 
-    public Customer getCustomer(){
         return (Customer) user;
     }
 
