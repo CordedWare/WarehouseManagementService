@@ -72,7 +72,6 @@ public class OrderService {
         var order = orderRepo.findOrderById(orderDTO.getId());
         order.setStatus(orderStatus);
 
-
         orderRepo.save(order);
     }
 
@@ -87,6 +86,6 @@ public class OrderService {
         var products = order.getProducts();
 
         productService.move(products,warehouse);
-
     }
+
 }

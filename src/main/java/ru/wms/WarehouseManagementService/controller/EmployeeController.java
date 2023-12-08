@@ -15,6 +15,10 @@ import ru.wms.WarehouseManagementService.service.EmployeeService;
 @RequestMapping("/employees")
 public class EmployeeController {
 
+    /**
+     * Контроллер сотрудника
+     */
+
     @Autowired
     private final EmployeeService employeeService;
 
@@ -47,6 +51,5 @@ public class EmployeeController {
 //    public void deleteEmployee(Employee employee) {
 //        employeeService.deleteEmployee(employee);
 //    }
-
 
 }

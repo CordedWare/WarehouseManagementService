@@ -17,6 +17,11 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/products")
 public class MainProductController {
+
+    /**
+     * Основной контроллер товара
+     */
+
     @Autowired
     private ProductService productService;
 
@@ -95,4 +100,5 @@ public class MainProductController {
 
         return "redirect:/products";
     }
+
 }

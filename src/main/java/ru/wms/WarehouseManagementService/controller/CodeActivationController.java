@@ -9,6 +9,10 @@ import ru.wms.WarehouseManagementService.service.UserService;
 @Controller
 public class CodeActivationController {
 
+    /**
+     * Контроллер для активации аккаунта по почте
+     */
+
     @Autowired
     private UserService userService;
 
@@ -19,4 +23,5 @@ public class CodeActivationController {
 
         return "redirect:/login?activate_fail";
     }
+
 }

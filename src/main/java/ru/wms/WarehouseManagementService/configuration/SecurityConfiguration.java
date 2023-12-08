@@ -40,12 +40,12 @@ public class SecurityConfiguration {
 
     @Bean
     DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        DaoAuthenticationProvider daoAuthProvider = new DaoAuthenticationProvider();
 
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(this.userPrincipalDetailsService);
+        daoAuthProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthProvider.setUserDetailsService(this.userPrincipalDetailsService);
 
-        return daoAuthenticationProvider;
+        return daoAuthProvider;
     }
 
     @Bean
@@ -53,4 +53,5 @@ public class SecurityConfiguration {
 
         return new BCryptPasswordEncoder();
     }
+
 }

@@ -21,6 +21,10 @@ import ru.wms.WarehouseManagementService.service.WarehouseService;
 @RequestMapping("/orders")
 public class OrderController {
 
+    /**
+     * Основной контроллер заказа
+    */
+
     @Autowired
     private OrderService orderService;
 
@@ -121,4 +125,5 @@ public class OrderController {
 
         return orderService.findOrder(id);
     }
+
 }

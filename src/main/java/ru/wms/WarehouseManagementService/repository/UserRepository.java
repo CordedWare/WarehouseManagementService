@@ -15,4 +15,5 @@ public interface UserRepository<T extends User,E extends Serializable> extends J
     Optional<T> findByActivationCode(String code);
 
     Optional<T> findById(E id);
+
 }
