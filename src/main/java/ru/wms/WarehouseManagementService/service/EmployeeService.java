@@ -21,6 +21,7 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
     public List<Employee> findMyEmployee(Customer customer) {
+
         return employeeRepository.findAllByCustomer(customer);
     }
 

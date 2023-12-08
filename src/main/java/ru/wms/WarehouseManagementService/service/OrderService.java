@@ -19,8 +19,10 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepo;
+
     @Autowired
     private WarehouseService warehouseService;
+
     @Autowired
     private ProductService productService;
 
@@ -36,6 +38,7 @@ public class OrderService {
         order.setStatus(OrderStatus.NEW);
 
         var totalCost = BigDecimal.ZERO;
+
         for (var p : order.getProducts()) {
             var price = p.getPrice();
             var q = p.getQuantity();
@@ -46,10 +49,10 @@ public class OrderService {
 
         order.setTotalCost(totalCost);
 
-        for (var p : order.getProducts())
-        {
+        for (var p : order.getProducts()) {
             p.setOrderSet(Collections.singleton(order));
         }
+
         return orderRepo.save(order);
     }
 
@@ -59,7 +62,7 @@ public class OrderService {
     }
 
     public List<Order> getAllMyOrders(User user,OrderStatus status) {
-        if(user instanceof Employee employee)
+        if (user instanceof Employee employee)
             return orderRepo.findAllByOwnerAndStatus(employee.getCustomer(),status);
 
         return orderRepo.findAllByOwnerAndStatus(user,status);
@@ -74,6 +77,7 @@ public class OrderService {
     }
 
     public Order getById(Long orderId) {
+
         return orderRepo.findOrderById(orderId);
     }
 

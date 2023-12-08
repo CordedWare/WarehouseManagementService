@@ -22,7 +22,10 @@ public class CreateWarehouseController {
     private WarehouseService warehouseService;
 
     @GetMapping
-    public String CreateWarehouses(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
+    public String CreateWarehouses(
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
+            Model model
+    ) {
         Iterable<Warehouse> warehousesList = warehouseService.getAllMyWarehouses(userPrincipal.getUser());
 
         model.addAttribute("warehouses", warehousesList);

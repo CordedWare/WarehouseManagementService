@@ -51,20 +51,26 @@ public class Order {
 
     @NotNull
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "order_product",
+    @JoinTable(
+            name = "order_product",
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private Set<Product> products;
 
     public boolean isNEW(){
-        return status==OrderStatus.NEW;
+
+        return status == OrderStatus.NEW;
     }
-    public boolean isPROCESSING(){
-        return status==OrderStatus.PROCESSING;
+
+    public boolean isPROCESSING() {
+
+        return status == OrderStatus.PROCESSING;
     }
-    public boolean isCOMPLETED(){
-        return status==OrderStatus.COMPLETED;
+
+    public boolean isCOMPLETED() {
+
+        return status == OrderStatus.COMPLETED;
     }
 
 }

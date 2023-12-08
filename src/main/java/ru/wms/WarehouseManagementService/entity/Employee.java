@@ -14,12 +14,14 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "employee_t")
 public class Employee extends User {
+
     @JsonIgnore
     @OneToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
     public Customer getCustomer() {
+
         return customer;
     }
 

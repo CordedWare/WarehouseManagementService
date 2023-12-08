@@ -24,7 +24,10 @@ public class MainWarehouseController {
     private WarehouseRepository warehouseRepository;
 
     @GetMapping
-    public String warehouses(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
+    public String warehouses(
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
+            Model model
+    ) {
         Iterable<Warehouse> warehousesList = warehouseService.getAllMyWarehouses(userPrincipal.getUser());
         model.addAttribute("warehouses", warehousesList);
         model.addAttribute("warehouse", new Warehouse());
@@ -33,7 +36,14 @@ public class MainWarehouseController {
     }
 
     @GetMapping("/{id}")
-    public String getWarehousesByName(@RequestParam(name = "filter", required = false, defaultValue = "") Optional<String> nameFilter, Model model) {
+    public String getWarehousesByName(
+            @RequestParam(
+                    name = "filter",
+                    required = false,
+                    defaultValue = "")
+            Optional<String> nameFilter,
+            Model model
+    ) {
         Iterable<Warehouse> warehouseList = warehouseRepository.findAll();
         if (nameFilter.isPresent() && !nameFilter.isEmpty()) {
             warehouseList = warehouseRepository.findByNameContaining(nameFilter.get());

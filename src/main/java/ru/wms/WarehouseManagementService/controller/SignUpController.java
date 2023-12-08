@@ -15,6 +15,7 @@ public class SignUpController {
 
     @Autowired
     private UserService userService;
+
     @Autowired
     private MailSenderService mailSender;
 

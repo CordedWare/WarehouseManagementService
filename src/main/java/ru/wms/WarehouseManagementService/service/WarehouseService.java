@@ -15,14 +15,17 @@ public class WarehouseService {
     private WarehouseRepository warehouseRepository;
 
     public Iterable<Warehouse> getAllMyWarehouses(User user) {
-        if(user instanceof Employee emp){
+        if (user instanceof Employee emp)
+
             return warehouseRepository.findAllByOwner(emp.getCustomer());
-        }
+
+
         return warehouseRepository.findAllByOwner(user);
     }
 
     public Warehouse saveWarehouse(Warehouse warehouse, User user) {
         warehouse.setOwner(user);
+
         return warehouseRepository.save(warehouse);
     }
 
@@ -31,6 +34,8 @@ public class WarehouseService {
     }
 
     public Warehouse getWarehouse(Long warehouseId) {
+
         return warehouseRepository.findById(warehouseId).get();
     }
+
 }

@@ -51,7 +51,8 @@ public class ProductService {
     }
 
     public Iterable<Product> getAllMyProducts(User user) {
-        if(user instanceof Employee employee)
+        if (user instanceof Employee employee)
+
             return productRepository.findAllByOwner(employee.getCustomer());
 
         return productRepository.findAllByOwner(user);
@@ -74,7 +75,7 @@ public class ProductService {
 
 
     public void move(Set<Product> products, Warehouse warehouse) {
-        for(var product : products){
+        for (var product : products) {
             product.setWarehouse(warehouse);;
         }
         productRepository.saveAll(products);

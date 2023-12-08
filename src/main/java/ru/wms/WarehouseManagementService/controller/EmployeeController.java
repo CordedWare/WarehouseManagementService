@@ -23,7 +23,10 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public String getEmployee(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model) {
+    public String getEmployee(
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
+            Model model
+    ) {
         model.addAttribute("employees", employeeService.findMyEmployee(userPrincipal.getCustomer()));
         model.addAttribute("employee", new Employee());
 
@@ -31,8 +34,12 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public String createEmployee(@AuthenticationPrincipal UserPrincipal userPrincipal,Employee employee) {
+    public String createEmployee(
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
+            Employee employee
+    ) {
         var newEmployee = employeeService.createEmployee(employee,userPrincipal.getCustomer());
+
         return String.format("redirect:/login?activate_email=%s", newEmployee.getActivationCode());
     }
 

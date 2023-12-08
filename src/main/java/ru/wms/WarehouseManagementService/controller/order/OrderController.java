@@ -11,7 +11,6 @@ import ru.wms.WarehouseManagementService.dto.OrderDTO;
 import ru.wms.WarehouseManagementService.dto.OrderMoveDTO;
 import ru.wms.WarehouseManagementService.entity.Order;
 import ru.wms.WarehouseManagementService.entity.OrderStatus;
-import ru.wms.WarehouseManagementService.repository.ProductRepository;
 import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.OrderService;
 import ru.wms.WarehouseManagementService.service.ProductService;
@@ -24,6 +23,7 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
     @Autowired
     private ProductService productService;
 
@@ -31,7 +31,15 @@ public class OrderController {
     private WarehouseService warehouseService;
 
     @GetMapping
-    public String orders(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model,@RequestParam(name = "status",required = false,defaultValue = "NEW") OrderStatus status) {
+    public String orders(
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
+            Model model,
+            @RequestParam(
+                    name = "status",
+                    required = false,
+                    defaultValue = "NEW")
+            OrderStatus status
+    ) {
         model.addAttribute("order", new Order());
         model.addAttribute("orders", orderService.getAllMyOrders(userPrincipal.getUser(),status));
         model.addAttribute("productss", productService.getAllMyProducts(userPrincipal.getUser()));
@@ -41,13 +49,20 @@ public class OrderController {
     }
 
     @GetMapping("/manage")
-    public String manageOrders(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model) {
+    public String manageOrders(
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
+            Model model
+    ) {
         model.addAttribute("orders", orderService.getAllMyOrders(userPrincipal.getUser(),OrderStatus.PROCESSING));
 
         return "/order/manage";
     }
     @GetMapping("/manage/move/{id}")
-    public String moveOrdersProduct(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model,@PathVariable(name = "id") Long orderId) {
+    public String moveOrdersProduct(
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
+            Model model,@PathVariable(name = "id")
+            Long orderId
+    ) {
 //        model.addAttribute("orders", orderService.getAllMyOrders(userPrincipal.getUser(),OrderStatus.PROCESSING));
         model.addAttribute("order",orderService.getById(orderId));
         model.addAttribute("orderMoveDTO",new OrderMoveDTO());
@@ -57,17 +72,21 @@ public class OrderController {
 
 
     @PostMapping("/manage/move")
-    public String moveOrdersProduct(OrderMoveDTO orderMoveDTO,
-                              @AuthenticationPrincipal UserPrincipal userPrincipal) {
+    public String moveOrdersProduct(
+            OrderMoveDTO orderMoveDTO,
+            @AuthenticationPrincipal UserPrincipal userPrincipal
+    ) {
         orderService.moveToOtherWarehouse(orderMoveDTO);
         return "redirect:/orders";
     }
 
     @PostMapping("/createOrder")
-    public String createOrder(@ModelAttribute("order")
-                              @Valid Order order,
-                              BindingResult bindingResult,
-                              @AuthenticationPrincipal UserPrincipal userPrincipal) {
+    public String createOrder(
+            @ModelAttribute("order")
+            @Valid Order order,
+            BindingResult bindingResult,
+            @AuthenticationPrincipal UserPrincipal userPrincipal
+    ) {
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException("Invalid order data");
         }
@@ -77,16 +96,22 @@ public class OrderController {
     }
 
     @PostMapping("/process")
-    public String processOrder(@ModelAttribute("order")
-                              @Valid OrderDTO orderDTO) {
+    public String processOrder(
+            @ModelAttribute("order")
+            @Valid OrderDTO orderDTO
+    ) {
         orderService.changeStatus(orderDTO, OrderStatus.PROCESSING);
+
         return "redirect:/orders";
     }
 
     @PostMapping("/competed")
-    public String competedOrder(@ModelAttribute("order")
-                              @Valid OrderDTO orderDTO) {
+    public String competedOrder(
+            @ModelAttribute("order")
+            @Valid OrderDTO orderDTO
+    ) {
         orderService.changeStatus(orderDTO, OrderStatus.COMPLETED);
+
         return "redirect:/orders";
     }
 
