@@ -5,9 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.configuration.SecurityConfiguration;
 import ru.wms.WarehouseManagementService.entity.Customer;
 import ru.wms.WarehouseManagementService.entity.Employee;
-import ru.wms.WarehouseManagementService.entity.User;
 import ru.wms.WarehouseManagementService.repository.EmployeeRepository;
-import ru.wms.WarehouseManagementService.repository.UserRepository;
 import ru.wms.WarehouseManagementService.security.Authority;
 
 import java.util.Collections;

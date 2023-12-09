@@ -10,6 +10,7 @@ import ru.wms.WarehouseManagementService.repository.WarehouseRepository;
 import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.WarehouseService;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -26,15 +27,12 @@ public class MainWarehouseController {
     @Autowired
     private WarehouseService warehouseService;
 
-    @Autowired
-    private WarehouseRepository warehouseRepository;
-
     @GetMapping
     public String warehouses(
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             Model model
     ) {
-        Iterable<Warehouse> warehousesList = warehouseService.getAllMyWarehouses(userPrincipal.getUser());
+        Optional<Iterable<Warehouse>> warehousesList = warehouseService.getAllMyWarehouses(userPrincipal.getUser());
         model.addAttribute("warehouses", warehousesList);
         model.addAttribute("warehouse", new Warehouse());
 
@@ -50,16 +48,14 @@ public class MainWarehouseController {
             Optional<String> nameFilter,
             Model model
     ) {
-        Iterable<Warehouse> warehouseList = warehouseRepository.findAll();
-        if (nameFilter.isPresent() && !nameFilter.isEmpty()) {
-            warehouseList = warehouseRepository.findByNameContaining(nameFilter.get());
-        } else {
-            warehouseList = warehouseRepository.findAll();
-        }
+        Iterable<Warehouse> warehouseList = nameFilter
+                .filter( filter -> !filter.isEmpty())
+                .flatMap(  name -> warehouseService.findByNameContaining(name))
+                .orElseGet(  () -> warehouseService.getAllMyWarehouses().orElse(new ArrayList<>()));
 
         model.addAttribute("warehouses", warehouseList);
-        model.addAttribute("filter", nameFilter);
-        model.addAttribute("warehouse", new Warehouse());
+        model.addAttribute("filter",     nameFilter);
+        model.addAttribute("warehouse",  new Warehouse());
 
         return "/warehouse/warehouses";
     }

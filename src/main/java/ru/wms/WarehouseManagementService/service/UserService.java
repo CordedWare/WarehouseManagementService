@@ -18,7 +18,7 @@ import java.util.UUID;
 public class UserService {
 
     @Autowired
-    private UserRepository<User,Long> userRepository;
+    private UserRepository<User, Long> userRepository;
 
     @Autowired
     private CustomerRepository customerRepository;

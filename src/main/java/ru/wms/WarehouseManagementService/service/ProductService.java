@@ -49,36 +49,17 @@ public class ProductService {
         }
     }
 
-    public Iterable<Product> getAllProducts() {
-
-        return productRepository.findAll();
-    }
-
-    public Iterable<Product> getAllMyProducts(User user) {
+    public Optional<Iterable<Product>> getAllMyProducts(User user) {
         if (user instanceof Employee employee)
 
-            return productRepository.findAllByOwner(employee.getCustomer());
+            return Optional.ofNullable(productRepository.findAllByOwner(employee.getCustomer()));
 
-        return productRepository.findAllByOwner(user);
+        return Optional.ofNullable(productRepository.findAllByOwner(user));
     }
 
-    public Product saveProduct(Product product) {
-
-        return productRepository.save(product);
-    }
-
-    public Optional<List<Product>> getProductsByName(String name) {
-
-        return productRepository.findByName(name);
-    }
-
-    public void deleteProductById(Long id) {
-        productRepository.deleteById(id);
-    }
-
-    public void move(Set<Product> products, Warehouse warehouse) {
+    public void move(Set<Product> products, Optional<Warehouse> warehouse) {
         products.forEach( product ->
-                product.setWarehouse(warehouse));
+                product.setWarehouse(warehouse.get()));
 
         productRepository.saveAll(products);
     }
@@ -86,8 +67,28 @@ public class ProductService {
     public void createProduct(Product product, Long warehouseId, User user) {
         var warehouse = warehouseService.getById(warehouseId);
         product.setOwner(user);
-        product.setWarehouse(warehouse);
+        product.setWarehouse(warehouse.get());
 
         productRepository.save(product);
     }
+
+    public void deleteProductById(Long id) {
+        productRepository.deleteById(id);
+    }
+
+    public Optional<List<Product>> getProductsByName(String name) {
+
+        return productRepository.findByName(name);
+    }
+
+    public Product saveProduct(Product product) {
+
+        return productRepository.save(product);
+    }
+
+    public Iterable<Product> getAllProducts() {
+
+        return productRepository.findAll();
+    }
+
 }

@@ -29,7 +29,7 @@
         <label>Дата создания: <input type="date"   th:field="*{creationDate}" id="creationDate" required /></label><br>
         <label>Выберите склад:
             <select th:field="*{warehouse}" required>
-                <option  th:each="warehouse : ${warehouses}" th:value="${warehouse.id}" th:text="${warehouse.name}"></option>
+                <option th:each="warehouse : ${warehouses?.orElse(null)}" th:value="${warehouse.id}" th:text="${warehouse.name}"></option>
             </select>
         </label><br>
 

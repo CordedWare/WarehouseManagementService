@@ -17,7 +17,7 @@
         </p>
     <hr>
 
-    <h4><a href="/createProduct" sec:authorize="hasRole('CUSTOMER')">Зарегистрировать товар</a></h4>
+    <h4><a href="/createProduct" sec:authorize="hasRole('EMPLOYEE')">Зарегистрировать товар</a></h4>
 
     <tr>
         <td colspan="7">
@@ -44,7 +44,7 @@
         </thead>
         <tbody>
 
-        <tr th:each="product : ${products}">
+        <tr th:each="product : ${products.get()}">
             <td th:text="${product.name}"></td>
             <td th:text="${product.description}"></td>
             <td th:text="${product.category}"></td>
