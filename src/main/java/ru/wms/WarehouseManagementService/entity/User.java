@@ -23,10 +23,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String firstname;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String lastname;
 
     @Column(nullable = true)
