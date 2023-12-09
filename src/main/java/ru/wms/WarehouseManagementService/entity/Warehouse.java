@@ -7,7 +7,6 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -39,6 +38,6 @@ public class Warehouse {
     private User owner;
 
     @OneToMany(mappedBy = "warehouse")
-    private List<Product> productSet;
+    private List<Product> productList;
 
 }

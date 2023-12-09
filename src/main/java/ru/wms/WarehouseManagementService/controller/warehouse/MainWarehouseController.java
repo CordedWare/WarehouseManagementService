@@ -10,6 +10,8 @@ import ru.wms.WarehouseManagementService.repository.WarehouseRepository;
 import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.WarehouseService;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 

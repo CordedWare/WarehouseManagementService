@@ -7,12 +7,13 @@ import ru.wms.WarehouseManagementService.entity.Product;
 import ru.wms.WarehouseManagementService.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Repository
 public interface ProductRepository extends CrudRepository<Product, Long> {
 
-    List<Product> findByName(String name);
+    Optional<List<Product>> findByName(String name);
 
     List<Product> findByNameContaining(String name);
 
