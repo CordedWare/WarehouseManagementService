@@ -33,7 +33,7 @@ public class CreateWarehouseController {
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             Model model
     ) {
-        Iterable<Warehouse> warehousesList = warehouseService.getAllMyWarehouses(userPrincipal.getUser());
+        Optional<Iterable<Warehouse>> warehousesList = warehouseService.getAllMyWarehouses(userPrincipal.getUser());
 
         model.addAttribute("warehouses", warehousesList);
         model.addAttribute("warehouse", new Warehouse());

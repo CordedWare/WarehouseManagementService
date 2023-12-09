@@ -31,7 +31,7 @@
             <label>Описание: <input type="text" th:field="*{description}" required /></label><br>
             <label>Добавьте товары:
                 <select th:field="*{products}" multiple required>
-                    <option th:each="product : ${productss}" th:value="${product.id}" th:text="${product}"></option>
+                    <option th:each="product : ${productss.get()}" th:value="${product.id}" th:text="${product}"></option>
                 </select>
             </label><br>
             <input type="submit" value="Оформить заказ" />

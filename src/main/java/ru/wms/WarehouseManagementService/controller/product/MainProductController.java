@@ -12,7 +12,6 @@ import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.ProductService;
 import ru.wms.WarehouseManagementService.service.WarehouseService;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -38,8 +37,8 @@ public class MainProductController {
             Model model
     ) {
         var user = userPrincipal.getUser();
-        Iterable<Product> productList = productService.getAllMyProducts(user);
-        Iterable<Warehouse> warehouseList = warehouseService.getAllMyWarehouses(user);
+        Optional<Iterable<Product>> productList = productService.getAllMyProducts(user);
+        Optional<Iterable<Warehouse>> warehouseList = warehouseService.getAllMyWarehouses(user);
 
         model.addAttribute("warehouses", warehouseList);
         model.addAttribute("products", productList);
