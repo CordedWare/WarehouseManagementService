@@ -18,15 +18,15 @@
             продажах.
         </p>
     <hr>
-    <a href="/orders" sec:authorize="hasRole('ROLE_CUSTOMER')">Заказы</a> <br>
+    <a href="/orders" sec:authorize="hasAnyRole('ROLE_CUSTOMER', 'ROLE_ADMIN')">Заказы</a> <br>
 
-    <a href="/warehouses" sec:authorize="hasRole('ROLE_EMPLOYEE')">Склады</a> <br>
+    <a href="/warehouses" sec:authorize="hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')">Склады</a> <br>
 
-    <a href="/products" sec:authorize="hasRole('ROLE_EMPLOYEE')">Товары</a>  <br>
+    <a href="/products" sec:authorize="hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')">Товары</a>  <br>
 
     <a href="/employees" sec:authorize="hasRole('ROLE_ADMIN')">Создать работника</a> <br>
 
-    <a href="/orders/manage" sec:authorize="hasRole('ROLE_EMPLOYEE')">Управление заказами</a> <br>
+    <a href="/orders/manage" sec:authorize="hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')">Управление заказами</a> <br>
 
     <hr/>
 
