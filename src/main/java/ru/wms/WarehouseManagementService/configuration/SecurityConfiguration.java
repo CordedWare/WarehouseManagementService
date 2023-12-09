@@ -24,7 +24,8 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/home", "/sign-up","/logout","/login","/activate/*").permitAll()
-                        .requestMatchers("/employees","/createWarehouse","/createProduct").hasRole("CUSTOMER")
+                        .requestMatchers("/createWarehouse","/createProduct").hasRole("EMPLOYEE")
+                        .requestMatchers("/employees").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
