@@ -13,17 +13,17 @@ import ru.wms.WarehouseManagementService.repository.UserRepository;
 public class UserPrincipalDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserRepository<User,Long> userRepository;
+    private UserRepository<User, Long> userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        var user = this.userRepository.findByEmail(email);
+        var userOpt = this.userRepository.findByEmail(email); //TODO порефакторить чтобы более лаконично завернуть
 
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException("User not found");
+        if (userOpt.isEmpty()) {
+            throw new UsernameNotFoundException("Пользователь не найден");
         }
 
-        return new UserPrincipal(user.get());
+        return new UserPrincipal(userOpt.get());
     }
 
 }

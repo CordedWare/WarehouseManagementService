@@ -42,7 +42,7 @@ public class EmployeeController {
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             Employee employee
     ) {
-        var newEmployee = employeeService.createEmployee(employee,userPrincipal.getCustomer());
+        var newEmployee = employeeService.createEmployee(employee, userPrincipal.getCustomer());
 
         return String.format("redirect:/login?activate_email=%s", newEmployee.getActivationCode());
     }

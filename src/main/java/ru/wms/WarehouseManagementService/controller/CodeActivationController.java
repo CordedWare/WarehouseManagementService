@@ -19,6 +19,7 @@ public class CodeActivationController {
     @GetMapping("/activate/{code}")
     public String activateEmail(@PathVariable String code) {
         if (userService.activateUser(code))
+
             return "redirect:/login?activate_success";
 
         return "redirect:/login?activate_fail";

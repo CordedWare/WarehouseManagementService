@@ -21,12 +21,12 @@
         <h2>Создать товар</h2>
     <hr>
     <form th:action="@{/createProduct}" th:object="${product}" method="post">
-        <label>Имя: <input type="text" th:field="*{name}" id="name" required /></label><br>
-        <label>Описание: <input type="text" th:field="*{description}" id="description" required /></label><br>
-        <label>Категория: <input type="text" th:field="*{category}" id="category" required /></label><br>
-        <label>Стоимость: <input type="text" th:field="*{price}" id="price" required /></label><br>
-        <label>Количество: <input type="number" th:field="*{quantity}" id="quantity" required /></label><br>
-        <label>Дата создания: <input type="date" th:field="*{creationDate}" id="creationDate" required /></label><br>
+        <label>Имя:           <input type="text"   th:field="*{name}"         id="name" required /></label><br>
+        <label>Описание:      <input type="text"   th:field="*{description}"  id="description" required /></label><br>
+        <label>Категория:     <input type="text"   th:field="*{category}"     id="category" required /></label><br>
+        <label>Стоимость:     <input type="text"   th:field="*{price}"        id="price" required /></label><br>
+        <label>Количество:    <input type="number" th:field="*{quantity}"     id="quantity" required /></label><br>
+        <label>Дата создания: <input type="date"   th:field="*{creationDate}" id="creationDate" required /></label><br>
         <label>Выберите склад:
             <select th:field="*{warehouse}" required>
                 <option  th:each="warehouse : ${warehouses}" th:value="${warehouse.id}" th:text="${warehouse.name}"></option>

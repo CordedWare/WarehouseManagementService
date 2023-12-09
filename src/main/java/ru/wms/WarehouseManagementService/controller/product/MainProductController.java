@@ -12,6 +12,7 @@ import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.ProductService;
 import ru.wms.WarehouseManagementService.service.WarehouseService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -80,13 +81,14 @@ public class MainProductController {
             @PathVariable("id") Long id,
             Model model
     ) {
-        Optional<Product> productOptional = Optional.ofNullable(productService.getProductById(id));
+        Optional<Product> productOptional = Optional.ofNullable(productService.getProductById(id)); //TODO порефакторить с Optional более лаконично
 
         if (productOptional.isPresent()) {
             model.addAttribute("product", productOptional.get());
+
             return "edit-product";
         } else {
-            throw new RuntimeException("Product not found with id: " + id);
+            throw new RuntimeException("Товар не найден по id: " + id);
         }
     }
 

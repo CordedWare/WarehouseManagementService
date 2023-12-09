@@ -6,16 +6,19 @@ import ru.wms.WarehouseManagementService.entity.User;
 import ru.wms.WarehouseManagementService.entity.Warehouse;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface WarehouseRepository extends CrudRepository<Warehouse, Long> {
 
-    List<Warehouse> findAllByOwner(User user);
+    Iterable<Warehouse> findAllByOwner(User user);
 
-    List<Warehouse> findByName(String name);
+    Iterable<Warehouse> findAll();
 
-    List<Warehouse> findByNameContaining(String name);
+    Optional<List<Warehouse>> findByName(String name);
 
-    List<Warehouse> findByAddressContaining(String address);
+    Iterable<Warehouse> findByNameContaining(String name);
+
+    Optional<List<Warehouse>> findByAddressContaining(String address);
 
 }

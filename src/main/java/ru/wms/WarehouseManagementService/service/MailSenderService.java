@@ -17,7 +17,11 @@ public class MailSenderService {
     @Value("${spring.mail.username}")
     private String username;
 
-    public void send(String emailTo, String subject, String message) {
+    public void send(
+            String emailTo,
+            String subject,
+            String message
+    ) {
         var mailMessage = new SimpleMailMessage();
 
         mailMessage.setFrom(username);
@@ -36,7 +40,11 @@ public class MailSenderService {
                     user.getFirstname(),
                     user.getActivationCode()
             );
-            send(user.getEmail(), "Activation code", message);
+            send(
+                    user.getEmail(),
+                    "Activation code",
+                    message
+            );
         }
     }
 
