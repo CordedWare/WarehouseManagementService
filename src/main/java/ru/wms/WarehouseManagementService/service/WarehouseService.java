@@ -37,4 +37,13 @@ public class WarehouseService {
         return warehouseRepository.findById(warehouseId).get();
     }
 
+    public Warehouse getById(Long id){
+        var optWarehouse = warehouseRepository.findById(id);
+
+        if(optWarehouse.isEmpty())
+            throw new IllegalArgumentException();
+
+        return optWarehouse.get();
+    }
+
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.entity.*;
 import ru.wms.WarehouseManagementService.repository.ProductRepository;
+import ru.wms.WarehouseManagementService.repository.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +15,8 @@ public class ProductService {
 
     @Autowired
     private final ProductRepository productRepository;
+    @Autowired
+    private WarehouseService warehouseService;
 
     @Autowired
     public ProductService(ProductRepository productRepository) {
@@ -81,4 +84,10 @@ public class ProductService {
         productRepository.saveAll(products);
     }
 
+    public void createProduct(Product product, Long warehouseId, User user) {
+        var warehouse = warehouseService.getById(warehouseId);
+        product.setOwner(user);
+        product.setWarehouse(warehouse);
+        productRepository.save(product);
+    }
 }

@@ -50,18 +50,18 @@ public class CreateProductController {
     public String createProduct(
             @ModelAttribute("product")
             @Valid Product product,
-            @Valid Warehouse warehouse,
+            @Valid Long warehouse,
             BindingResult bindingResult,
             @AuthenticationPrincipal UserPrincipal userPrincipal
     ) {
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException("Invalid product data");
         }
-
-        product.setOwner(userPrincipal.getUser());
-        product.setWarehouse(warehouse);
-        productService.saveProduct(product);
-
+        System.out.println();
+//        product.setOwner(userPrincipal.getUser());
+//        product.setWarehouse(warehouse);
+//        productService.saveProduct(product);
+        productService.createProduct(product,warehouse,userPrincipal.getUser());
         return "redirect:/products";
     }
 
