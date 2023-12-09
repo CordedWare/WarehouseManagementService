@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.entity.*;
 import ru.wms.WarehouseManagementService.repository.ProductRepository;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -72,23 +71,23 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public void deleteProductById(Long id) {
-        productRepository.deleteById(id);
-    }
-
-    public Optional<List<Product>> getProductsByName(String name) {
-
-        return productRepository.findByName(name);
-    }
-
     public Product saveProduct(Product product) {
 
         return productRepository.save(product);
     }
 
-    public Iterable<Product> getAllProducts() {
+    public Optional<Iterable<Product>> getAllProducts() {
 
-        return productRepository.findAll();
+        return Optional.ofNullable(productRepository.findAll());
+    }
+
+    public Optional<Iterable<Product>> findByNameContaining(String name) {
+
+        return Optional.ofNullable(productRepository.findByNameContaining(name));
+    }
+
+    public void deleteProductById(Long id) {
+        productRepository.deleteById(id);
     }
 
 }

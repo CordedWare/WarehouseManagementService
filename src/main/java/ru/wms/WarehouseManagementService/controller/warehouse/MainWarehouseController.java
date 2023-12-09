@@ -6,13 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.wms.WarehouseManagementService.entity.Warehouse;
-import ru.wms.WarehouseManagementService.repository.WarehouseRepository;
 import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.WarehouseService;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -32,7 +29,7 @@ public class MainWarehouseController {
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             Model model
     ) {
-        Optional<Iterable<Warehouse>> warehousesList = warehouseService.getAllMyWarehouses(userPrincipal.getUser());
+        Optional<Iterable<Warehouse>> warehousesList = warehouseService.getAllWarehouses(userPrincipal.getUser());
         model.addAttribute("warehouses", warehousesList);
         model.addAttribute("warehouse", new Warehouse());
 
@@ -45,16 +42,16 @@ public class MainWarehouseController {
                     name = "filter",
                     required = false,
                     defaultValue = "")
-            Optional<String> nameFilter,
+            Optional<String> nameFilterOpt,
             Model model
     ) {
-        Iterable<Warehouse> warehouseList = nameFilter
+        Optional<Iterable<Warehouse>> warehouseList = Optional.of(nameFilterOpt
                 .filter( filter -> !filter.isEmpty())
                 .flatMap(  name -> warehouseService.findByNameContaining(name))
-                .orElseGet(  () -> warehouseService.getAllMyWarehouses().orElse(new ArrayList<>()));
+                .orElseGet(  () -> warehouseService.getAllWarehouses().orElse(new ArrayList<>())));
 
         model.addAttribute("warehouses", warehouseList);
-        model.addAttribute("filter",     nameFilter);
+        model.addAttribute("filter",     nameFilterOpt);
         model.addAttribute("warehouse",  new Warehouse());
 
         return "/warehouse/warehouses";

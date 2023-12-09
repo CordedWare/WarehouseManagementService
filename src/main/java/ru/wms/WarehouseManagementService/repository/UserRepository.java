@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository<T extends User,E extends Serializable> extends JpaRepository<T, E> {
+public interface UserRepository<T extends User, E extends Serializable> extends JpaRepository<T, E> {
 
     Optional<T> findByEmail(String email);
 
