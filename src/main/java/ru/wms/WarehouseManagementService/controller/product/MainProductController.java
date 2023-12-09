@@ -1,9 +1,11 @@
 package ru.wms.WarehouseManagementService.controller.product;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.wms.WarehouseManagementService.entity.Product;
 import ru.wms.WarehouseManagementService.entity.Warehouse;
@@ -12,6 +14,7 @@ import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.ProductService;
 import ru.wms.WarehouseManagementService.service.WarehouseService;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller
@@ -26,9 +29,6 @@ public class MainProductController {
     private ProductService productService;
 
     @Autowired
-    private ProductRepository productRepository;
-
-    @Autowired
     private WarehouseService warehouseService;
 
     @GetMapping
@@ -38,7 +38,7 @@ public class MainProductController {
     ) {
         var user = userPrincipal.getUser();
         Optional<Iterable<Product>> productList = productService.getAllMyProducts(user);
-        Optional<Iterable<Warehouse>> warehouseList = warehouseService.getAllMyWarehouses(user);
+        Optional<Iterable<Warehouse>> warehouseList = warehouseService.getAllWarehouses(user);
 
         model.addAttribute("warehouses", warehouseList);
         model.addAttribute("products", productList);
@@ -53,53 +53,48 @@ public class MainProductController {
                     name = "filter",
                     required = false,
                     defaultValue = "")
-            Optional<String> filter, Model model
+            Optional<String> nameFilterOpt,
+            Model model
     ) {
-        Iterable<Product> productList;
-        if (filter.isPresent() && !filter.isEmpty()) {
-            productList = productRepository.findByNameContaining(filter.get());
-        } else {
-            productList = productRepository.findAll();
-        }
-        model.addAttribute("products", productList);
-        model.addAttribute("filter", filter);
-        model.addAttribute("product", new Product());
+        Optional<Iterable<Product>> productList = Optional.of(nameFilterOpt
+                .filter( filter -> !filter.isEmpty())
+                .flatMap(  name -> productService.findByNameContaining(name))
+                .orElseGet(  () -> productService.getAllProducts().orElse(new ArrayList<>())));
 
-        return "products";
+        model.addAttribute("products", productList);
+        model.addAttribute("filter",   nameFilterOpt);
+        model.addAttribute("product",  new Product());
+
+        return "/product/products";
     }
 
-    @PostMapping("/{id}/delete")
-    public String deleteProduct(@PathVariable("id") Long id) {
+    @PostMapping("/{id}")
+    public String deleteProduct(@PathVariable Long id) {
         productService.deleteProductById(id);
 
         return "redirect:/products";
     }
 
     @GetMapping("/{id}/edit")
-    public String showEditProductForm(
-            @PathVariable("id") Long id,
-            Model model
-    ) {
-        Optional<Product> productOptional = Optional.ofNullable(productService.getProductById(id)); //TODO порефакторить с Optional более лаконично
+    public String editProductForm(@PathVariable Long id, Model model) {
+        Product product = productService.getProductById(id);
+        model.addAttribute("product", product);
 
-        if (productOptional.isPresent()) {
-            model.addAttribute("product", productOptional.get());
-
-            return "edit-product";
-        } else {
-            throw new RuntimeException("Товар не найден по id: " + id);
-        }
+        return "editProduct";
     }
 
     @PostMapping("/{id}/edit")
-    public String saveEditedProduct(
-            @PathVariable("id") Long id,
-            @ModelAttribute("product")
-            Product product
-    ) {
-        productService.updateProduct(id, product);
+    public String saveEditedProduct(@PathVariable Long id, @ModelAttribute Product editedProduct) {
+        Product product = productService.getProductById(id); // TODO перенести в сервис + ui форму поправить юзабельнее
+        product.setName(editedProduct.getName());
+        product.setDescription(editedProduct.getDescription());
+        product.setCategory(editedProduct.getCategory());
+        product.setPrice(editedProduct.getPrice());
+        product.setQuantity(editedProduct.getQuantity());
 
-        return "redirect:/products";
+        productService.saveProduct(product);
+
+        return "redirect:/products/" + id;
     }
 
 }

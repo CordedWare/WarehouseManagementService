@@ -14,7 +14,6 @@ import ru.wms.WarehouseManagementService.entity.Warehouse;
 import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.WarehouseService;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -33,7 +32,7 @@ public class CreateWarehouseController {
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             Model model
     ) {
-        Optional<Iterable<Warehouse>> warehousesList = warehouseService.getAllMyWarehouses(userPrincipal.getUser());
+        Optional<Iterable<Warehouse>> warehousesList = warehouseService.getAllWarehouses(userPrincipal.getUser());
 
         model.addAttribute("warehouses", warehousesList);
         model.addAttribute("warehouse", new Warehouse());

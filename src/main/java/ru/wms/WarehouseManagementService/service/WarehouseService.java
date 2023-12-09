@@ -15,7 +15,7 @@ public class WarehouseService {
     @Autowired
     private WarehouseRepository warehouseRepository;
 
-    public Optional<Iterable<Warehouse>> getAllMyWarehouses(User user) {
+    public Optional<Iterable<Warehouse>> getAllWarehouses(User user) {
 
         return Optional.ofNullable((user instanceof Employee) ?
                 warehouseRepository.findAllByOwner(((Employee) user).getCustomer()) :
@@ -47,7 +47,7 @@ public class WarehouseService {
                                 new IllegalArgumentException("Ошибка: Склад не найден по id :" + id)));
     }
 
-    public Optional<Iterable<Warehouse>> getAllMyWarehouses() {
+    public Optional<Iterable<Warehouse>> getAllWarehouses() {
 
         return Optional.ofNullable(warehouseRepository.findAll());
     }
