@@ -26,9 +26,8 @@ public class Product {
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
-
     @ManyToOne
-    @JoinColumn(name = "warehouse_id", nullable = false)
+    @JoinColumn(name = "warehouse_id")
     private Warehouse warehouse;
 
     @ManyToMany(mappedBy = "products")
@@ -51,15 +50,15 @@ public class Product {
     @Override
     public String toString() {
 
-        return "Product{" +
-                "id=" + id +
-                ", warehouse=" + warehouse.getName() +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", category='" + category + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                ", creationDate=" + creationDate +
+        return "Product {" +
+                "id = " + id +
+                ", warehouse = "    + warehouse.getName() +
+                ", name = '"        + name + '\'' +
+                ", description = '" + description + '\'' +
+                ", category = '"    + category + '\'' +
+                ", price = "        + price +
+                ", quantity = "     + quantity +
+                ", creationDate = " + creationDate +
                 '}';
     }
 

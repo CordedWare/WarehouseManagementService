@@ -26,11 +26,11 @@ public class Customer extends User {
     @Override
     public String toString() {
 
-        return "Customer{" +
-                "pass=" + getPassword() +
-                ", ema='" + getEmail() + '\'' +
-                ", addressOrg='" + addressOrg + '\'' +
-                ", contactInfoOrg='" + contactInfoOrg + '\'' +
+        return "Customer { "          +
+                " pass ="             + getPassword() +
+                ", email ='"          + getEmail() + '\'' +
+                ", addressOrg ='"     + addressOrg + '\'' +
+                ", contactInfoOrg ='" + contactInfoOrg + '\'' +
                 '}';
     }
 

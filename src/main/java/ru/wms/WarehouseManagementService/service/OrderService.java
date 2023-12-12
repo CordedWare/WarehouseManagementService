@@ -4,15 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.dto.OrderDTO;
 import ru.wms.WarehouseManagementService.dto.OrderMoveDTO;
-import ru.wms.WarehouseManagementService.entity.Employee;
-import ru.wms.WarehouseManagementService.entity.Order;
-import ru.wms.WarehouseManagementService.entity.OrderStatus;
-import ru.wms.WarehouseManagementService.entity.User;
+import ru.wms.WarehouseManagementService.entity.*;
 import ru.wms.WarehouseManagementService.repository.OrderRepository;
 
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -37,21 +35,16 @@ public class OrderService {
         order.setDelivery(false);
         order.setStatus(OrderStatus.NEW);
 
-        var totalCost = BigDecimal.ZERO;
-
-        for (var p : order.getProducts()) {
-            var price = p.getPrice();
-            var q = p.getQuantity();
-            var quant = new BigDecimal(q);
-            var x = price.multiply(quant);
-            totalCost = totalCost.add(x);
-        }
-
+        var totalCost = order
+                .getProducts()
+                .stream()
+                .map( product ->
+                        product.getPrice().multiply(BigDecimal.valueOf(product.getQuantity()))
+                ).reduce(BigDecimal.ZERO, BigDecimal::add);
         order.setTotalCost(totalCost);
 
-        for (var p : order.getProducts()) {
-            p.setOrderSet(Collections.singleton(order));
-        }
+        order.getProducts().forEach( product ->
+                product.setOrderSet(Collections.singleton(order)));
 
         return orderRepo.save(order);
     }
@@ -61,9 +54,10 @@ public class OrderService {
         return orderRepo.findOrderById(id);
     }
 
-    public List<Order> getAllMyOrders(User user,OrderStatus status) {
+    public List<Order> getAllMyOrders(User user, OrderStatus status) {
         if (user instanceof Employee employee)
-            return orderRepo.findAllByOwnerAndStatus(employee.getCustomer(),status);
+
+            return orderRepo.findAllByOwnerAndStatus(employee.getCustomer(), status);
 
         return orderRepo.findAllByOwnerAndStatus(user,status);
     }
@@ -81,11 +75,11 @@ public class OrderService {
     }
 
     public void moveToOtherWarehouse(OrderMoveDTO orderMoveDTO) {
-        var order = orderRepo.findOrderById(orderMoveDTO.getOrderId());
-        var warehouse = warehouseService.getWarehouse(orderMoveDTO.getWarehouseId());
-        var products = order.getProducts();
+        var order     = orderRepo.findOrderById(orderMoveDTO.getOrderId());
+        var warehouse = warehouseService.getWarehouseById(orderMoveDTO.getWarehouseId());
+        var products  = order.getProducts();
 
-        productService.move(products,warehouse);
+        productService.move(products, warehouse);
     }
 
 }

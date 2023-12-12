@@ -18,7 +18,7 @@ import java.util.UUID;
 public class UserService {
 
     @Autowired
-    private UserRepository<User,Long> userRepository;
+    private UserRepository<User, Long> userRepository;
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -37,15 +37,17 @@ public class UserService {
         customer.setActive(false);
         customer.setActivationCode(UUID.randomUUID().toString());
         customer.setPassword(SecurityConfiguration.passwordEncoder().encode(customer.getPassword()));
+
         customerRepository.save(customer);
+
         return customer;
     }
 
     public boolean activateUser(String code) {
-        var optionalUser = userRepository.findByActivationCode(code);
+        var userOpt = userRepository.findByActivationCode(code);
 
-        if (optionalUser.isPresent()) {
-            var user = optionalUser.get();
+        if (userOpt.isPresent()) {
+            var user = userOpt.get();
 
             user.setActive(true);
             user.setActivationCode(null);
@@ -53,7 +55,7 @@ public class UserService {
             userRepository.save(user);
         }
 
-        return optionalUser.isPresent();
+        return userOpt.isPresent();
     }
 
 }

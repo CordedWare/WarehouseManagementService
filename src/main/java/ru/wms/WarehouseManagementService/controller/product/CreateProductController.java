@@ -16,6 +16,8 @@ import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.ProductService;
 import ru.wms.WarehouseManagementService.service.WarehouseService;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/createProduct")
 public class CreateProductController {
@@ -36,8 +38,8 @@ public class CreateProductController {
             Model model
     ) {
         var user = userPrincipal.getUser();
-        Iterable<Product> productList = productService.getAllMyProducts(user);
-        Iterable<Warehouse> warehouseList = warehouseService.getAllMyWarehouses(user);
+        Optional<Iterable<Product>> productList = productService.getAllMyProducts(user);
+        Optional<Iterable<Warehouse>> warehouseList = warehouseService.getAllWarehouses(user);
 
         model.addAttribute("warehouses", warehouseList);
         model.addAttribute("products", productList);
@@ -55,13 +57,15 @@ public class CreateProductController {
             @AuthenticationPrincipal UserPrincipal userPrincipal
     ) {
         if (bindingResult.hasErrors()) {
-            throw new IllegalArgumentException("Invalid product data");
+            throw new IllegalArgumentException("Неверные данные о товаре");
         }
-        System.out.println();
-//        product.setOwner(userPrincipal.getUser());
-//        product.setWarehouse(warehouse);
-//        productService.saveProduct(product);
-        productService.createProduct(product,warehouse,userPrincipal.getUser());
+
+        productService.createProduct(
+                product,
+                warehouse,
+                userPrincipal.getUser()
+        );
+
         return "redirect:/products";
     }
 

@@ -5,17 +5,13 @@ import org.springframework.stereotype.Repository;
 import ru.wms.WarehouseManagementService.entity.User;
 import ru.wms.WarehouseManagementService.entity.Warehouse;
 
-import java.util.List;
-
 @Repository
 public interface WarehouseRepository extends CrudRepository<Warehouse, Long> {
 
-    List<Warehouse> findAllByOwner(User user);
+    Iterable<Warehouse> findAllByOwner(User user);
 
-    List<Warehouse> findByName(String name);
+    Iterable<Warehouse> findAll();
 
-    List<Warehouse> findByNameContaining(String name);
-
-    List<Warehouse> findByAddressContaining(String address);
+    Iterable<Warehouse> findByNameContaining(String name);
 
 }

@@ -44,7 +44,7 @@ public class SignUpController {
 
 //        mailSender.sendActivationCode(newUser);
 
-        return String.format("redirect:/login?activate_email=%s",newUser.getActivationCode());
+        return String.format("redirect:/login?activate_email=%s", newUser.getActivationCode());
     }
 
     private boolean isCorrectUserDTO(UserRegistrationDTO userDTO){

@@ -57,20 +57,22 @@ public class OrderController {
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             Model model
     ) {
-        model.addAttribute("orders", orderService.getAllMyOrders(userPrincipal.getUser(),OrderStatus.PROCESSING));
+        model.addAttribute("orders", orderService.getAllMyOrders(userPrincipal.getUser(), OrderStatus.PROCESSING));
 
         return "/order/manage";
     }
     @GetMapping("/manage/move/{id}")
     public String moveOrdersProduct(
             @AuthenticationPrincipal UserPrincipal userPrincipal,
-            Model model,@PathVariable(name = "id")
+            Model model,
+            @PathVariable(name = "id")
             Long orderId
     ) {
 //        model.addAttribute("orders", orderService.getAllMyOrders(userPrincipal.getUser(),OrderStatus.PROCESSING));
-        model.addAttribute("order",orderService.getById(orderId));
-        model.addAttribute("orderMoveDTO",new OrderMoveDTO());
-        model.addAttribute("warehouses",warehouseService.getAllMyWarehouses(userPrincipal.getUser()));
+        model.addAttribute("order", orderService.getById(orderId));
+        model.addAttribute("orderMoveDTO", new OrderMoveDTO());
+        model.addAttribute("warehouses", warehouseService.getAllWarehouses(userPrincipal.getUser()));
+
         return "/order/move";
     }
 
@@ -92,10 +94,11 @@ public class OrderController {
             @AuthenticationPrincipal UserPrincipal userPrincipal
     ) {
         if (bindingResult.hasErrors()) {
-            throw new IllegalArgumentException("Invalid order data");
+            throw new IllegalArgumentException("Неверные данные заказа");
         }
         order.setOwner(userPrincipal.getUser());
         orderService.saveNewOrder(order);
+
         return "redirect:/orders";
     }
 
