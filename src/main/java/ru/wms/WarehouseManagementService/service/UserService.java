@@ -1,8 +1,10 @@
 package ru.wms.WarehouseManagementService.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.configuration.SecurityConfiguration;
+import ru.wms.WarehouseManagementService.dto.RegistrationForm;
 import ru.wms.WarehouseManagementService.dto.UserRegistrationDTO;
 import ru.wms.WarehouseManagementService.entity.Customer;
 import ru.wms.WarehouseManagementService.entity.User;
@@ -32,11 +34,26 @@ public class UserService {
      * Логика принципала как User с ролями и Customer как сущность заказчика разделены для атомарности.
      * TODO: Возможно придется вынести отдельно регистрацию Customer, если поменяется бизнес-логика
      */
-    public Customer registerUserCustomer(Customer customer) {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public Customer registerUserCustomer(RegistrationForm registrationForm) {
+        var customer = new Customer();
+
+        customer.setFirstname(registrationForm.getFirstname());
+        customer.setLastname(registrationForm.getLastname());
+        customer.setPatronymic(registrationForm.getPatronymic());
+        customer.setEmail(registrationForm.getEmail());
+        customer.setTelephone(registrationForm.getTelephone());
+        customer.setNameOrg(registrationForm.getNameOrg());
+        customer.setAddressOrg(registrationForm.getAddressOrg());
+        customer.setContactInfoOrg(registrationForm.getContactInfoOrg());
+
         customer.setAuthorities(Collections.singleton(Authority.ROLE_CUSTOMER));
         customer.setActive(false);
         customer.setActivationCode(UUID.randomUUID().toString());
-        customer.setPassword(SecurityConfiguration.passwordEncoder().encode(customer.getPassword()));
+        customer.setPassword(passwordEncoder.encode(registrationForm.getPassword()));
 
         customerRepository.save(customer);
 

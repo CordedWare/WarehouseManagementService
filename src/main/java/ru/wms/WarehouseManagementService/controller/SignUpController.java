@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.wms.WarehouseManagementService.dto.RegistrationForm;
 import ru.wms.WarehouseManagementService.dto.UserRegistrationDTO;
 import ru.wms.WarehouseManagementService.entity.Customer;
 import ru.wms.WarehouseManagementService.service.MailSenderService;
@@ -25,13 +26,13 @@ public class SignUpController {
 
     @GetMapping("/sign-up")
     public String signUpPage(Model model) {
-        model.addAttribute("customer", new Customer());
+        model.addAttribute("registrationForm", new RegistrationForm());
 
         return "sign-up";
     }
 
     @PostMapping("/sign-up")
-    public String userRegistration(Customer customer) {
+    public String userRegistration(RegistrationForm registrationForm) {
 
 //        System.out.println(customer);
 //        if(!isCorrectUserDTO(userDTO))
@@ -40,7 +41,7 @@ public class SignUpController {
 //        if(userService.isUserExist(userDTO))
 //            return "redirect:/sign-up?user_exist";
 
-        var newUser = userService.registerUserCustomer(customer);
+        var newUser = userService.registerUserCustomer(registrationForm);
 
 //        mailSender.sendActivationCode(newUser);
 

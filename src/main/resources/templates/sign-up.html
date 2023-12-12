@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="container">
-    <form name="f" th:action="@{/sign-up}" th:object="${customer}" method="post">
+    <form name="f" th:action="@{/sign-up}" th:object="${registrationForm}" method="post">
         <div th:if="${param.user_exist}" class="alert alert-danger">
             Пользователь с такой почтой уже существует.
         </div>
