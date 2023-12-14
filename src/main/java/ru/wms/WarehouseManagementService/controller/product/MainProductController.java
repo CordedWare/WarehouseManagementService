@@ -34,12 +34,12 @@ public class MainProductController {
             Model model
     ) {
         var user = userPrincipal.getUser();
-        Optional<Iterable<Product>> productList = productService.getAllMyProducts(user);
+        Optional<Iterable<Product>> productList     = productService.getAllMyProducts(user);
         Optional<Iterable<Warehouse>> warehouseList = warehouseService.getAllWarehouses(user);
 
         model.addAttribute("warehouses", warehouseList);
-        model.addAttribute("products", productList);
-        model.addAttribute("product", new Product());
+        model.addAttribute("products",   productList);
+        model.addAttribute("product",    new Product());
 
         return "/product/products";
     }
@@ -53,10 +53,12 @@ public class MainProductController {
             Optional<String> nameFilterOpt,
             Model model
     ) {
-        Optional<Iterable<Product>> productList = Optional.of(nameFilterOpt
-                .filter( filter -> !filter.isEmpty())
-                .flatMap(  name -> productService.findByNameContaining(name))
-                .orElseGet(  () -> productService.getAllProducts().orElse(new ArrayList<>())));
+        Optional<Iterable<Product>> productList = Optional.of(
+                nameFilterOpt
+                        .filter( filter -> !filter.isEmpty())
+                        .flatMap(  name -> productService.findByNameContaining(name))
+                        .orElseGet(  () -> productService.getAllProducts().orElse(new ArrayList<>()))
+        );
 
         model.addAttribute("products", productList);
         model.addAttribute("filter",   nameFilterOpt);
@@ -73,7 +75,10 @@ public class MainProductController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editProductForm(@PathVariable Long id, Model model) {
+    public String editProductForm(
+            @PathVariable Long id,
+            Model model
+    ) {
         Product product = productService.getProductById(id);
         model.addAttribute("product", product);
 
@@ -81,7 +86,10 @@ public class MainProductController {
     }
 
     @PostMapping("/{id}/edit")
-    public String saveEditedProduct(@PathVariable Long id, @ModelAttribute Product editedProduct) {
+    public String saveEditedProduct(
+            @PathVariable Long id,
+            @ModelAttribute Product editedProduct
+    ) {
         productService.updateProduct(id, editedProduct);
 
         return "redirect:/products/" + id;
