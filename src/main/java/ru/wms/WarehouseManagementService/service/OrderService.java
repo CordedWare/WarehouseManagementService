@@ -35,18 +35,18 @@ public class OrderService {
         order.setDelivery(false);
         order.setStatus(OrderStatus.NEW);
 
-        var totalCost = order
-                .getProducts()
+        var totalCost = order.getProducts()
                 .stream()
-                .map( product ->
-                        product.getPrice().multiply(BigDecimal.valueOf(product.getQuantity()))
-                ).reduce(BigDecimal.ZERO, BigDecimal::add);
+                .map(product ->
+                        product.getPrice().multiply(BigDecimal.valueOf(product.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
         order.setTotalCost(totalCost);
 
-        order.getProducts().forEach( product ->
+        order.getProducts().forEach(product ->
                 product.setOrderSet(Collections.singleton(order)));
 
-        return orderRepo.save(order);
+        return Optional.of(orderRepo.save(order))
+                .orElseThrow(() -> new RuntimeException("Ошибка при сохранении заказа"));
     }
 
     public Order findOrder(Long id){
@@ -79,7 +79,7 @@ public class OrderService {
         var warehouse = warehouseService.getWarehouseById(orderMoveDTO.getWarehouseId());
         var products  = order.getProducts();
 
-        productService.move(products, warehouse);
+        productService.move(products, Optional.ofNullable(warehouse));
     }
 
 }
