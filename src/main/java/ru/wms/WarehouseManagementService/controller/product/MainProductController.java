@@ -41,7 +41,7 @@ public class MainProductController {
         model.addAttribute("products", productList);
         model.addAttribute("product", new Product());
 
-        return "/product/products";
+        return "product/products";
     }
 
     @GetMapping("/{id}")
@@ -62,7 +62,7 @@ public class MainProductController {
         model.addAttribute("filter",   nameFilterOpt);
         model.addAttribute("product",  new Product());
 
-        return "/product/products";
+        return "product/products";
     }
 
     @PostMapping("/{id}")

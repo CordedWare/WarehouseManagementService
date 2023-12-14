@@ -44,8 +44,8 @@ public class Order {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "owner_id", nullable = false)
-    private User owner;
+    @JoinColumn(name = "company_id", nullable = false)
+    private Company company;
 
     @NotNull
     @ManyToMany(fetch = FetchType.EAGER)

@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.wms.WarehouseManagementService.entity.Customer;
+import ru.wms.WarehouseManagementService.entity.Client;
 import ru.wms.WarehouseManagementService.entity.User;
 
 import java.util.Collection;
@@ -19,9 +19,8 @@ public class UserPrincipal implements UserDetails {
         this.user = user;
     }
 
-    public Customer getCustomer() {
-
-        return (Customer) user;
+    public Client getClient() {
+        return (Client) user;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package ru.wms.WarehouseManagementService.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import ru.wms.WarehouseManagementService.security.Authority;
@@ -45,13 +46,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Set<Authority> authorities;
 
-    @OneToMany(mappedBy = "owner")
-    private Set<Warehouse> warehouseSet;
-
-    @OneToMany(mappedBy = "owner")
-    private Set<Product> products;
-
-    @OneToMany(mappedBy = "owner")
-    private Set<Order> orders;
-
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JoinColumn(name = "company_id", referencedColumnName = "id")
+    private Company company;
 }

@@ -49,7 +49,7 @@ public class OrderController {
         model.addAttribute("productss", productService.getAllMyProducts(userPrincipal.getUser()));
         model.addAttribute("orderDTO", new OrderDTO());
 
-        return "/order/orders";
+        return "order/orders";
     }
 
     @GetMapping("/manage")
@@ -59,7 +59,7 @@ public class OrderController {
     ) {
         model.addAttribute("orders", orderService.getAllMyOrders(userPrincipal.getUser(), OrderStatus.PROCESSING));
 
-        return "/order/manage";
+        return "order/manage";
     }
     @GetMapping("/manage/move/{id}")
     public String moveOrdersProduct(
@@ -73,7 +73,7 @@ public class OrderController {
         model.addAttribute("orderMoveDTO", new OrderMoveDTO());
         model.addAttribute("warehouses", warehouseService.getAllWarehouses(userPrincipal.getUser()));
 
-        return "/order/move";
+        return "order/move";
     }
 
 
@@ -96,7 +96,7 @@ public class OrderController {
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException("Неверные данные заказа");
         }
-        order.setOwner(userPrincipal.getUser());
+        order.setCompany(userPrincipal.getUser().getCompany());
         orderService.saveNewOrder(order);
 
         return "redirect:/orders";

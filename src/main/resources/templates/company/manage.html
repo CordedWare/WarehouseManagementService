@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Company</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<header th:replace="~{fragments/common_header_fragment :: head}"></header>
+
+<div class="container">
+
+    <h1>Управлять компанией</h1>
+
+
+    <h1 th:text="${company?.name}">
+        Название компании
+    </h1>
+
+
+<p>
+    <h3 th:if="${company == null}">
+        Вы ещё не создали компанию
+        <a th:href="@{/company/manage/create}">Create</a>
+    </h3>
+</p>
+
+
+
+
+    <p th:if="${company != null}">
+        <a th:href="@{/orders}" href="/orders" >Заказы</a> <br>
+        <a th:href="@{/warehouses}" href="/warehouses" >Склады</a> <br>
+        <a th:href="@{/products}" href="/products" >Товары</a>  <br>
+        <a th:href="@{/employees}" href="/employees" >Создать работника</a> <br>
+        <a th:href="@{/orders/manage}" href="/orders/manage" >Управление заказами</a> <br>
+    </p>
+</div>
+
+</body>
+</html>

@@ -58,9 +58,9 @@ public class OrderService {
     public List<Order> getAllMyOrders(User user, OrderStatus status) {
         if (user instanceof Employee employee)
 
-            return orderRepo.findAllByOwnerAndStatus(employee.getCustomer(), status);
+            return orderRepo.findAllByCompanyAndStatus(employee.getCompany(), status);
 
-        return orderRepo.findAllByOwnerAndStatus(user, status);
+        return orderRepo.findAllByCompanyAndStatus(user.getCompany(), status);
     }
 
     public void changeStatus(OrderDTO orderDTO, OrderStatus orderStatus) {

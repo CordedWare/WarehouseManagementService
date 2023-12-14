@@ -49,9 +49,9 @@ public class ProductService {
     public Optional<Iterable<Product>> getAllMyProducts(User user) {
         if (user instanceof Employee employee)
 
-            return Optional.of(productRepository.findAllByOwner(employee.getCustomer()));
+            return Optional.of(productRepository.findAllByCompany(employee.getCompany()));
 
-        return Optional.of(productRepository.findAllByOwner(user));
+        return Optional.of(productRepository.findAllByCompany(user.getCompany()));
     }
 
     public void move(Set<Product> products, Optional<Warehouse> warehouse) {
@@ -63,7 +63,7 @@ public class ProductService {
 
     public void createProduct(Product product, Long warehouseId, User user) {
         var warehouseOpt = warehouseService.getById(warehouseId);
-        product.setOwner(user);
+        product.setCompany(user.getCompany());
         product.setWarehouse(warehouseOpt.get());
 
         productRepository.save(product);
