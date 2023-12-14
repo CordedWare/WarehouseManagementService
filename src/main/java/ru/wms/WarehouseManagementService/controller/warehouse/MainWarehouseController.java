@@ -33,7 +33,7 @@ public class MainWarehouseController {
         model.addAttribute("warehouses", warehousesList);
         model.addAttribute("warehouse", new Warehouse());
 
-        return "/warehouse/warehouses";
+        return "warehouse/warehouses";
     }
 
     @GetMapping("/{id}")
@@ -54,7 +54,7 @@ public class MainWarehouseController {
         model.addAttribute("filter",     nameFilterOpt);
         model.addAttribute("warehouse",  new Warehouse());
 
-        return "/warehouse/warehouses";
+        return "warehouse/warehouses";
     }
 
     @PostMapping("/{id}")

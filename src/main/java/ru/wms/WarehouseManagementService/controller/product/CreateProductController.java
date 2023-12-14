@@ -45,7 +45,7 @@ public class CreateProductController {
         model.addAttribute("products",   productList);
         model.addAttribute("product",    new Product());
 
-        return "/product/createProduct";
+        return "product/createProduct";
     }
 
     @PostMapping

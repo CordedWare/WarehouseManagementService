@@ -2,6 +2,7 @@ package ru.wms.WarehouseManagementService.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.wms.WarehouseManagementService.entity.Client;
 import ru.wms.WarehouseManagementService.entity.Employee;
 import ru.wms.WarehouseManagementService.entity.User;
 import ru.wms.WarehouseManagementService.entity.Warehouse;
@@ -17,13 +18,11 @@ public class WarehouseService {
 
     public Optional<Iterable<Warehouse>> getAllWarehouses(User user) {
 
-        return Optional.ofNullable((user instanceof Employee) ?
-                warehouseRepository.findAllByOwner(((Employee) user).getCustomer()) :
-                warehouseRepository.findAllByOwner(user));
+        return Optional.ofNullable(warehouseRepository.findAllByCompany(user.getCompany()));
     }
 
-    public Warehouse saveWarehouse(Warehouse warehouse, User user) {
-        warehouse.setOwner(user);
+    public Warehouse saveWarehouse(Warehouse warehouse, User client) {
+        warehouse.setCompany(client.getCompany());
 
         return Optional.of(warehouseRepository.save(warehouse))
                         .orElseThrow( () ->

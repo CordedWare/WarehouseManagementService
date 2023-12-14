@@ -2,9 +2,9 @@ package ru.wms.WarehouseManagementService.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import ru.wms.WarehouseManagementService.entity.Company;
 import ru.wms.WarehouseManagementService.entity.Order;
 import ru.wms.WarehouseManagementService.entity.OrderStatus;
-import ru.wms.WarehouseManagementService.entity.User;
 
 import java.util.List;
 
@@ -13,6 +13,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     Order findOrderById(Long id);
 
-    List<Order> findAllByOwnerAndStatus(User user, OrderStatus status);
+    List<Order> findAllByCompanyAndStatus(Company company, OrderStatus status);
 
 }

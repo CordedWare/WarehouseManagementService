@@ -65,7 +65,7 @@ public class XmlDocParserService {
             product.setQuantity(Integer.parseInt(rowElem.getAttribute(QUANTITY)));
             product.setCreationDate(LocalDate.parse(rowElem.getAttribute(CREATION_DATE)));
             product.setWarehouse(warehouse);
-            product.setOwner(userOwner);
+            product.setCompany(userOwner.getCompany());
         }
 
         productService.saveParserProduct(productRows);

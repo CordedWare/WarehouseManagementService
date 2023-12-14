@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.wms.WarehouseManagementService.dto.RegistrationForm;
 import ru.wms.WarehouseManagementService.dto.UserRegistrationDTO;
-import ru.wms.WarehouseManagementService.entity.Customer;
 import ru.wms.WarehouseManagementService.service.MailSenderService;
 import ru.wms.WarehouseManagementService.service.UserService;
 
@@ -38,10 +37,10 @@ public class SignUpController {
 //        if(!isCorrectUserDTO(userDTO))
 //            return "redirect:/sign-up?validate_error";
 //
-//        if(userService.isUserExist(userDTO))
-//            return "redirect:/sign-up?user_exist";
+        if(userService.isUserExist(registrationForm))
+            return "redirect:/sign-up?user_exist";
 
-        var newUser = userService.registerUserCustomer(registrationForm);
+        var newUser = userService.registerClient(registrationForm);
 
 //        mailSender.sendActivationCode(newUser);
 

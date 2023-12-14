@@ -6,6 +6,7 @@
     <title>Warehouses</title>
 </head>
 <body>
+<header th:replace="~{fragments/common_header_fragment :: head}"></header>
 
 <div class="container">
 
@@ -17,7 +18,7 @@
         </p>
     <hr>
 
-    <h4><a href="/createWarehouse" sec:authorize="hasRole('EMPLOYEE')">Зарегистрировать склад</a></h4>
+    <h4><a href="/createWarehouse" >Зарегистрировать склад</a></h4>
 
     <tr>
         <td colspan="7">
