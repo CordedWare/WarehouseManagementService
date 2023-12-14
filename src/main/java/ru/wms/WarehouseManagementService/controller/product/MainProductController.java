@@ -1,15 +1,12 @@
 package ru.wms.WarehouseManagementService.controller.product;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.wms.WarehouseManagementService.entity.Product;
 import ru.wms.WarehouseManagementService.entity.Warehouse;
-import ru.wms.WarehouseManagementService.repository.ProductRepository;
 import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.ProductService;
 import ru.wms.WarehouseManagementService.service.WarehouseService;
@@ -85,14 +82,7 @@ public class MainProductController {
 
     @PostMapping("/{id}/edit")
     public String saveEditedProduct(@PathVariable Long id, @ModelAttribute Product editedProduct) {
-        Product product = productService.getProductById(id); // TODO перенести в сервис + ui форму поправить юзабельнее
-        product.setName(editedProduct.getName());
-        product.setDescription(editedProduct.getDescription());
-        product.setCategory(editedProduct.getCategory());
-        product.setPrice(editedProduct.getPrice());
-        product.setQuantity(editedProduct.getQuantity());
-
-        productService.saveProduct(product);
+        productService.updateProduct(id, editedProduct);
 
         return "redirect:/products/" + id;
     }

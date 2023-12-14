@@ -22,39 +22,36 @@ public class WarehouseService {
                 warehouseRepository.findAllByOwner(user));
     }
 
-    public Optional<Warehouse> saveWarehouse(Warehouse warehouse, User user) {
+    public Warehouse saveWarehouse(Warehouse warehouse, User user) {
         warehouse.setOwner(user);
 
-        return Optional
-                .ofNullable(Optional.of(warehouseRepository.save(warehouse))
+        return Optional.of(warehouseRepository.save(warehouse))
                         .orElseThrow( () ->
-                                new RuntimeException("Ошибка: склад не был сохранен ")));
+                                new RuntimeException("Ошибка: склад не был сохранен "));
     }
 
-    public Optional<Warehouse> getWarehouseById(Long warehouseId) {
+    public Warehouse getWarehouseById(Long warehouseId) {
 
-        return Optional
-                .ofNullable(Optional.of(warehouseRepository.findById(warehouseId).get())
+        return Optional.of(warehouseRepository.findById(warehouseId).get())
                         .orElseThrow( () ->
-                                new RuntimeException("Ошибка: склад не найден ")));
+                                new RuntimeException("Ошибка: склад не найден "));
     }
 
     public Optional<Warehouse> getById(Long id) {
 
-        return Optional
-                .ofNullable(warehouseRepository.findById(id)
+        return Optional.ofNullable(warehouseRepository.findById(id)
                         .orElseThrow(() ->
                                 new IllegalArgumentException("Ошибка: Склад не найден по id :" + id)));
     }
 
     public Optional<Iterable<Warehouse>> getAllWarehouses() {
 
-        return Optional.ofNullable(warehouseRepository.findAll());
+        return Optional.of(warehouseRepository.findAll());
     }
 
     public Optional<Iterable<Warehouse>> findByNameContaining(String name) {
 
-        return Optional.ofNullable(warehouseRepository.findByNameContaining(name));
+        return Optional.of(warehouseRepository.findByNameContaining(name));
     }
 
     public void deleteWarehouseById(Long id) {
