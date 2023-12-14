@@ -39,19 +39,19 @@ public class WarehouseService {
 
     public Optional<Warehouse> getById(Long id) {
 
-        return Optional.ofNullable(warehouseRepository.findById(id)
+        return Optional.of(warehouseRepository.findById(id)
                         .orElseThrow(() ->
                                 new IllegalArgumentException("Ошибка: Склад не найден по id :" + id)));
     }
 
     public Optional<Iterable<Warehouse>> getAllWarehouses() {
 
-        return Optional.of(warehouseRepository.findAll());
+        return Optional.ofNullable(warehouseRepository.findAll());
     }
 
     public Optional<Iterable<Warehouse>> findByNameContaining(String name) {
 
-        return Optional.of(warehouseRepository.findByNameContaining(name));
+        return Optional.ofNullable(warehouseRepository.findByNameContaining(name));
     }
 
     public void deleteWarehouseById(Long id) {

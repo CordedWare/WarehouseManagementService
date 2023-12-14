@@ -71,12 +71,12 @@ public class ProductService {
 
     public Optional<Iterable<Product>> getAllProducts() {
 
-        return Optional.of(productRepository.findAll());
+        return Optional.ofNullable(productRepository.findAll());
     }
 
     public Optional<Iterable<Product>> findByNameContaining(String name) {
 
-        return Optional.of(productRepository.findByNameContaining(name));
+        return Optional.ofNullable(productRepository.findByNameContaining(name));
     }
 
     public void deleteProductById(Long id) {

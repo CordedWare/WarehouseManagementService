@@ -46,7 +46,8 @@ public class OrderService {
                 product.setOrderSet(Collections.singleton(order)));
 
         return Optional.of(orderRepo.save(order))
-                .orElseThrow(() -> new RuntimeException("Ошибка при сохранении заказа"));
+                .orElseThrow( () ->
+                        new RuntimeException("Ошибка при сохранении заказа"));
     }
 
     public Order findOrder(Long id){
@@ -59,7 +60,7 @@ public class OrderService {
 
             return orderRepo.findAllByOwnerAndStatus(employee.getCustomer(), status);
 
-        return orderRepo.findAllByOwnerAndStatus(user,status);
+        return orderRepo.findAllByOwnerAndStatus(user, status);
     }
 
     public void changeStatus(OrderDTO orderDTO, OrderStatus orderStatus) {
