@@ -38,27 +38,29 @@ public class CreateProductController {
             Model model
     ) {
         var user = userPrincipal.getUser();
-        Optional<Iterable<Product>> productList = productService.getAllMyProducts(user);
+        Optional<Iterable<Product>> productList     = productService.getAllMyProducts(user);
         Optional<Iterable<Warehouse>> warehouseList = warehouseService.getAllWarehouses(user);
 
         model.addAttribute("warehouses", warehouseList);
-        model.addAttribute("products", productList);
-        model.addAttribute("product", new Product());
+        model.addAttribute("products",   productList);
+        model.addAttribute("product",    new Product());
 
         return "product/createProduct";
     }
 
     @PostMapping
     public String createProduct(
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
             @ModelAttribute("product")
             @Valid Product product,
             @Valid Long warehouse,
-            BindingResult bindingResult,
-            @AuthenticationPrincipal UserPrincipal userPrincipal
+            BindingResult bindingResult
     ) {
-        if (bindingResult.hasErrors()) {
-            throw new IllegalArgumentException("Неверные данные о товаре");
-        }
+        Optional.of(bindingResult)
+                .filter(BindingResult::hasErrors)
+                .ifPresent(errors -> {
+                    throw new IllegalArgumentException("Неверные данные о товаре");
+                });
 
         productService.createProduct(
                 product,

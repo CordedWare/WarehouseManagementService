@@ -51,7 +51,7 @@ public class Product {
     public String toString() {
 
         return "Product {" +
-                "id = " + id +
+                "id = "             + id +
                 ", warehouse = "    + warehouse.getName() +
                 ", name = '"        + name + '\'' +
                 ", description = '" + description + '\'' +

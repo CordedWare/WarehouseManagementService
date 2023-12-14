@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.entity.*;
 import ru.wms.WarehouseManagementService.repository.ProductRepository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -25,7 +26,7 @@ public class ProductService {
     public Product getProductById(Long id) {
 
         return productRepository.findById(id)
-                .orElseThrow(() ->
+                .orElseThrow( () ->
                         new RuntimeException("Товар не был найден по id: " + id));
     }
 
@@ -81,6 +82,10 @@ public class ProductService {
 
     public void deleteProductById(Long id) {
         productRepository.deleteById(id);
+    }
+
+    public void saveParserProduct(List<Product> product) {
+        productRepository.saveAll(product);
     }
 
 }
