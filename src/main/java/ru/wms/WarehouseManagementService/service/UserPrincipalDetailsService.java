@@ -17,11 +17,10 @@ public class UserPrincipalDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        var userOpt = this.userRepository.findByEmail(email); //TODO порефакторить чтобы более лаконично завернуть
+        var userOpt = this.userRepository.findByEmail(email);
 
-        if (userOpt.isEmpty()) {
+        if (userOpt.isEmpty())
             throw new UsernameNotFoundException("Пользователь не найден");
-        }
 
         return new UserPrincipal(userOpt.get());
     }
