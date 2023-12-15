@@ -49,7 +49,7 @@
             <td th:if="${warehouse.capacity}" th:text="${warehouse.capacity}"></td>
             <td th:if="${warehouse.creationDate}" th:text="${warehouse.creationDate}"></td>
             <td>
-                <form th:action="@{'/warehouses/' + ${warehouse.id}}" method="post">
+                <form th:action="@{'/warehouses/delete/' + ${warehouse.id}}" method="post">
                     <input type="hidden" name="_method" value="delete">
                     <button type="submit">Удалить</button>
                 </form>

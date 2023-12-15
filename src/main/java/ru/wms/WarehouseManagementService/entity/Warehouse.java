@@ -35,7 +35,7 @@ public class Warehouse {
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
 
-    @OneToMany(mappedBy = "warehouse")
+    @OneToMany(mappedBy = "warehouse", cascade = CascadeType.REMOVE)
     private List<Product> productList;
 
 }

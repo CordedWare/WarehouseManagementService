@@ -27,12 +27,8 @@ public class WarehouseController {
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             Model model
     ) {
-        Optional<Iterable<Warehouse>> warehousesList = warehouseService.getAllWarehouses(userPrincipal.getUser().getCompany());
-
-        model.addAttribute("warehouses", warehousesList);
         model.addAttribute("warehouse", new Warehouse());
-
-        return "warehouse/createWarehouse";
+        return "warehouse/create";
     }
 
     @PostMapping("/create")
@@ -46,12 +42,9 @@ public class WarehouseController {
             throw new IllegalArgumentException("Invalid warehouse data");
         }
         var user = userPrincipal.getUser();
-
         warehouseService.saveWarehouse(warehouse, user.getCompany());
-
         return "redirect:/warehouses";
     }
-
 
     @GetMapping
     public String warehouses(
@@ -80,8 +73,6 @@ public class WarehouseController {
     }
 
 
-
-
     @GetMapping("/{id}")
     public String getWarehousesByName(
             @RequestParam(
@@ -103,11 +94,9 @@ public class WarehouseController {
         return "warehouse/warehouses";
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteWarehouse(@PathVariable Long id) {
         warehouseService.deleteWarehouseById(id);
-
         return "redirect:/warehouses";
     }
-
 }

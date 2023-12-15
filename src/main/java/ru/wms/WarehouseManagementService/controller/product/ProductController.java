@@ -102,17 +102,6 @@ public class ProductController {
         return "redirect:" + referer;
     }
 
-    @GetMapping("/{id}/edit")
-    public String editProductForm(
-            @PathVariable Long id,
-            Model model
-    ) {
-        Product product = productService.getProductById(id);
-        model.addAttribute("product", product);
-
-        return "editProduct";
-    }
-
     @PostMapping("/{id}/edit")
     public String saveEditedProduct(
             @PathVariable Long id,
