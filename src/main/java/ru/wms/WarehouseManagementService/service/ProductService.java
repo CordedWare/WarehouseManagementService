@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.entity.*;
 import ru.wms.WarehouseManagementService.repository.ProductRepository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -23,37 +24,35 @@ public class ProductService {
     }
 
     public Product getProductById(Long id) {
-        Optional<Product> productOpt = productRepository.findById(id);
 
-        if (productOpt.isPresent()) {
-
-            return productOpt.get();
-        } else {
-            throw new RuntimeException("Товар не был найден по id: " + id);
-        }
+        return productRepository.findById(id)
+                .orElseThrow( () ->
+                        new RuntimeException("Товар не был найден по id: " + id));
     }
 
-    public Product updateProduct(Long id, Product updatedProduct) {
-        Optional<Product> existingProductOpt = productRepository.findById(id);
+    public Product updateProduct(Long id, Product editedProduct) {
 
-        if (existingProductOpt.isPresent()) {
-            Product exisProdOpt = existingProductOpt.get();
-            exisProdOpt.setName(updatedProduct.getName());
-            exisProdOpt.setDescription(updatedProduct.getDescription());
-            exisProdOpt.setPrice(updatedProduct.getPrice());
+        return productRepository.findById(id)
+                .map(product -> {
+                    product.setName(editedProduct.getName());
+                    product.setDescription(editedProduct.getDescription());
+                    product.setCategory(editedProduct.getCategory());
+                    product.setPrice(editedProduct.getPrice());
+                    product.setQuantity(editedProduct.getQuantity());
 
-            return productRepository.save(exisProdOpt);
-        } else {
-            throw new RuntimeException("Товар не был найден по id: " + id);
-        }
+                    return productRepository.save(product);
+                })
+                .orElseThrow( () ->
+                        new RuntimeException("Товар не был найден по id: " + id));
     }
+
 
     public Optional<Iterable<Product>> getAllMyProducts(User user) {
         if (user instanceof Employee employee)
 
-            return Optional.ofNullable(productRepository.findAllByOwner(employee.getCustomer()));
+            return Optional.of(productRepository.findAllByCompany(employee.getCompany()));
 
-        return Optional.ofNullable(productRepository.findAllByOwner(user));
+        return Optional.of(productRepository.findAllByCompany(user.getCompany()));
     }
 
     public void move(Set<Product> products, Optional<Warehouse> warehouse) {
@@ -64,16 +63,11 @@ public class ProductService {
     }
 
     public void createProduct(Product product, Long warehouseId, User user) {
-        var warehouse = warehouseService.getById(warehouseId);
-        product.setOwner(user);
-        product.setWarehouse(warehouse.get());
+        var warehouseOpt = warehouseService.getById(warehouseId);
+        product.setCompany(user.getCompany());
+        product.setWarehouse(warehouseOpt.get());
 
         productRepository.save(product);
-    }
-
-    public Product saveProduct(Product product) {
-
-        return productRepository.save(product);
     }
 
     public Optional<Iterable<Product>> getAllProducts() {
@@ -88,6 +82,10 @@ public class ProductService {
 
     public void deleteProductById(Long id) {
         productRepository.deleteById(id);
+    }
+
+    public void saveParserProduct(List<Product> product) {
+        productRepository.saveAll(product);
     }
 
 }

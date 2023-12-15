@@ -34,8 +34,8 @@ public class Warehouse {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "owner_id", nullable = false)
-    private User owner;
+    @JoinColumn(name = "company_id", nullable = false)
+    private Company company;
 
     @OneToMany(mappedBy = "warehouse")
     private List<Product> productList;

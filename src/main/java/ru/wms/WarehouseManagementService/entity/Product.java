@@ -23,8 +23,8 @@ public class Product {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "owner_id", nullable = false)
-    private User owner;
+    @JoinColumn(name = "company_id", nullable = false)
+    private Company company;
 
     @ManyToOne
     @JoinColumn(name = "warehouse_id")
@@ -51,7 +51,7 @@ public class Product {
     public String toString() {
 
         return "Product {" +
-                "id = " + id +
+                "id = "             + id +
                 ", warehouse = "    + warehouse.getName() +
                 ", name = '"        + name + '\'' +
                 ", description = '" + description + '\'' +

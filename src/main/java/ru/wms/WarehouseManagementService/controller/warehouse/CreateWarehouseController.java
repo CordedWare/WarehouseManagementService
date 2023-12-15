@@ -37,7 +37,7 @@ public class CreateWarehouseController {
         model.addAttribute("warehouses", warehousesList);
         model.addAttribute("warehouse", new Warehouse());
 
-        return "/warehouse/createWarehouse";
+        return "warehouse/createWarehouse";
     }
 
     @PostMapping

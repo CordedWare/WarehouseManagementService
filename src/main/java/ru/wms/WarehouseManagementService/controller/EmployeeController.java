@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.wms.WarehouseManagementService.dto.EmployeeRegistrationForm;
 import ru.wms.WarehouseManagementService.entity.Employee;
 import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.EmployeeService;
@@ -31,8 +32,8 @@ public class EmployeeController {
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             Model model
     ) {
-        model.addAttribute("employees", employeeService.findMyEmployee(userPrincipal.getCustomer()));
-        model.addAttribute("employee", new Employee());
+        model.addAttribute("employees", employeeService.findMyEmployee(userPrincipal.getClient()));
+        model.addAttribute("employeeRegistrationForm", new EmployeeRegistrationForm());
 
         return "employees";
     }
@@ -40,9 +41,9 @@ public class EmployeeController {
     @PostMapping
     public String createEmployee(
             @AuthenticationPrincipal UserPrincipal userPrincipal,
-            Employee employee
+            EmployeeRegistrationForm employeeRegistrationForm
     ) {
-        var newEmployee = employeeService.createEmployee(employee, userPrincipal.getCustomer());
+        var newEmployee = employeeService.createEmployee(employeeRegistrationForm, userPrincipal.getClient());
 
         return String.format("redirect:/login?activate_email=%s", newEmployee.getActivationCode());
     }

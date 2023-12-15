@@ -1,17 +1,16 @@
 package ru.wms.WarehouseManagementService.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.wms.WarehouseManagementService.configuration.SecurityConfiguration;
-import ru.wms.WarehouseManagementService.dto.UserRegistrationDTO;
-import ru.wms.WarehouseManagementService.entity.Customer;
+import ru.wms.WarehouseManagementService.dto.RegistrationForm;
+import ru.wms.WarehouseManagementService.entity.Client;
 import ru.wms.WarehouseManagementService.entity.User;
-import ru.wms.WarehouseManagementService.repository.CustomerRepository;
+import ru.wms.WarehouseManagementService.repository.ClientRepository;
 import ru.wms.WarehouseManagementService.repository.UserRepository;
 import ru.wms.WarehouseManagementService.security.Authority;
 
 import java.util.Collections;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -21,26 +20,40 @@ public class UserService {
     private UserRepository<User, Long> userRepository;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private ClientRepository clientRepository;
 
-    public boolean isUserExist(UserRegistrationDTO userRegistrationDTO) {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-        return userRepository.findByEmail(userRegistrationDTO.getEmail()).isPresent();
+    public boolean isUserExist( RegistrationForm registrationForm) {
+        return userRepository.findByEmail(registrationForm.getEmail()).isPresent();
     }
 
     /**
      * Логика принципала как User с ролями и Customer как сущность заказчика разделены для атомарности.
      * TODO: Возможно придется вынести отдельно регистрацию Customer, если поменяется бизнес-логика
      */
-    public Customer registerUserCustomer(Customer customer) {
-        customer.setAuthorities(Collections.singleton(Authority.ROLE_CUSTOMER));
-        customer.setActive(false);
-        customer.setActivationCode(UUID.randomUUID().toString());
-        customer.setPassword(SecurityConfiguration.passwordEncoder().encode(customer.getPassword()));
 
-        customerRepository.save(customer);
 
-        return customer;
+
+    public Client registerClient(RegistrationForm registrationForm) {
+        var client = new Client();
+
+        client.setFirstname(registrationForm.getFirstname());
+        client.setLastname(registrationForm.getLastname());
+        client.setPatronymic(registrationForm.getPatronymic());
+        client.setEmail(registrationForm.getEmail());
+        client.setTelephone(registrationForm.getTelephone());
+        client.setContactInfoOrg(registrationForm.getContactInfoOrg());
+
+        client.setAuthorities(Collections.singleton(Authority.ROLE_CLIENT));
+        client.setActive(false);
+        client.setActivationCode(UUID.randomUUID().toString());
+        client.setPassword(passwordEncoder.encode(registrationForm.getPassword()));
+
+        clientRepository.save(client);
+
+        return client;
     }
 
     public boolean activateUser(String code) {
