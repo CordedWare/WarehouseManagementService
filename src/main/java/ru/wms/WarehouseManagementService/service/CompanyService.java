@@ -29,10 +29,10 @@ public class CompanyService {
         company.setName(companyCreateForm.getName());
         company.setAddress(companyCreateForm.getAddress());
 
-        if(company.getEmployess() == null){
-            company.setEmployess(new HashSet<>());
+        if(company.getUsers() == null){
+            company.setUsers(new HashSet<>());
         }
-        company.getEmployess().add(client);
+        company.getUsers().add(client);
         client.setCompany(company);
 
         companyRepository.save(company);

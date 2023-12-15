@@ -31,9 +31,6 @@ public class Company {
     private Set<Order> orders;
 
     @OneToMany(mappedBy = "company")
-    private Set<Employee> employees;
-
-    @OneToMany(mappedBy = "company")
-    private Set<User> employess;
+    private Set<User> users;
 
 }
