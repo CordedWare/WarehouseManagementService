@@ -13,12 +13,12 @@
     <h2>Вы вошли в систему как <span sec:authentication="name"></span></h2>
 
     <hr>
-        <p>
-         Раздел управления складами
-        </p>
+    <p>
+        Раздел управления складами
+    </p>
     <hr>
 
-    <h4><a href="/createWarehouse" >Зарегистрировать склад</a></h4>
+    <h4><a href="/warehouses/create">Зарегистрировать склад</a></h4>
 
     <tr>
         <td colspan="7">
@@ -34,24 +34,31 @@
         <tr>
             <th>Имя склада</th>
             <th>Адрес</th>
-            <th>Площадь</th>
-            <th>Контактная информация</th>
+            <th>Вместительность</th>
             <th>Дата создания</th>
+            <th>Удалить</th>
+            <th>Добавить товар</th>
+            <th>Список товаров</th>
         </tr>
         </thead>
         <tbody>
 
         <tr th:each="warehouse : ${warehouses.orElse(null)}">
-            <td th:if="${warehouse.name}"               th:text="${warehouse.name}"></td>
-            <td th:if="${warehouse.address}"            th:text="${warehouse.address}"></td>
-            <td th:if="${warehouse.capacity}"           th:text="${warehouse.capacity}"></td>
-            <td th:if="${warehouse.contactInformation}" th:text="${warehouse.contactInformation}"></td>
-            <td th:if="${warehouse.creationDate}"       th:text="${warehouse.creationDate}"></td>
+            <td th:if="${warehouse.name}" th:text="${warehouse.name}"></td>
+            <td th:if="${warehouse.address}" th:text="${warehouse.address}"></td>
+            <td th:if="${warehouse.capacity}" th:text="${warehouse.capacity}"></td>
+            <td th:if="${warehouse.creationDate}" th:text="${warehouse.creationDate}"></td>
             <td>
                 <form th:action="@{'/warehouses/' + ${warehouse.id}}" method="post">
                     <input type="hidden" name="_method" value="delete">
                     <button type="submit">Удалить</button>
                 </form>
+            </td>
+            <td>
+                <a th:href="@{'/products/add?warehouseId='+${warehouse.id}}" href="/products">Добавить товар</a>
+            </td>
+            <td>
+                <a th:href="@{'/warehouses/'+${warehouse.id}+'/products'}" href="/products">Список товаров</a>
             </td>
         </tr>
         </tbody>

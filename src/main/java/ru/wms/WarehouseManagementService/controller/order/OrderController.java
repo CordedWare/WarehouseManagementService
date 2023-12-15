@@ -71,7 +71,7 @@ public class OrderController {
 //        model.addAttribute("orders", orderService.getAllMyOrders(userPrincipal.getUser(),OrderStatus.PROCESSING));
         model.addAttribute("order", orderService.getById(orderId));
         model.addAttribute("orderMoveDTO", new OrderMoveDTO());
-        model.addAttribute("warehouses", warehouseService.getAllWarehouses(userPrincipal.getUser()));
+        model.addAttribute("warehouses", warehouseService.getAllWarehouses(userPrincipal.getUser().getCompany()));
 
         return "order/move";
     }

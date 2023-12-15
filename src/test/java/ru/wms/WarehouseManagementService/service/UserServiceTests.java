@@ -43,9 +43,6 @@ class UserServiceTests {
         registrationForm.setPassword("password");
         registrationForm.setEmail("testEmail@email.com");
         registrationForm.setTelephone(79028196791L);
-        registrationForm.setNameOrg("testOrgname");
-        registrationForm.setAddressOrg("testaddrORg");
-        registrationForm.setContactInfoOrg("testContactInfo");
     }
 
     @AfterEach
@@ -59,12 +56,11 @@ class UserServiceTests {
 
         assertNotNull(customer);
         assertTrue(passwordEncoder.matches(registrationForm.getPassword(), customer.getPassword()));
-        assertTrue(CoreMatchers.is(customer.getEmail()).matches(registrationForm.getEmail()));
+        assertTrue(CoreMatchers.is(customer.getEmail()).matches(registrationForm.getEmail().toLowerCase()));
         assertTrue(CoreMatchers.is(customer.getFirstname()).matches(registrationForm.getFirstname()));
         assertTrue(CoreMatchers.is(customer.getLastname()).matches(registrationForm.getLastname()));
         assertTrue(CoreMatchers.is(customer.getPatronymic()).matches(registrationForm.getPatronymic()));
         assertTrue(CoreMatchers.is(customer.getTelephone()).matches(registrationForm.getTelephone()));
-        assertTrue(CoreMatchers.is(customer.getContactInfoOrg()).matches(registrationForm.getContactInfoOrg()));
         assertTrue(CoreMatchers.is(customer.isActive()).matches(false));
         assertEquals(customer.getAuthorities(), Collections.singleton(Authority.ROLE_CLIENT));
 

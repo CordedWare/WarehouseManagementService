@@ -18,16 +18,18 @@
         </p>
     <hr>
 
-    <h4><a href="/createProduct" >Зарегистрировать товар</a></h4>
+<!--    <h4><a href="/createProduct" >Зарегистрировать товар</a></h4>-->
 
-    <tr>
-        <td colspan="7">
-            <form th:action="@{'/productsя/' + ${product.name}}" method="get">
-                <input type="text" name="filter" placeholder="Поиск по имени">
-                <button type="submit">Поиск</button>
-            </form>
-        </td>
-    </tr>
+<!--    <tr>-->
+<!--        <td colspan="7">-->
+<!--            <form th:action="@{'/productsя/' + ${product.name}}" method="get">-->
+<!--                <input type="text" name="filter" placeholder="Поиск по имени">-->
+<!--                <button type="submit">Поиск</button>-->
+<!--            </form>-->
+<!--        </td>-->
+<!--    </tr>-->
+
+    <h4>Список товаров склада</h4>
 
     <table>
         <thead>
@@ -45,7 +47,7 @@
         </thead>
         <tbody>
 
-        <tr th:each="product : ${products.get()}">
+        <tr th:each="product : ${products}">
             <td th:text="${product.name}"></td>
             <td th:text="${product.description}"></td>
             <td th:text="${product.category}"></td>
@@ -66,7 +68,7 @@
                 </form>
             </td>
             <td>
-                <form th:action="@{'/products/' + ${product.id}}" method="post">
+                <form th:action="@{'/products/delete' + ${product.id}}" method="post">
                     <input type="hidden" name="_method" value="delete">
                     <button type="submit">Удалить</button>
                 </form>

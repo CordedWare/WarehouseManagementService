@@ -32,15 +32,7 @@ public class OrderService {
     public Order saveNewOrder(Order order) {
 
         order.setQuantity(order.getProducts().size());
-        order.setDelivery(false);
         order.setStatus(OrderStatus.NEW);
-
-        var totalCost = order.getProducts()
-                .stream()
-                .map(product ->
-                        product.getPrice().multiply(BigDecimal.valueOf(product.getQuantity())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        order.setTotalCost(totalCost);
 
         order.getProducts().forEach(product ->
                 product.setOrderSet(Collections.singleton(order)));

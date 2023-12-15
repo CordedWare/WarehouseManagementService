@@ -1,9 +1,13 @@
 package ru.wms.WarehouseManagementService.controller.product;
 
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.wms.WarehouseManagementService.entity.Product;
 import ru.wms.WarehouseManagementService.entity.Warehouse;
@@ -16,7 +20,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/products")
-public class MainProductController {
+public class ProductController {
 
     /**
      * Основной контроллер товара
@@ -28,21 +32,44 @@ public class MainProductController {
     @Autowired
     private WarehouseService warehouseService;
 
-    @GetMapping
-    public String products(
-            @AuthenticationPrincipal UserPrincipal userPrincipal,
-            Model model
+    @GetMapping("/add")
+    public String add(@RequestParam(required = true) Long warehouseId,
+                      Model model,
+                      @AuthenticationPrincipal UserPrincipal userPrincipal
     ) {
-        var user = userPrincipal.getUser();
-        Optional<Iterable<Product>> productList     = productService.getAllMyProducts(user);
+
+        var user = userPrincipal.getUser().getCompany();
         Optional<Iterable<Warehouse>> warehouseList = warehouseService.getAllWarehouses(user);
 
         model.addAttribute("warehouses", warehouseList);
-        model.addAttribute("products",   productList);
-        model.addAttribute("product",    new Product());
-
-        return "product/products";
+        model.addAttribute("product", new Product());
+        return "product/add";
     }
+
+
+    @PostMapping("/add")
+    public String add(
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
+            @ModelAttribute("product")
+            @Valid Product product,
+            @Valid Long warehouse,
+            BindingResult bindingResult
+    ) {
+        Optional.of(bindingResult)
+                .filter(BindingResult::hasErrors)
+                .ifPresent(errors -> {
+                    throw new IllegalArgumentException("Неверные данные о товаре");
+                });
+
+        productService.createProduct(
+                product,
+                warehouse,
+                userPrincipal.getUser()
+        );
+
+        return "redirect:/warehouses";
+    }
+
 
     @GetMapping("/{id}")
     public String getProductsByName(
@@ -55,23 +82,24 @@ public class MainProductController {
     ) {
         Optional<Iterable<Product>> productList = Optional.of(
                 nameFilterOpt
-                        .filter( filter -> !filter.isEmpty())
-                        .flatMap(  name -> productService.findByNameContaining(name))
-                        .orElseGet(  () -> productService.getAllProducts().orElse(new ArrayList<>()))
+                        .filter(filter -> !filter.isEmpty())
+                        .flatMap(name -> productService.findByNameContaining(name))
+                        .orElseGet(() -> productService.getAllProducts().orElse(new ArrayList<>()))
         );
 
         model.addAttribute("products", productList);
-        model.addAttribute("filter",   nameFilterOpt);
-        model.addAttribute("product",  new Product());
+        model.addAttribute("filter", nameFilterOpt);
+        model.addAttribute("product", new Product());
 
         return "product/products";
     }
 
-    @PostMapping("/{id}")
-    public String deleteProduct(@PathVariable Long id) {
+    @PostMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable Long id, HttpServletRequest request) {
         productService.deleteProductById(id);
 
-        return "redirect:/products";
+        var referer = request.getHeader("Referer");
+        return "redirect:" + referer;
     }
 
     @GetMapping("/{id}/edit")
@@ -88,11 +116,12 @@ public class MainProductController {
     @PostMapping("/{id}/edit")
     public String saveEditedProduct(
             @PathVariable Long id,
-            @ModelAttribute Product editedProduct
+            @ModelAttribute Product editedProduct,
+            HttpServletRequest request
     ) {
         productService.updateProduct(id, editedProduct);
-
-        return "redirect:/products/" + id;
+        var referer = request.getHeader("Referer");
+        return "redirect:" + referer;
     }
 
 }

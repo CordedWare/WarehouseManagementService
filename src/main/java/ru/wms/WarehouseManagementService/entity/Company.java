@@ -25,12 +25,8 @@ public class Company {
     private Set<Warehouse> warehouses;
 
     @OneToMany(mappedBy = "company")
-    private Set<Product> products;
-
-    @OneToMany(mappedBy = "company")
     private Set<Order> orders;
 
     @OneToMany(mappedBy = "company")
     private Set<User> users;
-
 }

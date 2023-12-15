@@ -14,12 +14,12 @@
     <div class="container">
         <form name="f" th:action="@{/company/manage/create}" th:object="${companyCreateForm}" method="post">
             <div>
-                <label for="name">Company name</label>
+                <label for="name">Создать команию</label>
                 <input type="text" class="form-control" id="name" th:field="*{name}" name="name"
                        placeholder="Company name">
             </div>
             <div>
-                <label for="address">Company address</label>
+                <label for="address">Адрес компании</label>
                 <input type="text" class="form-control" id="address" th:field="*{address}" name="address"
                        placeholder="Company address">
             </div>

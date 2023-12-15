@@ -21,18 +21,6 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "company_id", nullable = false)
-    private Company company;
-
-    @ManyToOne
-    @JoinColumn(name = "warehouse_id")
-    private Warehouse warehouse;
-
-    @ManyToMany(mappedBy = "products")
-    private Set<Order> orderSet;
-
     @Size(min = 2, message = "Имя должно содержать не менее 2 символов")
     private String name;
 
@@ -42,24 +30,15 @@ public class Product {
 
     private BigDecimal price;
 
-    private int quantity;
+    private Integer quantity;
 
     @Column(name = "creation_date", columnDefinition = "DATE")
     private LocalDate creationDate;
 
-    @Override
-    public String toString() {
+    @ManyToOne
+    @JoinColumn(name = "warehouse_id")
+    private Warehouse warehouse;
 
-        return "Product {" +
-                "id = "             + id +
-                ", warehouse = "    + warehouse.getName() +
-                ", name = '"        + name + '\'' +
-                ", description = '" + description + '\'' +
-                ", category = '"    + category + '\'' +
-                ", price = "        + price +
-                ", quantity = "     + quantity +
-                ", creationDate = " + creationDate +
-                '}';
-    }
-
+    @ManyToMany(mappedBy = "products")
+    private Set<Order> orderSet;
 }

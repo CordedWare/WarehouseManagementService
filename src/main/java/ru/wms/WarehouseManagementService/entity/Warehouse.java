@@ -27,8 +27,6 @@ public class Warehouse {
 
     private int capacity;
 
-    private String contactInformation;
-
     @Column(name = "creation_date", columnDefinition = "DATE")
     private LocalDate creationDate;
 

@@ -21,10 +21,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String firstname;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String lastname;
 
     @Column(nullable = true)
@@ -36,9 +36,13 @@ public class User {
     @Column(nullable = false,unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = true,unique = true)
+    private Long telephone;
+
+    @Column(nullable = true)
     private boolean active;
 
+    @Column(nullable = true)
     private String activationCode;
 
     @ElementCollection(targetClass = Authority.class, fetch = FetchType.EAGER)

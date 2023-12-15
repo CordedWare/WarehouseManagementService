@@ -22,25 +22,19 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int quantity;
+    @Column(nullable = false)
+    private String name;
 
-    private boolean delivery;
+    private Integer quantity;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     private String description;
 
-    @Column(name = "total_cost")
-    private BigDecimal totalCost;
-
     @Column(name = "creation_date", columnDefinition = "DATE")
     @CreationTimestamp
     private LocalDateTime creationDate;
-
-    @NotNull
-    @Column
-    private String name;
 
     @JsonIgnore
     @ManyToOne

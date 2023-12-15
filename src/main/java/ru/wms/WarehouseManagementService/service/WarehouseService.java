@@ -2,10 +2,7 @@ package ru.wms.WarehouseManagementService.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.wms.WarehouseManagementService.entity.Client;
-import ru.wms.WarehouseManagementService.entity.Employee;
-import ru.wms.WarehouseManagementService.entity.User;
-import ru.wms.WarehouseManagementService.entity.Warehouse;
+import ru.wms.WarehouseManagementService.entity.*;
 import ru.wms.WarehouseManagementService.repository.WarehouseRepository;
 
 import java.util.Optional;
@@ -16,31 +13,31 @@ public class WarehouseService {
     @Autowired
     private WarehouseRepository warehouseRepository;
 
-    public Optional<Iterable<Warehouse>> getAllWarehouses(User user) {
+    public Optional<Iterable<Warehouse>> getAllWarehouses(Company company) {
 
-        return Optional.ofNullable(warehouseRepository.findAllByCompany(user.getCompany()));
+        return Optional.ofNullable(warehouseRepository.findAllByCompany(company));
     }
 
-    public Warehouse saveWarehouse(Warehouse warehouse, User client) {
-        warehouse.setCompany(client.getCompany());
+    public Warehouse saveWarehouse(Warehouse warehouse, Company company) {
+        warehouse.setCompany(company);
 
         return Optional.of(warehouseRepository.save(warehouse))
-                        .orElseThrow( () ->
-                                new RuntimeException("Ошибка: склад не был сохранен "));
+                .orElseThrow(() ->
+                        new RuntimeException("Ошибка: склад не был сохранен "));
     }
 
     public Warehouse getWarehouseById(Long warehouseId) {
 
         return Optional.of(warehouseRepository.findById(warehouseId).get())
-                        .orElseThrow( () ->
-                                new RuntimeException("Ошибка: склад не найден "));
+                .orElseThrow(() ->
+                        new RuntimeException("Ошибка: склад не найден "));
     }
 
     public Optional<Warehouse> getById(Long id) {
 
         return Optional.of(warehouseRepository.findById(id)
-                        .orElseThrow(() ->
-                                new IllegalArgumentException("Ошибка: Склад не найден по id :" + id)));
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Ошибка: Склад не найден по id :" + id)));
     }
 
     public Optional<Iterable<Warehouse>> getAllWarehouses() {
