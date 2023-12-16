@@ -1,6 +1,7 @@
 package ru.wms.WarehouseManagementService.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,9 @@ public class EmployeeController {
     /**
      * Контроллер сотрудника
      */
+
+    @Value("${domen}")
+    private String domen;
 
     @Autowired
     private final EmployeeService employeeService;
@@ -45,7 +49,7 @@ public class EmployeeController {
     ) {
         var newEmployee = employeeService.createEmployee(employeeRegistrationForm, userPrincipal.getClient());
 
-        return String.format("redirect:/login?activate_email=%s", newEmployee.getActivationCode());
+        return String.format("redirect:/login?activate_email=%s&domen=%s", newEmployee.getActivationCode(),domen);
     }
 
 //    @PostMapping

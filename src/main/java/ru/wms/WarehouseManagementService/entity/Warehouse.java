@@ -27,8 +27,6 @@ public class Warehouse {
 
     private int capacity;
 
-    private String contactInformation;
-
     @Column(name = "creation_date", columnDefinition = "DATE")
     private LocalDate creationDate;
 
@@ -37,7 +35,7 @@ public class Warehouse {
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
 
-    @OneToMany(mappedBy = "warehouse")
+    @OneToMany(mappedBy = "warehouse", cascade = CascadeType.REMOVE)
     private List<Product> productList;
 
 }

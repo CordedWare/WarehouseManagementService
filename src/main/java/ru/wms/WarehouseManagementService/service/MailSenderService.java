@@ -17,6 +17,9 @@ public class MailSenderService {
     @Value("${spring.mail.username}")
     private String username;
 
+    @Value("${domen}")
+    private String domen;
+
     public void send(
             String emailTo,
             String subject,
@@ -36,9 +39,10 @@ public class MailSenderService {
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
                     "Здравствуйте, %s! \n" +
-                            "Добро пожаловать в сервис WarehouseManagementWebservice. Пожалуйста, перейдите по ссылке: http://localhost:8080/index/%s",
+                            "Добро пожаловать в сервис WarehouseManagementWebservice. Пожалуйста, перейдите по ссылке: %sindex/%s",
                     user.getFirstname(),
-                    user.getActivationCode()
+                    user.getActivationCode(),
+                    domen
             );
             send(
                     user.getEmail(),

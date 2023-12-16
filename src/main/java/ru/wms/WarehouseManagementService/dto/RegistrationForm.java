@@ -10,7 +10,4 @@ public class RegistrationForm {
     private String password;
     private String email;
     private Long telephone;
-    private String nameOrg;
-    private String addressOrg;
-    private String contactInfoOrg;
 }

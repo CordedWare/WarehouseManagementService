@@ -1,6 +1,7 @@
 package ru.wms.WarehouseManagementService.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +15,11 @@ import ru.wms.WarehouseManagementService.service.UserService;
 public class SignUpController {
 
     /**
-     * Контроллер авторизации и регистрации
+     * Контроллер регистрации
      */
+
+    @Value("${domen}")
+    private String domen;
 
     @Autowired
     private UserService userService;
@@ -26,30 +30,16 @@ public class SignUpController {
     @GetMapping("/sign-up")
     public String signUpPage(Model model) {
         model.addAttribute("registrationForm", new RegistrationForm());
-
         return "sign-up";
     }
 
     @PostMapping("/sign-up")
     public String userRegistration(RegistrationForm registrationForm) {
-
-//        System.out.println(customer);
-//        if(!isCorrectUserDTO(userDTO))
-//            return "redirect:/sign-up?validate_error";
-//
         if(userService.isUserExist(registrationForm))
             return "redirect:/sign-up?user_exist";
 
         var newUser = userService.registerClient(registrationForm);
 
-//        mailSender.sendActivationCode(newUser);
-
-        return String.format("redirect:/login?activate_email=%s", newUser.getActivationCode());
+        return String.format("redirect:/login?activate_email=%s&domen=%s", newUser.getActivationCode(),domen);
     }
-
-    private boolean isCorrectUserDTO(UserRegistrationDTO userDTO){
-//        TODO: проверка полей
-        return true;
-    }
-
 }

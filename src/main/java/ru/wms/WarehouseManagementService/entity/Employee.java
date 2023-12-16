@@ -1,6 +1,5 @@
 package ru.wms.WarehouseManagementService.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,6 +8,4 @@ import lombok.*;
 @Entity
 @Table(name = "employee_t")
 public class Employee extends User {
-
-
 }

@@ -23,7 +23,7 @@
 <p>
     <h3 th:if="${company == null}">
         Вы ещё не создали компанию
-        <a th:href="@{/company/manage/create}">Create</a>
+        <a th:href="@{/company/manage/create}">Создать</a>
     </h3>
 </p>
 
@@ -31,11 +31,12 @@
 
 
     <p th:if="${company != null}">
-        <a th:href="@{/orders}" href="/orders" >Заказы</a> <br>
         <a th:href="@{/warehouses}" href="/warehouses" >Склады</a> <br>
-        <a th:href="@{/products}" href="/products" >Товары</a>  <br>
+<!--        <a th:href="@{/products}" href="/products" >Товары</a>  <br>-->
         <a th:href="@{/employees}" href="/employees" >Создать работника</a> <br>
         <a th:href="@{/orders/manage}" href="/orders/manage" >Управление заказами</a> <br>
+        <a th:href="@{/orders}" href="/orders" >Заказы</a> <br>
+
     </p>
 </div>
 

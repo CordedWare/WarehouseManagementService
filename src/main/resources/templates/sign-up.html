@@ -17,7 +17,7 @@
     <br>
     <form name="f" th:action="@{/sign-up}" th:object="${registrationForm}" method="post">
         <div th:if="${param.user_exist}" class="alert alert-danger">
-            Пользователь с такой почтой уже существует.
+            Пользователь с такой почтой или телефоном уже существует.
         </div>
         <div th:if="${param.validate_error}" class="alert alert-danger">
             Невалидные данные
@@ -51,11 +51,6 @@
             <label for="telephone">Контактный телефон</label>
             <input type="number" class="form-control" id="telephone" th:field="*{telephone}" name="telephone"
                    placeholder="Контактный телефон">
-        </div>
-        <div>
-            <label for="contactInfoOrg">Контактная информация</label>
-            <input type="text" class="form-control" id="contactInfoOrg" th:field="*{contactInfoOrg}" name="contactInfoOrg"
-                   placeholder="Контактная информация">
         </div>
         <div>
             <button type="submit">Зарегистрироваться</button>

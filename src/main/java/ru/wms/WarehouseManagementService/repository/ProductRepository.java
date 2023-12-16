@@ -15,6 +15,4 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 
     List<Product> findByNameContaining(String name);
 
-    List<Product> findAllByCompany(Company company);
-
 }

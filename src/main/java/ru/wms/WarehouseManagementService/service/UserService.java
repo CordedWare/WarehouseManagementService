@@ -26,7 +26,7 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public boolean isUserExist( RegistrationForm registrationForm) {
-        return userRepository.findByEmail(registrationForm.getEmail()).isPresent();
+        return userRepository.existsByEmail(registrationForm.getEmail()) || userRepository.existsByTelephone(registrationForm.getTelephone());
     }
 
     /**
@@ -42,9 +42,8 @@ public class UserService {
         client.setFirstname(registrationForm.getFirstname());
         client.setLastname(registrationForm.getLastname());
         client.setPatronymic(registrationForm.getPatronymic());
-        client.setEmail(registrationForm.getEmail());
+        client.setEmail(registrationForm.getEmail().toLowerCase());
         client.setTelephone(registrationForm.getTelephone());
-        client.setContactInfoOrg(registrationForm.getContactInfoOrg());
 
         client.setAuthorities(Collections.singleton(Authority.ROLE_CLIENT));
         client.setActive(false);
