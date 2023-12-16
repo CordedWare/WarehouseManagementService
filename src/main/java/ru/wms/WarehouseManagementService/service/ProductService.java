@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.entity.*;
 import ru.wms.WarehouseManagementService.repository.ProductRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -47,12 +48,16 @@ public class ProductService {
     }
 
 
-    public Optional<Iterable<Product>> getAllMyProducts(User user) {
-//        if (user instanceof Employee employee)
-//            return Optional.of(productRepository.findAllByCompany(employee.getCompany()));
-//
-//        return Optional.of(productRepository.findAllByCompany(user.getCompany()));
-        return null;
+    public Optional<Iterable<Product>> getCompanyProducts(Company company) {
+        var warehouseList = warehouseService.getCompanyWarehouse(company).get();
+
+        var products = new ArrayList<Product>();
+
+        for (var wh : warehouseList){
+            products.addAll(wh.getProductList() );
+        }
+
+        return Optional.of(products);
     }
 
     public void move(Set<Product> products, Optional<Warehouse> warehouse) {

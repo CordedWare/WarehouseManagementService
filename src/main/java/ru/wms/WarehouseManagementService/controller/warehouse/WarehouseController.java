@@ -51,7 +51,7 @@ public class WarehouseController {
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             Model model
     ) {
-        Optional<Iterable<Warehouse>> warehousesList = warehouseService.getAllWarehouses(userPrincipal.getUser().getCompany());
+        Optional<Iterable<Warehouse>> warehousesList = warehouseService.getCompanyWarehouse(userPrincipal.getUser().getCompany());
         model.addAttribute("warehouses", warehousesList);
         model.addAttribute("warehouse", new Warehouse());
 
@@ -73,26 +73,26 @@ public class WarehouseController {
     }
 
 
-    @GetMapping("/{id}")
-    public String getWarehousesByName(
-            @RequestParam(
-                    name = "filter",
-                    required = false,
-                    defaultValue = "")
-            Optional<String> nameFilterOpt,
-            Model model
-    ) {
-        Optional<Iterable<Warehouse>> warehouseList = Optional.of(nameFilterOpt
-                .filter( filter -> !filter.isEmpty())
-                .flatMap(  name -> warehouseService.findByNameContaining(name))
-                .orElseGet(  () -> warehouseService.getAllWarehouses().orElse(new ArrayList<>())));
-
-        model.addAttribute("warehouses", warehouseList);
-        model.addAttribute("filter",     nameFilterOpt);
-        model.addAttribute("warehouse",  new Warehouse());
-
-        return "warehouse/warehouses";
-    }
+//    @GetMapping("/{id}")
+//    public String getWarehousesByName(
+//            @RequestParam(
+//                    name = "filter",
+//                    required = false,
+//                    defaultValue = "")
+//            Optional<String> nameFilterOpt,
+//            Model model
+//    ) {
+//        Optional<Iterable<Warehouse>> warehouseList = Optional.of(nameFilterOpt
+//                .filter( filter -> !filter.isEmpty())
+//                .flatMap(  name -> warehouseService.findByNameContaining(name))
+//                .orElseGet(  () -> warehouseService.getCompanyWarehouse().orElse(new ArrayList<>())));
+//
+//        model.addAttribute("warehouses", warehouseList);
+//        model.addAttribute("filter",     nameFilterOpt);
+//        model.addAttribute("warehouse",  new Warehouse());
+//
+//        return "warehouse/warehouses";
+//    }
 
     @PostMapping("/delete/{id}")
     public String deleteWarehouse(@PathVariable Long id) {

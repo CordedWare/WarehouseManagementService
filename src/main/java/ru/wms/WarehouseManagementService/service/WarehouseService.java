@@ -13,10 +13,6 @@ public class WarehouseService {
     @Autowired
     private WarehouseRepository warehouseRepository;
 
-    public Optional<Iterable<Warehouse>> getAllWarehouses(Company company) {
-
-        return Optional.ofNullable(warehouseRepository.findAllByCompany(company));
-    }
 
     public Warehouse saveWarehouse(Warehouse warehouse, Company company) {
         warehouse.setCompany(company);
@@ -40,9 +36,9 @@ public class WarehouseService {
                         new IllegalArgumentException("Ошибка: Склад не найден по id :" + id)));
     }
 
-    public Optional<Iterable<Warehouse>> getAllWarehouses() {
-
-        return Optional.ofNullable(warehouseRepository.findAll());
+    public Optional<Iterable<Warehouse>> getCompanyWarehouse(Company company) {
+        var warehouseList = warehouseRepository.findAllByCompany(company);
+        return Optional.ofNullable(warehouseList);
     }
 
     public Optional<Iterable<Warehouse>> findByNameContaining(String name) {
@@ -54,4 +50,7 @@ public class WarehouseService {
         warehouseRepository.deleteById(id);
     }
 
+    public Optional<Iterable<Warehouse>> findAllById(Long warehouseId) {
+        return Optional.ofNullable(warehouseRepository.findAllById(warehouseId));
+    }
 }

@@ -9,7 +9,7 @@
 <header th:replace="~{fragments/common_header_fragment :: head}"></header>
 
 <div class="container">
-    <form th:action="@{/employees}" th:object="${employeeRegistrationForm}" method="post">
+    <form th:action="@{/employees/create}" th:object="${employeeRegistrationForm}" method="post">
         <div class="px-4">
             <div>
                 <label for="create_firstname" class="form-label">Имя:</label>
@@ -29,6 +29,10 @@
             <div>
                 <label for="create_email">Email:</label>
                 <input id="create_email" class="form-control" type="text" name="email" th:field="*{email}">
+            </div>
+            <div>
+                <label for="telephone">Телефон:</label>
+                <input id="telephone" class="form-control" type="number" name="phone" th:field="*{telephone}">
             </div>
 
             <div>
@@ -59,17 +63,23 @@
             <th>Имя:</th>
             <th>Фамилия:</th>
             <th>Отчество:</th>
+            <th>Ссылка для активации аккаунта:</th>
+            <th>Телефон:</th>
         </tr>
         <tr th:each="employee_ : ${employees}">
             <td th:text="${employee_.getFirstname()}">firstname</td>
             <td th:text="${employee_.getLastname()}">lastname</td>
             <td th:text="${employee_.getPatronymic()}">patronymic</td>
+            <td th:text="${employee_.getActivationCode()}">patronymic</td>
+            <td th:text="${employee_.telephone}">telephone</td>
         </tr>
     </table>
 
     <div class="px-4">
         <br><button onclick="redirectToLink()" class="btn btn-primary">Выйти</button>
     </div>
+    <h3><a href="/company/manage">Вернуться в меню</a></h3>
+
 </div>
 
 

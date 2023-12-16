@@ -39,7 +39,8 @@ public class ProductController {
     ) {
 
         var user = userPrincipal.getUser().getCompany();
-        Optional<Iterable<Warehouse>> warehouseList = warehouseService.getAllWarehouses(user);
+        Optional<Iterable<Warehouse>> warehouseList = warehouseService.findAllById(warehouseId);
+//        Optional<Iterable<Warehouse>> warehouseList = warehouseService.getAllWarehouses(user);
 
         model.addAttribute("warehouses", warehouseList);
         model.addAttribute("product", new Product());

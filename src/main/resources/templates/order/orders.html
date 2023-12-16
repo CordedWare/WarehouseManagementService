@@ -18,31 +18,7 @@
         <a href="/orders?status=PROCESSING">Заказы в процессе обработки</a>
         <a href="/orders?status=COMPLETED">Завершенные заказы</a>
     </div>
-
     <hr>
-
-    <div>
-        <hr>
-        <p>
-            Раздел управления заказами
-        </p>
-        <p>
-        <form th:action="@{/orders/createOrder}" th:object="${order}" method="post">
-            <label>Название: <input type="text" th:field="*{name}" required/></label><br>
-            <label>Описание: <input type="text" th:field="*{description}" required/></label><br>
-            <label>Добавьте товары:
-                <select th:field="*{products}" multiple required>
-                    <option th:each="product : ${productss.get()}" th:value="${product.id}"
-                            th:text="${product}"></option>
-                </select>
-            </label><br>
-            <input type="submit" value="Оформить заказ"/>
-        </form>
-        <a href="/orders">Отменить оформление заказа</a>
-    </div>
-
-    <hr>
-
     <table>
         <thead>
         <tr>
@@ -50,7 +26,6 @@
             <th>Имя</th>
             <th>Количество</th>
             <th>Статус</th>
-            <th>Общая стоимость</th>
             <th>Дата создания</th>
             <th>Описание</th>
             <th>Товары</th>
@@ -65,7 +40,6 @@
             <td th:text="${order_.name}"></td>
             <td th:text="${order_.quantity}"></td>
             <td th:text="${order_.status}"></td>
-            <td th:text="${order_.totalCost}"></td>
             <td th:text="${order_.creationDate}"></td>
             <td th:text="${order_.description}"></td>
             <td>
@@ -75,14 +49,14 @@
                 </select>
             </td>
             <td>
-                <form th:action="@{/orders/process}" th:object="${orderDTO}" method="post">
+                <form th:action="@{/orders/status/process}" th:object="${orderDTO}" method="post">
 
                     <input type="hidden" th:value="${order_.id}" id="processid" name="id"/>
                     <input type="submit" value="Взять"/>
                 </form>
             </td>
             <td>
-                <form th:action="@{/orders/competed}" th:object="${orderDTO}" method="post">
+                <form th:action="@{/orders/status/competed}" th:object="${orderDTO}" method="post">
                     <input type="hidden" th:value="${order_.id}" id="competedid" name="id"/>
                     <input type="submit" value="Завершить"/>
                 </form>
@@ -91,7 +65,7 @@
         </tr>
         </tbody>
     </table>
-    <h3><a href="/index">Вернутся в меню</a></h3>
+    <h3><a href="/company/manage">Вернуться в меню</a></h3>
 </div>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
