@@ -65,6 +65,7 @@
             <th>Отчество:</th>
             <th>Ссылка для активации аккаунта:</th>
             <th>Телефон:</th>
+            <th>Написать сообщение</th>
         </tr>
         <tr th:each="employee_ : ${employees}">
             <td th:text="${employee_.getFirstname()}">firstname</td>
@@ -72,6 +73,9 @@
             <td th:text="${employee_.getPatronymic()}">patronymic</td>
             <td th:text="${employee_.getActivationCode()}">patronymic</td>
             <td th:text="${employee_.telephone}">telephone</td>
+            <td>
+                <a th:href="@{'/messenger/chat?partner='+${employee_.id}}">Связаться</a>
+            </td>
         </tr>
     </table>
 

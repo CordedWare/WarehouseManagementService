@@ -3,8 +3,10 @@ package ru.wms.WarehouseManagementService.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import ru.wms.WarehouseManagementService.entity.messenger.Chat;
 import ru.wms.WarehouseManagementService.security.Authority;
 
+import java.util.List;
 import java.util.Set;
 
 @ToString
@@ -54,4 +56,5 @@ public class User {
     @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     private Company company;
+
 }
