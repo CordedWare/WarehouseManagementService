@@ -1,6 +1,5 @@
 package ru.wms.WarehouseManagementService.controller.product;
 
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,10 @@ import ru.wms.WarehouseManagementService.service.ProductService;
 import ru.wms.WarehouseManagementService.service.WarehouseService;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Controller
 @RequestMapping("/products")
@@ -32,23 +34,21 @@ public class ProductController {
     @Autowired
     private WarehouseService warehouseService;
 
-    @GetMapping("/add")
-    public String add(@RequestParam(required = true) Long warehouseId,
-                      Model model,
-                      @AuthenticationPrincipal UserPrincipal userPrincipal
+    @GetMapping("/product")
+    public String products(@RequestParam(required = true) Long warehouseId,
+                           @AuthenticationPrincipal UserPrincipal userPrincipal,
+                           Model model
     ) {
-
         var user = userPrincipal.getUser().getCompany();
-        Optional<Iterable<Warehouse>> warehouseList = warehouseService.getAllWarehouses(user);
+        Optional<Iterable<Warehouse>> warehouseList = warehouseService.findAllById(warehouseId);
 
         model.addAttribute("warehouses", warehouseList);
         model.addAttribute("product", new Product());
         return "product/add";
     }
 
-
-    @PostMapping("/add")
-    public String add(
+    @PostMapping("/product")
+    public String products(
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             @ModelAttribute("product")
             @Valid Product product,
@@ -69,7 +69,6 @@ public class ProductController {
 
         return "redirect:/warehouses";
     }
-
 
     @GetMapping("/{id}")
     public String getProductsByName(
@@ -99,6 +98,7 @@ public class ProductController {
         productService.deleteProductById(id);
 
         var referer = request.getHeader("Referer");
+
         return "redirect:" + referer;
     }
 
@@ -110,7 +110,38 @@ public class ProductController {
     ) {
         productService.updateProduct(id, editedProduct);
         var referer = request.getHeader("Referer");
+
         return "redirect:" + referer;
+    }
+
+    @PostMapping("/filter")
+    public String filterProducts(
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
+            @RequestParam(defaultValue = "asc") String sort,
+            @RequestParam(defaultValue = "") String filter,
+            Model model
+    ) {
+        Optional<Iterable<Product>> productList = productService.getAllProducts();
+
+        productList.ifPresent( products -> {
+            if (sort.equals("asc"))
+                products = StreamSupport.stream(products.spliterator(), false)
+                        .sorted(Comparator.comparing(product ->
+                                product.getPrice()))
+                        .collect(Collectors.toList());
+
+            else if (sort.equals("desc"))
+                products = StreamSupport.stream(products.spliterator(), false)
+                        .sorted(Comparator.comparing( (Product product) ->
+                                product.getPrice()).reversed())
+                        .collect(Collectors.toList());
+
+            model.addAttribute("products", products);
+        });
+
+        model.addAttribute("product", new Product());
+
+        return "product/products";
     }
 
 }

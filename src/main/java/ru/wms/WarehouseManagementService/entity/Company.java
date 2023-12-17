@@ -17,7 +17,9 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String address;
 
 

@@ -12,6 +12,25 @@
 
 <div class="container">
     <h2>Вы вошли в систему как <span sec:authentication="name"></span></h2>
+    <div>
+        <hr>
+        <p>
+            Раздел управления заказами
+        </p>
+        <p>
+        <form th:action="@{/orders/manage/create}" th:object="${order}" method="post">
+            <label>Название: <input type="text" th:field="*{name}" required/></label><br>
+            <label>Описание: <input type="text" th:field="*{description}" required/></label><br>
+            <label>Добавьте товары:
+                <select th:field="*{products}" multiple required>
+                    <option th:each="product : ${productList}" th:value="${product.id}"
+                            th:text="${product}"></option>
+                </select>
+            </label><br>
+            <input type="submit" value="Оформить заказ"/>
+        </form>
+        <a href="/orders">Отменить оформление заказа</a>
+    </div>
     <hr>
     <table>
         <thead>
@@ -20,7 +39,6 @@
             <th>Имя</th>
             <th>Количество</th>
             <th>Статус</th>
-            <th>Общая стоимость</th>
             <th>Дата создания</th>
             <th>Описание</th>
             <th>Переместить на другой склад</th>
@@ -33,7 +51,6 @@
             <td th:text="${order_.name}"></td>
             <td th:text="${order_.quantity}"></td>
             <td th:text="${order_.status}"></td>
-            <td th:text="${order_.totalCost}"></td>
             <td th:text="${order_.creationDate}"></td>
             <td th:text="${order_.description}"></td>
             <td>
@@ -43,7 +60,7 @@
         </tr>
         </tbody>
     </table>
-    <h3><a href="/index">Вернутся в меню</a></h3>
+    <h3><a href="/company/manage">Вернуться в меню</a></h3>
 </div>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">

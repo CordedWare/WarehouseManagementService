@@ -24,9 +24,9 @@ public class EmployeeController {
     @Value("${domen}")
     private String domen;
 
-    @Autowired
     private final EmployeeService employeeService;
 
+    @Autowired
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
@@ -36,20 +36,21 @@ public class EmployeeController {
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             Model model
     ) {
-        model.addAttribute("employees", employeeService.findMyEmployee(userPrincipal.getClient()));
+        model.addAttribute("employees", employeeService.findMyEmployee(userPrincipal.getClient().getCompany()));
         model.addAttribute("employeeRegistrationForm", new EmployeeRegistrationForm());
 
         return "employees";
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public String createEmployee(
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             EmployeeRegistrationForm employeeRegistrationForm
     ) {
-        var newEmployee = employeeService.createEmployee(employeeRegistrationForm, userPrincipal.getClient());
+        var newEmployee = employeeService.createEmployee(employeeRegistrationForm, userPrincipal.getClient().getCompany());
 
-        return String.format("redirect:/login?activate_email=%s&domen=%s", newEmployee.getActivationCode(),domen);
+//        return String.format("redirect:/login?activate_email=%s&domen=%s", newEmployee.getActivationCode(),domen);
+        return "redirect:/employees";
     }
 
 //    @PostMapping

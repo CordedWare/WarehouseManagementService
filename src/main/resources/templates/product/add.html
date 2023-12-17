@@ -17,8 +17,6 @@
          Раздел управления товарами (регистрация товара)
         </p>
     <hr>
-
-    <hr>
         <h2>Создать товар</h2>
     <hr>
     <form th:action="@{/products/add}" th:object="${product}" method="post">
@@ -35,12 +33,12 @@
         </label><br>
 
         <input type="submit" value="Зарегистрировать товар" />
-        <a href="/products">Отменить регистрацию товара</a>
+        <a href="/warehouses">Отменить регистрацию товара</a>
     </form>
 
-    <h3><a href="/products">Вернутся в главное меню товаров</a></h3>
+    <h3><a href="/warehouses">Вернуться к складам</a></h3>
 
-    <h3><a href="/index">Вернутся в основное меню</a></h3>
+    <h3><a href="/company/manage">Вернуться в основное меню</a></h3>
 
 </div>
 

@@ -10,6 +10,7 @@ import ru.wms.WarehouseManagementService.entity.Warehouse;
 public interface WarehouseRepository extends CrudRepository<Warehouse, Long> {
 
     Iterable<Warehouse> findAllByCompany(Company company);
+    Iterable<Warehouse> findAllById(Long id);
 
     Iterable<Warehouse> findAll();
 

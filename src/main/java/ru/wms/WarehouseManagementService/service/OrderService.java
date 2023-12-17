@@ -7,7 +7,6 @@ import ru.wms.WarehouseManagementService.dto.OrderMoveDTO;
 import ru.wms.WarehouseManagementService.entity.*;
 import ru.wms.WarehouseManagementService.repository.OrderRepository;
 
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -47,12 +46,8 @@ public class OrderService {
         return orderRepo.findOrderById(id);
     }
 
-    public List<Order> getAllMyOrders(User user, OrderStatus status) {
-        if (user instanceof Employee employee)
-
-            return orderRepo.findAllByCompanyAndStatus(employee.getCompany(), status);
-
-        return orderRepo.findAllByCompanyAndStatus(user.getCompany(), status);
+    public List<Order> getOrders(Company company, OrderStatus status) {
+        return orderRepo.findAllByCompanyAndStatus(company, status);
     }
 
     public void changeStatus(OrderDTO orderDTO, OrderStatus orderStatus) {

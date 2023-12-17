@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.dto.EmployeeRegistrationForm;
 import ru.wms.WarehouseManagementService.entity.Client;
+import ru.wms.WarehouseManagementService.entity.Company;
 import ru.wms.WarehouseManagementService.entity.Employee;
 import ru.wms.WarehouseManagementService.repository.EmployeeRepository;
 import ru.wms.WarehouseManagementService.security.Authority;
@@ -25,12 +26,12 @@ public class EmployeeService {
     @Autowired
     private CompanyService companyService;
 
-    public List<Employee> findMyEmployee(Client client) {
+    public List<Employee> findMyEmployee(Company company) {
 
-        return employeeRepository.findAllByCompany(client.getCompany());
+        return employeeRepository.findAllByCompany(company);
     }
 
-    public Employee createEmployee(EmployeeRegistrationForm registrationForm, Client client) {
+    public Employee createEmployee(EmployeeRegistrationForm registrationForm, Company company) {
 
         var employee = new Employee();
 
@@ -38,14 +39,14 @@ public class EmployeeService {
         employee.setLastname(registrationForm.getLastname());
         employee.setPatronymic(registrationForm.getPatronymic());
         employee.setEmail(registrationForm.getEmail());
+        employee.setTelephone(registrationForm.getTelephone());
 
         employee.setAuthorities(Collections.singleton(Authority.ROLE_EMPLOYEE));
         employee.setActive(false);
         employee.setActivationCode(UUID.randomUUID().toString());
         employee.setPassword(passwordEncoder.encode(registrationForm.getPassword()));
 
-//        client.getCompany().getEmployess().add(client);
-        employee.setCompany(client.getCompany());
+        employee.setCompany(company);
 
         employeeRepository.save(employee);
 

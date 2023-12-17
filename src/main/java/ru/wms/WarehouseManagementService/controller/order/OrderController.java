@@ -23,16 +23,20 @@ public class OrderController {
 
     /**
      * Основной контроллер заказа
-    */
+     */
 
-    @Autowired
     private OrderService orderService;
 
-    @Autowired
     private ProductService productService;
 
-    @Autowired
     private WarehouseService warehouseService;
+
+    @Autowired
+    public OrderController(OrderService orderService, ProductService productService, WarehouseService warehouseService) {
+        this.orderService = orderService;
+        this.productService = productService;
+        this.warehouseService = warehouseService;
+    }
 
     @GetMapping
     public String orders(
@@ -44,9 +48,7 @@ public class OrderController {
                     defaultValue = "NEW")
             OrderStatus status
     ) {
-        model.addAttribute("order", new Order());
-        model.addAttribute("orders", orderService.getAllMyOrders(userPrincipal.getUser(),status));
-        model.addAttribute("productss", productService.getAllMyProducts(userPrincipal.getUser()));
+        model.addAttribute("orders", orderService.getOrders(userPrincipal.getUser().getCompany(), status));
         model.addAttribute("orderDTO", new OrderDTO());
 
         return "order/orders";
@@ -57,10 +59,13 @@ public class OrderController {
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             Model model
     ) {
-        model.addAttribute("orders", orderService.getAllMyOrders(userPrincipal.getUser(), OrderStatus.PROCESSING));
+        model.addAttribute("orders", orderService.getOrders(userPrincipal.getUser().getCompany(), OrderStatus.PROCESSING));
+        model.addAttribute("productList", productService.getCompanyProducts(userPrincipal.getUser().getCompany()).get());
+        model.addAttribute("order", new Order());
 
         return "order/manage";
     }
+
     @GetMapping("/manage/move/{id}")
     public String moveOrdersProduct(
             @AuthenticationPrincipal UserPrincipal userPrincipal,
@@ -71,7 +76,7 @@ public class OrderController {
 //        model.addAttribute("orders", orderService.getAllMyOrders(userPrincipal.getUser(),OrderStatus.PROCESSING));
         model.addAttribute("order", orderService.getById(orderId));
         model.addAttribute("orderMoveDTO", new OrderMoveDTO());
-        model.addAttribute("warehouses", warehouseService.getAllWarehouses(userPrincipal.getUser().getCompany()));
+        model.addAttribute("warehouses", warehouseService.getCompanyWarehouse(userPrincipal.getUser().getCompany()).get());
 
         return "order/move";
     }
@@ -86,7 +91,7 @@ public class OrderController {
         return "redirect:/orders";
     }
 
-    @PostMapping("/createOrder")
+    @PostMapping("/manage/create")
     public String createOrder(
             @ModelAttribute("order")
             @Valid Order order,
@@ -102,7 +107,7 @@ public class OrderController {
         return "redirect:/orders";
     }
 
-    @PostMapping("/process")
+    @PostMapping("/status/process")
     public String processOrder(
             @ModelAttribute("order")
             @Valid OrderDTO orderDTO
@@ -112,7 +117,7 @@ public class OrderController {
         return "redirect:/orders";
     }
 
-    @PostMapping("/competed")
+    @PostMapping("/status/competed")
     public String competedOrder(
             @ModelAttribute("order")
             @Valid OrderDTO orderDTO

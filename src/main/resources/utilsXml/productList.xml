@@ -1,0 +1,31 @@
+<document>
+<data id="product">
+<metadata>
+<columns>
+    <column name="NAME" type="string" bytes="12" max_size="0"/>
+    <column name="DESCRIPTION" type="string" bytes="12" max_size="0"/>
+    <column name="CATEGORY" type="string" bytes="12" max_size="0"/>
+    <column name="PRICE" type="double"/>
+    <column name="QUANTITY" type="int32"/>
+    <column name="CREATION_DATE" type="int32"/>
+    <column name="WAREHOUSE" type="string" bytes="12" max_size="0"/>
+    <column name="USER" type="string" bytes="12" max_size="0"/>
+</columns>
+</metadata>
+<rows>
+    <row NAME="Клавиатура Кл-1" DESCRIPTION="Устройство ввода-вывода перефирийного устройства" CATEGORY="Техника" PRICE="1299.00" QUANTITY="120" CREATION_DATE="2023-12-17" WAREHOUSE="Склад 1" USER="Тестовый юзер"/>
+</rows>
+</data>
+<data id="product.cursor">
+<metadata>
+<columns>
+<column name="INDEX" type="int64"/>
+<column name="TOTAL" type="int64"/>
+<column name="PAGESIZE" type="int64"/>
+</columns>
+</metadata>
+<rows>
+<row INDEX="0" TOTAL="54" PAGESIZE="100"/>
+</rows>
+</data>
+</document>
