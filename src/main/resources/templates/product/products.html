@@ -18,18 +18,35 @@
         </p>
     <hr>
 
-<!--    <h4><a href="/createProduct" >Зарегистрировать товар</a></h4>-->
+    <h4><a href="/createProduct" >Зарегистрировать товар</a></h4>
+    <h4>Загрузить XML-файл</h4>
+    <form th:action="@{/upload}" method="post" enctype="multipart/form-data" th:object="${uploadForm}">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        <input type="file" name="file" accept=".xml">
+        <br>
+        <br>
+        <input type="submit" value="Upload">
+    </form>
+    <div class="notification" id="uploadNotification">
+        <span th:text="${uploadStatus}" th:if="${uploadStatus != null}"></span>
+    </div>
 
-<!--    <tr>-->
-<!--        <td colspan="7">-->
-<!--            <form th:action="@{'/productsя/' + ${product.name}}" method="get">-->
-<!--                <input type="text" name="filter" placeholder="Поиск по имени">-->
-<!--                <button type="submit">Поиск</button>-->
-<!--            </form>-->
-<!--        </td>-->
-<!--    </tr>-->
+    <tr>
+        <td colspan="7">
+            <form th:action="@{'/products/' + ${product.name}}" method="get">
+                <input type="text" name="filter" placeholder="Поиск по имени">
+                <button type="submit">Поиск</button>
+            </form>
+        </td>
+    </tr>
 
-    <h4>Список товаров склада</h4>
+    <form action="/filter" method="post">
+        <select name="sort">
+            <option value="asc">По возрастанию</option>
+            <option value="desc">По убыванию</option>
+        </select>
+        <button type="submit">Фильтровать</button>
+    </form>
 
     <table>
         <thead>
