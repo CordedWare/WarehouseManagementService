@@ -1,17 +1,23 @@
 package ru.wms.WarehouseManagementService.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.entity.*;
 import ru.wms.WarehouseManagementService.repository.WarehouseRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class WarehouseService {
 
-    @Autowired
-    private WarehouseRepository warehouseRepository;
+    private final WarehouseRepository warehouseRepository;
+
+    public void sortedByDate() {
+        warehouseRepository.sortedByDate();
+    }
 
 
     public Warehouse saveWarehouse(Warehouse warehouse, Company company) {

@@ -4,15 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity(name = "warehouse_t")
 public class Warehouse {
 
@@ -37,5 +36,6 @@ public class Warehouse {
 
     @OneToMany(mappedBy = "warehouse", cascade = CascadeType.REMOVE)
     private List<Product> productList;
+
 
 }

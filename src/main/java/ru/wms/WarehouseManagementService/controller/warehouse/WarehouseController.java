@@ -1,6 +1,7 @@
 package ru.wms.WarehouseManagementService.controller.warehouse;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -17,10 +18,15 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/warehouses")
+@RequiredArgsConstructor
 public class WarehouseController {
 
-    @Autowired
-    private WarehouseService warehouseService;
+    private final WarehouseService warehouseService;
+
+//    @GetMapping
+//    public String sortedByDate() {
+//        return sortedByDate();
+//    }
 
     @GetMapping("/create")
     public String createPage(
