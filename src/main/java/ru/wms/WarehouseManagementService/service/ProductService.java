@@ -14,15 +14,10 @@ import java.util.Set;
 public class ProductService {
 
     @Autowired
-    private final ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     @Autowired
     private WarehouseService warehouseService;
-
-    @Autowired
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
 
     public Product getProductById(Long id) {
 
