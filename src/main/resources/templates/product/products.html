@@ -35,7 +35,9 @@
         <td colspan="7">
             <form th:action="@{/products}" method="get">
                 <input type="text" name="filter" placeholder="Поиск по имени">
-                <input type="hidden" name="name" th:value="${product.name}">
+                <select name="name">
+                    <option th:each="product : ${products}" th:value="${product.name}" th:text="${product.name}"></option>
+                </select>
                 <button type="submit">Поиск</button>
             </form>
         </td>
