@@ -22,7 +22,7 @@ import java.util.stream.StreamSupport;
 
 @Controller
 @RequestMapping("/products")
-public class MainProductController {
+public class ProductController {
 
     /**
      * Основной контроллер товара
@@ -34,12 +34,11 @@ public class MainProductController {
     @Autowired
     private WarehouseService warehouseService;
 
-    @GetMapping("/add")
-    public String add(@RequestParam(required = true) Long warehouseId,
-                      Model model,
-                      @AuthenticationPrincipal UserPrincipal userPrincipal
+    @GetMapping("/product")
+    public String products(@RequestParam(required = true) Long warehouseId,
+                           @AuthenticationPrincipal UserPrincipal userPrincipal,
+                           Model model
     ) {
-
         var user = userPrincipal.getUser().getCompany();
         Optional<Iterable<Warehouse>> warehouseList = warehouseService.findAllById(warehouseId);
 
@@ -48,9 +47,8 @@ public class MainProductController {
         return "product/add";
     }
 
-
-    @PostMapping("/add")
-    public String add(
+    @PostMapping("/product")
+    public String products(
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             @ModelAttribute("product")
             @Valid Product product,
