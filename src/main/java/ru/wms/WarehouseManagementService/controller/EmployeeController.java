@@ -24,9 +24,9 @@ public class EmployeeController {
     @Value("${domen}")
     private String domen;
 
+    @Autowired
     private final EmployeeService employeeService;
 
-    @Autowired
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
