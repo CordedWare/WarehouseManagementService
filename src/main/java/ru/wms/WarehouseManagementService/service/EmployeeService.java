@@ -21,10 +21,10 @@ public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private CompanyService companyService;
+
+    private final PasswordEncoder passwordEncoder;
+
+    private final CompanyService companyService;
 
     public List<Employee> findMyEmployee(Company company) {
 
