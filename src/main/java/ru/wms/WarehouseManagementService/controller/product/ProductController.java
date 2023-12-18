@@ -34,21 +34,21 @@ public class ProductController {
     @Autowired
     private WarehouseService warehouseService;
 
-    @GetMapping("/product")
-    public String products(@RequestParam(required = true) Long warehouseId,
-                           @AuthenticationPrincipal UserPrincipal userPrincipal,
-                           Model model
+    @GetMapping("/addProduct")
+    public String addProduct(@RequestParam(required = true) Long warehouseId,
+                             @AuthenticationPrincipal UserPrincipal userPrincipal,
+                             Model model
     ) {
         var user = userPrincipal.getUser().getCompany();
         Optional<Iterable<Warehouse>> warehouseList = warehouseService.findAllById(warehouseId);
 
         model.addAttribute("warehouses", warehouseList);
         model.addAttribute("product", new Product());
-        return "product/add";
+        return "product/addProduct";
     }
 
-    @PostMapping("/product")
-    public String products(
+    @PostMapping("/addProduct")
+    public String addProduct(
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             @ModelAttribute("product")
             @Valid Product product,
@@ -81,14 +81,14 @@ public class ProductController {
     ) {
         Optional<Iterable<Product>> productList = Optional.of(
                 nameFilterOpt
-                        .filter(filter -> !filter.isEmpty())
-                        .flatMap(name -> productService.findByNameContaining(name))
-                        .orElseGet(() -> productService.getAllProducts().orElse(new ArrayList<>()))
+                        .filter( filter -> !filter.isEmpty())
+                        .flatMap( name  -> productService.findByNameContaining(name))
+                        .orElseGet( ()  -> productService.getAllProducts().orElse(new ArrayList<>()))
         );
 
         model.addAttribute("products", productList);
-        model.addAttribute("filter", nameFilterOpt);
-        model.addAttribute("product", new Product());
+        model.addAttribute("filter",   nameFilterOpt);
+        model.addAttribute("product",  new Product());
 
         return "product/products";
     }

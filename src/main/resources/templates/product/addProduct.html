@@ -19,7 +19,7 @@
     <hr>
         <h2>Создать товар</h2>
     <hr>
-    <form th:action="@{/products/add}" th:object="${product}" method="post">
+    <form th:action="@{/products/addProduct}" th:object="${product}" method="post">
         <label>Имя:           <input type="text"   th:field="*{name}"         id="name" required /></label><br>
         <label>Описание:      <input type="text"   th:field="*{description}"  id="description" required /></label><br>
         <label>Категория:     <input type="text"   th:field="*{category}"     id="category" required /></label><br>
