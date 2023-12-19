@@ -15,8 +15,18 @@ public class WarehouseService {
 
     private final WarehouseRepository warehouseRepository;
 
-    public void sortedByDate() {
-        warehouseRepository.sortedByDate();
+    public Optional<Iterable<Warehouse>> sorted(String sortBy) {
+        switch (sortBy) {
+            case "name":
+                return Optional.ofNullable(warehouseRepository.sortedByName());
+            case "address":
+                return Optional.ofNullable(warehouseRepository.sortedByAddress());
+            case "capacity":
+                return Optional.ofNullable(warehouseRepository.sortedByCapacity());
+            case "creationDate":
+                return Optional.ofNullable(warehouseRepository.sortedByDate());
+        }
+        return Optional.empty();
     }
 
 
@@ -59,4 +69,6 @@ public class WarehouseService {
     public Optional<Iterable<Warehouse>> findAllById(Long warehouseId) {
         return Optional.ofNullable(warehouseRepository.findAllById(warehouseId));
     }
+
+
 }

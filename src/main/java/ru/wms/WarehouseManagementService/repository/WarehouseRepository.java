@@ -20,7 +20,17 @@ public interface WarehouseRepository extends CrudRepository<Warehouse, Long> {
     Iterable<Warehouse> findByNameContaining(String name);
 
 
-    @Query(value = "SELECT * FROM warehouse_t ORDER BY creation_date",
-            nativeQuery = true)
-    List<Warehouse> sortedByDate();
+    @Query(value = "SELECT * FROM warehouse_t ORDER BY creation_date", nativeQuery = true)
+    Iterable<Warehouse> sortedByDate();
+
+    @Query(value = "SELECT * FROM warehouse_t ORDER BY  capacity", nativeQuery = true)
+    Iterable<Warehouse> sortedByCapacity();
+
+    @Query(value = "SELECT * FROM warehouse_t ORDER BY  address",nativeQuery = true)
+    Iterable<Warehouse> sortedByAddress();
+
+    @Query(value = "SELECT * FROM warehouse_t ORDER BY  name",nativeQuery = true)
+    Iterable<Warehouse> sortedByName();
+
+
 }
