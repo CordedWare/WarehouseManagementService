@@ -35,9 +35,10 @@ public class ProductController {
     private WarehouseService warehouseService;
 
     @GetMapping("/addProduct")
-    public String addProduct(@RequestParam(required = true) Long warehouseId,
-                             @AuthenticationPrincipal UserPrincipal userPrincipal,
-                             Model model
+    public String addProduct(
+            @RequestParam(required = true) Long warehouseId,
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
+            Model model
     ) {
         var user = userPrincipal.getUser().getCompany();
         Optional<Iterable<Warehouse>> warehouseList = warehouseService.findAllById(warehouseId);
@@ -77,6 +78,7 @@ public class ProductController {
                     required = false,
                     defaultValue = "")
             Optional<String> nameFilterOpt,
+            HttpServletRequest request,
             Model model
     ) {
         Optional<Iterable<Product>> productList = Optional.of(
@@ -90,7 +92,9 @@ public class ProductController {
         model.addAttribute("filter",   nameFilterOpt);
         model.addAttribute("product",  new Product());
 
-        return "product/products";
+        var referer = request.getHeader("Referer");
+
+        return "redirect:" + referer;
     }
 
     @PostMapping("/delete/{id}")

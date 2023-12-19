@@ -18,7 +18,6 @@
         </p>
     <hr>
 
-    <h4><a href="/createProduct" >Зарегистрировать товар</a></h4>
     <h4>Загрузить XML-файл</h4>
     <form th:action="@{/upload}" method="post" enctype="multipart/form-data" th:object="${uploadForm}">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -33,7 +32,7 @@
 
     <tr>
         <td colspan="7">
-            <form th:action="@{/products}" method="get">
+            <form th:action="@{'/products/' + ${product.id}}" method="get">
                 <input type="text" name="filter" placeholder="Поиск по имени">
                 <button type="submit">Поиск</button>
             </form>
