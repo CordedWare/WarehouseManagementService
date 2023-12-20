@@ -28,6 +28,17 @@
 
     <h2>Вы вошли в систему как <span sec:authentication="name"></span></h2>
 
+    <div th:if="${param.notFound}" class="alert alert-danger">
+        Склад не существует.
+    </div>
+    <div th:if="${param.overflow}" class="alert alert-danger">
+        Склад не может вместить такое количество товаров
+    </div>
+
+    <div th:if="${param.illegal}" class="alert alert-danger">
+        Недопустимые данные при создании продукта
+    </div>
+
     <hr>
     <p>
         Раздел управления складами

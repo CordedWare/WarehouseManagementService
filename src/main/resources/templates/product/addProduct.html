@@ -17,6 +17,16 @@
          Раздел управления товарами (регистрация товара)
         </p>
     <hr>
+    <div th:if="${param.notFound}" class="alert alert-danger">
+        Склад не существует.
+    </div>
+    <div th:if="${param.overflow}" class="alert alert-danger">
+        Склад не может вместить такое количество товаров
+    </div>
+    <div th:if="${param.illegal}" class="alert alert-danger">
+        Недопустимые данные при создании продукта
+    </div>
+
         <h2>Создать товар</h2>
     <hr>
     <form th:action="@{/products/addProduct}" th:object="${product}" method="post">
