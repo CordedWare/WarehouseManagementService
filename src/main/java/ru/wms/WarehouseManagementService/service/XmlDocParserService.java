@@ -1,24 +1,22 @@
 package ru.wms.WarehouseManagementService.service;
 
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+import ru.wms.WarehouseManagementService.entity.Company;
 import ru.wms.WarehouseManagementService.entity.Product;
-import ru.wms.WarehouseManagementService.entity.User;
 import ru.wms.WarehouseManagementService.entity.Warehouse;
-import ru.wms.WarehouseManagementService.repository.ProductRepository;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.StringReader;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class XmlDocParserService {
@@ -33,14 +31,24 @@ public class XmlDocParserService {
     public static final String PRICE         = "PRICE";
     public static final String QUANTITY      = "QUANTITY";
     public static final String CREATION_DATE = "CREATION_DATE";
-    public static final String WAREHOUSE     = "WAREHOUSE";
-    public static final String USER          = "USER";
+    public static final String WAREHOUSE_ID  = "WAREHOUSE_ID";
+    public static final String COMPANY_ID    = "COMPANY_ID";
+    public static final String COMPANY       = "COMPANY";
+    public static final String ADRESS        = "";
 
     @Autowired
     private ProductService productService;
 
-    public void parseAndSaveDate(String content) throws Exception {
-        List<Product> productRows  = new ArrayList<>();
+    @Autowired
+    private WarehouseService warehouseService;
+
+    @Autowired
+    private CompanyService companyService;
+
+    public void parseAndSaveDate(String content) throws Exception { // TODO порефакторить для более универсального парсинга + работы с API
+        List<Product> productRows      = new ArrayList<>();
+        List<Warehouse> warehouseRows  = new ArrayList<>();
+        List<Company> companyRows      = new ArrayList<>();
 
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db         = dbf.newDocumentBuilder();
@@ -50,23 +58,46 @@ public class XmlDocParserService {
         for (int i = 0; i < rowList.getLength(); i++) { // TODO еще доработать
             Element rowElem = (Element) rowList.item(i);
 
-            User userOwner = new User();
-            userOwner.setId(Long.parseLong(rowElem.getAttribute(USER)));
+            Company company = new Company();
+            String companyId = rowElem.getAttribute(COMPANY_ID);
+            company.setId(companyId.isEmpty() || companyId.equals("") ? 1 : Long.parseLong(companyId));
+            company.setName(COMPANY);
+            company.setAddress(ADRESS);
 
             Warehouse warehouse = new Warehouse();
-            warehouse.setName(rowElem.getAttribute(WAREHOUSE));
+            String warehouseId = rowElem.getAttribute(WAREHOUSE_ID);
+            warehouse.setId(warehouseId.isEmpty() ? 1 : Long.parseLong(warehouseId));
+            warehouse.setCompany(company);
+            warehouseRows.add(warehouse);
+
+            Set<Warehouse> warehouseSet = new HashSet<>();
+            warehouseSet.add(warehouse);
+            company.setWarehouses(warehouseSet);
+            companyRows.add(company);
 
             Product product = new Product();
-            product.setId(Long.valueOf(rowElem.getAttribute(String.valueOf(UUID.randomUUID()))));
+            String productId = rowElem.getAttribute(WAREHOUSE_ID);
+            product.setId(productId.isEmpty() ? 1 : Long.parseLong(productId));
             product.setName(rowElem.getAttribute(NAME));
             product.setDescription(rowElem.getAttribute(DESCRIPTION));
             product.setCategory(rowElem.getAttribute(CATEGORY));
-            product.setPrice(BigDecimal.valueOf(Integer.parseInt(rowElem.getAttribute(PRICE))));
-            product.setQuantity(Integer.parseInt(rowElem.getAttribute(QUANTITY)));
-            product.setCreationDate(LocalDate.parse(rowElem.getAttribute(CREATION_DATE)));
+
+            String price = rowElem.getAttribute(PRICE);
+            product.setPrice(price.isEmpty() ? null : BigDecimal.valueOf(Double.parseDouble(price)));
+
+            String quantity = rowElem.getAttribute(QUANTITY);
+            product.setQuantity(quantity.isEmpty() ? null : Integer.parseInt(quantity));
+
+            String creationDate = rowElem.getAttribute(CREATION_DATE);
+            product.setCreationDate(creationDate.isEmpty() ? null : LocalDate.parse(creationDate));
+
             product.setWarehouse(warehouse);
+
+            productRows.add(product);
         }
 
-        productService.saveParserProduct(productRows);
+        List<Product> prod = Collections.singletonList(productRows.get(0));
+        productService.saveParserProduct(prod);
     }
+
 }

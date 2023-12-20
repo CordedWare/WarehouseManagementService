@@ -19,7 +19,7 @@
     <hr>
 
     <h4>Загрузить XML-файл</h4>
-    <form th:action="@{/upload}" method="post" enctype="multipart/form-data" th:object="${uploadForm}">
+    <form th:action="@{'/products/upload'}" method="post" enctype="multipart/form-data" th:object="${uploadForm}">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <input type="file" name="file" accept=".xml">
         <br>
@@ -41,7 +41,7 @@
     </tr>
 
 
-    <form action="/filter" method="post">
+    <form action="filter" method="post">
         <select name="sort">
             <option value="asc">По возрастанию</option>
             <option value="desc">По убыванию</option>

@@ -44,13 +44,15 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", category='" + category + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                ", warehouse=" + warehouse.getName() +
+        String warehouseName = (warehouse != null) ? warehouse.getName() : "1";
+
+        return "Product{"       +
+                "id= "          + id +
+                ", name='"      + name + '\'' +
+                ", category='"  + category + '\'' +
+                ", price="      + price +
+                ", quantity="   + quantity +
+                ", warehouse="  + warehouse.getName() +
                 '}';
     }
 }

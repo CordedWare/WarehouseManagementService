@@ -19,9 +19,9 @@ public class Company {
 
     @Column(nullable = false)
     private String name;
+
     @Column(nullable = false)
     private String address;
-
 
     @OneToMany(mappedBy = "company")
     private Set<Warehouse> warehouses;
