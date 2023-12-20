@@ -3,6 +3,9 @@ package ru.wms.WarehouseManagementService.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.entity.*;
+import ru.wms.WarehouseManagementService.exceptions.NotFoundWarehouseException;
+import ru.wms.WarehouseManagementService.exceptions.OverflowWarehouse;
+import ru.wms.WarehouseManagementService.exceptions.WarehouseException;
 import ru.wms.WarehouseManagementService.repository.ProductRepository;
 
 import java.util.ArrayList;
@@ -62,10 +65,20 @@ public class ProductService {
         productRepository.saveAll(products);
     }
 
-    public void createProduct(Product product, Long warehouseId, User user) {
+    public void createProduct(Product product, Long warehouseId, User user) throws WarehouseException {
         var warehouseOpt = warehouseService.getById(warehouseId);
 
-        product.setWarehouse(warehouseOpt.get());
+        if(warehouseOpt.isEmpty())
+            throw new NotFoundWarehouseException("Склад не найден");
+
+        if(product.getQuantity()<0)
+            throw new IllegalArgumentException();
+
+        var warehouse = warehouseOpt.get();
+        product.setWarehouse(warehouse);
+
+        if(warehouse.getCapacity() < product.getQuantity())
+            throw new OverflowWarehouse("Склад не может вместить столько товаров");
 
         productRepository.save(product);
     }

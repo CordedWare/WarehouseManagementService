@@ -74,7 +74,7 @@
             <td th:text="${employee_.getActivationCode()}">patronymic</td>
             <td th:text="${employee_.telephone}">telephone</td>
             <td>
-                <   a th:href="@{'/messenger/chat?partner='+${employee_.id}}">Связаться</a>
+                <a th:href="@{'/messenger/chat?partner='+${employee_.id}}">Связаться</a>
             </td>
         </tr>
     </table>

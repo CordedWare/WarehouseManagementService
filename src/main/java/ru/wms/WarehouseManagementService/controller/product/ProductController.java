@@ -10,6 +10,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.wms.WarehouseManagementService.entity.Product;
 import ru.wms.WarehouseManagementService.entity.Warehouse;
+import ru.wms.WarehouseManagementService.exceptions.NotFoundWarehouseException;
+import ru.wms.WarehouseManagementService.exceptions.OverflowWarehouse;
+import ru.wms.WarehouseManagementService.exceptions.WarehouseException;
 import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.ProductService;
 import ru.wms.WarehouseManagementService.service.WarehouseService;
@@ -62,39 +65,53 @@ public class ProductController {
                     throw new IllegalArgumentException("Неверные данные о товаре");
                 });
 
-        productService.createProduct(
-                product,
-                warehouse,
-                userPrincipal.getUser()
-        );
+        try {
+            productService.createProduct(
+                    product,
+                    warehouse,
+                    userPrincipal.getUser()
+            );
+        } catch (NotFoundWarehouseException e) {
+            return String.format("redirect:/products/addProduct?warehouseId=%s&notFound", warehouse);
+        } catch (OverflowWarehouse e) {
+            return String.format("redirect:/products/addProduct?warehouseId=%s&overflow", warehouse);
+        } catch (WarehouseException e) {
+            throw new RuntimeException(e);
+        }catch (IllegalArgumentException e){
+            return String.format("redirect:/products/addProduct?warehouseId=%s&illegal", warehouse);
+        }
+
 
         return "redirect:/warehouses";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/search")
     public String getProductsByName(
             @RequestParam(
-                    name = "filter",
+                    name = "name",
                     required = false,
                     defaultValue = "")
             Optional<String> nameFilterOpt,
-            HttpServletRequest request,
+            @RequestParam(
+                    name = "warehouseId",
+                    required = false,
+                    defaultValue = "")
+            Optional<Long> warehouseId,
             Model model
     ) {
         Optional<Iterable<Product>> productList = Optional.of(
                 nameFilterOpt
-                        .filter( filter -> !filter.isEmpty())
-                        .flatMap( name  -> productService.findByNameContaining(name))
-                        .orElseGet( ()  -> productService.getAllProducts().orElse(new ArrayList<>()))
+                        .filter(filter -> !filter.isEmpty())
+                        .flatMap(name -> productService.findByNameContaining(name))
+                        .orElseGet(() -> productService.getAllProducts().orElse(new ArrayList<>()))
         );
 
-        model.addAttribute("products", productList);
-        model.addAttribute("filter",   nameFilterOpt);
-        model.addAttribute("product",  new Product());
 
-        var referer = request.getHeader("Referer");
+        model.addAttribute("products", productList.get());
+        model.addAttribute("product", new Product());
 
-        return "redirect:" + referer;
+
+        return "product/products";
     }
 
     @PostMapping("/delete/{id}")
@@ -127,7 +144,7 @@ public class ProductController {
     ) {
         Optional<Iterable<Product>> productList = productService.getAllProducts();
 
-        productList.ifPresent( products -> {
+        productList.ifPresent(products -> {
             if (sort.equals("asc"))
                 products = StreamSupport.stream(products.spliterator(), false)
                         .sorted(Comparator.comparing(product ->
@@ -136,7 +153,7 @@ public class ProductController {
 
             else if (sort.equals("desc"))
                 products = StreamSupport.stream(products.spliterator(), false)
-                        .sorted(Comparator.comparing( (Product product) ->
+                        .sorted(Comparator.comparing((Product product) ->
                                 product.getPrice()).reversed())
                         .collect(Collectors.toList());
 
