@@ -106,8 +106,7 @@ public class ProductController {
                         .orElseGet(() -> productService.getAllProducts().orElse(new ArrayList<>()))
         );
 
-        for (var p : productList.get())
-            System.out.println(p);
+
         model.addAttribute("products", productList.get());
         model.addAttribute("product", new Product());
 

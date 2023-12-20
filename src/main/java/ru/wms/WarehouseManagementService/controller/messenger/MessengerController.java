@@ -35,29 +35,9 @@ public class MessengerController {
             @AuthenticationPrincipal UserPrincipal userPrincipal){
         var chat = chatService.getById(id);
         var user = userPrincipal.getUser();
-        System.out.println(user.getId());
-        System.out.println(user.getId());
-        System.out.println(user.getId());
-        System.out.println();
-        System.out.println(chat.getInitiator().getId());
-        System.out.println(chat.getInitiator().getId());
-        System.out.println(chat.getInitiator().getId());
-        System.out.println();
-        System.out.println(chat.getPartner().getId());
-        System.out.println(chat.getPartner().getId());
-        System.out.println(chat.getPartner().getId());
-        System.out.println();
-        System.out.println();
-        System.out.println();
         if(chat.getInitiator().getId() == user.getId()) {
-            System.out.println("first");
-            System.out.println("first");
-            System.out.println("first");
             return "redirect:/messenger/chat?partner=" + chat.getPartner().getId();
         }
-        System.out.println("second");
-        System.out.println("second");
-        System.out.println("second");
         return "redirect:/messenger/chat?partner="+chat.getInitiator().getId();
     }
 
