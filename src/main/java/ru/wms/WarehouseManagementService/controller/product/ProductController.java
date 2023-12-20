@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.wms.WarehouseManagementService.entity.Product;
 import ru.wms.WarehouseManagementService.entity.Warehouse;
 import ru.wms.WarehouseManagementService.exceptions.NotFoundWarehouseException;
@@ -16,6 +17,7 @@ import ru.wms.WarehouseManagementService.exceptions.WarehouseException;
 import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.ProductService;
 import ru.wms.WarehouseManagementService.service.WarehouseService;
+import ru.wms.WarehouseManagementService.service.XmlDocParserService;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -37,6 +39,9 @@ public class ProductController {
     @Autowired
     private WarehouseService warehouseService;
 
+    @Autowired
+    private XmlDocParserService xmlDocParserService;
+
     @GetMapping("/addProduct")
     public String addProduct(
             @RequestParam(required = true) Long warehouseId,
@@ -48,6 +53,7 @@ public class ProductController {
 
         model.addAttribute("warehouses", warehouseList);
         model.addAttribute("product", new Product());
+
         return "product/addProduct";
     }
 
@@ -81,7 +87,6 @@ public class ProductController {
             return String.format("redirect:/products/addProduct?warehouseId=%s&illegal", warehouse);
         }
 
-
         return "redirect:/warehouses";
     }
 
@@ -101,15 +106,13 @@ public class ProductController {
     ) {
         Optional<Iterable<Product>> productList = Optional.of(
                 nameFilterOpt
-                        .filter(filter -> !filter.isEmpty())
-                        .flatMap(name -> productService.findByNameContaining(name))
-                        .orElseGet(() -> productService.getAllProducts().orElse(new ArrayList<>()))
+                        .filter( filter -> !filter.isEmpty())
+                        .flatMap( name  -> productService.findByNameContaining(name))
+                        .orElseGet( ()  -> productService.getAllProducts().orElse(new ArrayList<>()))
         );
-
 
         model.addAttribute("products", productList.get());
         model.addAttribute("product", new Product());
-
 
         return "product/products";
     }
@@ -130,6 +133,7 @@ public class ProductController {
             HttpServletRequest request
     ) {
         productService.updateProduct(id, editedProduct);
+
         var referer = request.getHeader("Referer");
 
         return "redirect:" + referer;
@@ -163,6 +167,40 @@ public class ProductController {
         model.addAttribute("product", new Product());
 
         return "product/products";
+    }
+
+    @GetMapping("upload")
+    public String showUploadForm(HttpServletRequest request) {
+
+        var referer = request.getHeader("Referer");
+
+        return "redirect:" + referer;
+    }
+
+    @PostMapping("upload")
+    public String uploadFile(
+            @RequestParam("file") MultipartFile file,
+            Model model,
+            HttpServletRequest request
+    ) {
+        try {
+            String content = new String(file.getBytes());
+            xmlDocParserService.parseAndSaveDate(content);
+
+            boolean isLoadSuccess = true;
+            if (isLoadSuccess) {
+                model.addAttribute("uploadStatus", "Файл успешно загружен");
+            } else {
+                model.addAttribute("uploadStatus", "Произошла ошибка при сохранении данных");
+            }
+
+            var referer = request.getHeader("Referer");
+
+            return "redirect:" + referer;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
 }

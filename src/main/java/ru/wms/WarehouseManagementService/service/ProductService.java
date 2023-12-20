@@ -98,7 +98,9 @@ public class ProductService {
     }
 
     public void saveParserProduct(List<Product> product) {
-        productRepository.saveAll(product);
+        if (product != null) {
+            productRepository.saveAll(product);
+        }
     }
 
 }
