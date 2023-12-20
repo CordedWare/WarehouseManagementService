@@ -71,14 +71,18 @@ public class ProductController {
         return "redirect:/warehouses";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/search")
     public String getProductsByName(
             @RequestParam(
-                    name = "filter",
+                    name = "name",
                     required = false,
                     defaultValue = "")
             Optional<String> nameFilterOpt,
-            HttpServletRequest request,
+            @RequestParam(
+                    name = "warehouseId",
+                    required = false,
+                    defaultValue = "")
+            Optional<Long> warehouseId,
             Model model
     ) {
         Optional<Iterable<Product>> productList = Optional.of(
@@ -88,13 +92,13 @@ public class ProductController {
                         .orElseGet( ()  -> productService.getAllProducts().orElse(new ArrayList<>()))
         );
 
-        model.addAttribute("products", productList);
-        model.addAttribute("filter",   nameFilterOpt);
+        for(var p : productList.get())
+            System.out.println(p);
+        model.addAttribute("products", productList.get());
         model.addAttribute("product",  new Product());
 
-        var referer = request.getHeader("Referer");
 
-        return "redirect:" + referer;
+        return "product/products";
     }
 
     @PostMapping("/delete/{id}")

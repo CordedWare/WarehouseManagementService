@@ -84,6 +84,7 @@ public class WarehouseController {
         var warehouse = warehouseService.getById(warehouseId);
         model.addAttribute("products", warehouse.get().getProductList());
         model.addAttribute("product", new Product());
+        model.addAttribute("warehouseId", warehouseId);
 
         return "product/products";
     }
