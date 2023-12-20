@@ -140,7 +140,7 @@
 
                 // Обновляем таблицу с новыми данными
                 $.each(data, function (index, warehouse) {
-                    $('#tableBody').append(createTableRow(warehouse));
+                    $('#myTable').append(createTableRow(warehouse));
                 });
             },
             error: function (error) {
