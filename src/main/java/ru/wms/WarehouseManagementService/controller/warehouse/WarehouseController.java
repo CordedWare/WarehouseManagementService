@@ -89,17 +89,17 @@ public class WarehouseController {
     }
 
 
-    @GetMapping("{id}")
+    @GetMapping("/search")
     public String getWarehousesByName(
             @RequestParam(
-                    name = "filter",
+                    name = "name",
                     required = false,
                     defaultValue = "")
             Optional<String> nameFilterOpt,
             Model model) {
         Optional<Iterable<Warehouse>> warehouseList = Optional.of(nameFilterOpt
                 .filter( filter -> !filter.isEmpty())
-                .flatMap(  name -> warehouseService.findByNameContaining(name))
+                .flatMap(  name -> warehouseService.findByNameContaining(name.trim()))
                 .orElse(new ArrayList<>()));
 
         model.addAttribute("warehouses", warehouseList);
