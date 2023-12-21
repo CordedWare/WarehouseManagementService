@@ -57,4 +57,5 @@ public class User {
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     private Company company;
 
+
 }

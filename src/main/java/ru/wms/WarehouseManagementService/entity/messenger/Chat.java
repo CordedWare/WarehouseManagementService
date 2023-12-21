@@ -16,11 +16,11 @@ public class Chat {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @OneToOne
-    private User initiator;
+    @ManyToMany
+    private List<User> initiator;
 
-    @OneToOne
-    private User partner;
+    @ManyToMany
+    private List<User> partner;
 
     @OneToMany(mappedBy = "chat",cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private List<Message> messages;

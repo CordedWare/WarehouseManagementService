@@ -10,6 +10,7 @@ import ru.wms.WarehouseManagementService.repository.ChatRepository;
 import ru.wms.WarehouseManagementService.repository.MessageRepository;
 import ru.wms.WarehouseManagementService.repository.UserRepository;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -36,8 +37,8 @@ public class ChatService {
 
         if (chat.isEmpty()) {
             var newChat = new Chat();
-            newChat.setInitiator(user);
-            newChat.setPartner(userRepository.findById(partnerId).get());
+            newChat.setInitiator(Collections.singletonList(user));
+            newChat.setPartner(Collections.singletonList(userRepository.findById(partnerId).get()));
 
             chatRepository.save(newChat);
 
