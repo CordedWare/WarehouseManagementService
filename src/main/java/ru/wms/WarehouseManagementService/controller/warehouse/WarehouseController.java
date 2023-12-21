@@ -2,13 +2,11 @@ package ru.wms.WarehouseManagementService.controller.warehouse;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.wms.WarehouseManagementService.entity.Company;
 import ru.wms.WarehouseManagementService.entity.Product;
 import ru.wms.WarehouseManagementService.entity.Warehouse;
 import ru.wms.WarehouseManagementService.security.UserPrincipal;
@@ -53,24 +51,19 @@ public class WarehouseController {
         return "redirect:/warehouses";
     }
 
-    @GetMapping
-    public String warehouses(
+    @GetMapping()
+    public String warehousesSort(
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             @RequestParam(name = "sortBy", defaultValue = "name") String sortBy,
+            @RequestParam(name = "sortPath", defaultValue = "asc") String sortPath,
             Model model
     ) {
 
         Optional<Iterable<Warehouse>> warehousesList;
+        warehousesList = warehouseService.sorted(sortBy, sortPath);
 
-        if ("name".equals(sortBy) || "address".equals(sortBy) || "capacity".equals(sortBy) || "creationDate".equals(sortBy)) {
-            warehousesList = warehouseService.sorted(sortBy);
-        } else {
-            warehousesList = warehouseService.getCompanyWarehouse(userPrincipal.getUser().getCompany());
-        }
-        
         model.addAttribute("warehouses", warehousesList);
         model.addAttribute("warehouse", new Warehouse());
-
 
         return "warehouse/warehouses";
     }
@@ -99,13 +92,13 @@ public class WarehouseController {
             Optional<String> nameFilterOpt,
             Model model) {
         Optional<Iterable<Warehouse>> warehouseList = Optional.of(nameFilterOpt
-                .filter( filter -> !filter.isEmpty())
-                .flatMap(  name -> warehouseService.findByNameContaining(name.trim()))
+                .filter(filter -> !filter.isEmpty())
+                .flatMap(name -> warehouseService.findByNameContaining(name.trim()))
                 .orElse(new ArrayList<>()));
 
         model.addAttribute("warehouses", warehouseList);
-        model.addAttribute("filter",     nameFilterOpt);
-        model.addAttribute("warehouse",  new Warehouse());
+        model.addAttribute("filter", nameFilterOpt);
+        model.addAttribute("warehouse", new Warehouse());
 
         return "warehouse/warehouses";
     }

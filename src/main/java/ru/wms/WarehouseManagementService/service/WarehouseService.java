@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.entity.*;
 import ru.wms.WarehouseManagementService.repository.WarehouseRepository;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,18 +17,36 @@ public class WarehouseService {
 
     private final WarehouseRepository warehouseRepository;
 
-    public Optional<Iterable<Warehouse>> sorted(String sortBy) {
+    public Optional<Iterable<Warehouse>> sorted(String sortBy, String sortPath) {
+        Iterable<Warehouse> result;
+
         switch (sortBy) {
             case "name":
-                return Optional.ofNullable(warehouseRepository.sortedByName());
+                result = warehouseRepository.sortedByName();
+                break;
             case "address":
-                return Optional.ofNullable(warehouseRepository.sortedByAddress());
+                result = warehouseRepository.sortedByAddress();
+                break;
             case "capacity":
-                return Optional.ofNullable(warehouseRepository.sortedByCapacity());
+                result = warehouseRepository.sortedByCapacity();
+                break;
             case "creationDate":
-                return Optional.ofNullable(warehouseRepository.sortedByDate());
+                result = warehouseRepository.sortedByDate();
+                break;
+            default:
+                return Optional.empty();
         }
-        return Optional.empty();
+
+        List<Warehouse> sortedList = new ArrayList<>();
+        result.forEach(i -> sortedList.add(i));
+
+        if ("desc".equalsIgnoreCase(sortPath)) {
+            Collections.reverse(sortedList);
+        }
+
+       result = sortedList;
+
+        return Optional.of(result);
     }
 
 
