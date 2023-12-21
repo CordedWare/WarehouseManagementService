@@ -18,6 +18,7 @@ target/
 /data
 /target
 application-dev.properties
+application.properties
 
 ### Eclipse ###
 .apt_generated
