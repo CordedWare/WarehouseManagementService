@@ -8,6 +8,7 @@ import ru.wms.WarehouseManagementService.dto.EmployeeRegistrationForm;
 import ru.wms.WarehouseManagementService.entity.Client;
 import ru.wms.WarehouseManagementService.entity.Company;
 import ru.wms.WarehouseManagementService.entity.Employee;
+import ru.wms.WarehouseManagementService.exceptions.UserExistException;
 import ru.wms.WarehouseManagementService.repository.EmployeeRepository;
 import ru.wms.WarehouseManagementService.security.Authority;
 
@@ -31,7 +32,11 @@ public class EmployeeService {
         return employeeRepository.findAllByCompany(company);
     }
 
-    public Employee createEmployee(EmployeeRegistrationForm registrationForm, Company company) {
+    public void createEmployee(EmployeeRegistrationForm registrationForm, Company company) throws UserExistException {
+
+        if(employeeRepository.existsByTelephone(registrationForm.getTelephone()) || employeeRepository.existsByEmail(registrationForm.getEmail()))
+            throw new UserExistException();
+
 
         var employee = new Employee();
 
@@ -49,8 +54,6 @@ public class EmployeeService {
         employee.setCompany(company);
 
         employeeRepository.save(employee);
-
-        return employee;
     }
 
     public void deleteEmployee(Employee employee) {

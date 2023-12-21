@@ -1,0 +1,41 @@
+<document>
+    <data id="product">
+        <metadata>
+            <columns>
+                <column name="NAME" type="string" bytes="12" max_size="0"/>
+                <column name="DESCRIPTION" type="string" bytes="12" max_size="0"/>
+                <column name="CATEGORY" type="string" bytes="12" max_size="0"/>
+                <column name="PRICE" type="double"/>
+                <column name="QUANTITY" type="int32"/>
+                <column name="CREATION_DATE" type="int32"/>
+                <column name="WAREHOUSE" type="string" bytes="12" max_size="0"/>
+                <column name="USER" type="string" bytes="12" max_size="0"/>
+            </columns>
+        </metadata>
+        <rows>
+            <row NAME="Клавиатура Кл-1" DESCRIPTION="Устройство ввода-вывода перефирийного устройства" CATEGORY="Техника" PRICE="1299.00" QUANTITY="120" CREATION_DATE="2023-12-17" WAREHOUSE_ID="1" COMPANY_ID="1" COMPANY="Склад 1" USER="Тестовый юзер"/>
+            <row NAME="Samsung Galaxy S10" DESCRIPTION="Смартфон с мощным процессором и высококачественным дисплеем" CATEGORY="Электроника" PRICE="50000.00" QUANTITY="10" CREATION_DATE="2023-12-17" WAREHOUSE_ID="1" COMPANY_ID="1" COMPANY="Склад 1" USER="Тестовый юзер"/>
+            <row NAME="Nike Air Max 270" DESCRIPTION="Кроссовки с уникальной системой амортизации для комфортной ходьбы" CATEGORY="Обувь" PRICE="7000.00" QUANTITY="16" CREATION_DATE="2023-12-17" WAREHOUSE_ID="1" COMPANY_ID="1" COMPANY="Склад 1" USER="Тестовый юзер"/>
+            <row NAME="MacBook Pro 13" DESCRIPTION="Ноутбук с высокой производительностью и качественным дисплеем Retina" CATEGORY="Электроника" PRICE="120000.00" QUANTITY="5" CREATION_DATE="2023-12-17" WAREHOUSE_ID="1" COMPANY_ID="1" COMPANY="Склад 1" USER="Тестовый юзер"/>
+            <row NAME="Adidas Ultimate 365 Polo" DESCRIPTION="Мужская футболка-поло с технологией влагоотвода для активного использования" CATEGORY="Одежда" PRICE="4000.00" QUANTITY="25" CREATION_DATE="2023-12-17" WAREHOUSE_ID="1" COMPANY_ID="1" COMPANY="Склад 1" USER="Тестовый юзер"/>
+            <row NAME="Sony PlayStation 5" DESCRIPTION="Игровая приставка нового поколения с мощным железом и поддержкой 4K-разрешения" CATEGORY="Электроника" PRICE="45000.00" QUANTITY="8" CREATION_DATE="2023-12-17" WAREHOUSE_ID="1" COMPANY_ID="1" COMPANY="Склад 1" USER="Тестовый юзер"/>
+            <row NAME="Calvin Klein Euphoria for Men" DESCRIPTION="Мужская туалетная вода с ароматом эпохальной мужественности и силы" CATEGORY="Красота и уход" PRICE="4500.00" QUANTITY="12" CREATION_DATE="2023-12-17" WAREHOUSE_ID="1" COMPANY_ID="1" COMPANY="Склад 1" USER="Тестовый юзер"/>
+            <row NAME="Canon EOS 5D Mark IV" DESCRIPTION="Профессиональная DSLR-камера с высоким разрешением и возможностью съемки в Full HD и 4K." CATEGORY="Электроника" PRICE="180000.00" QUANTITY="3" CREATION_DATE="2023-12-17" WAREHOUSE_ID="1" COMPANY_ID="1" COMPANY="Склад 1" USER="Тестовый юзер"/>
+            <row NAME="Levi's 501 Original" DESCRIPTION="Мужские джинсы с классическим кроем и износостойкой тканью" CATEGORY="Одежда" PRICE="6000.00" QUANTITY="18" CREATION_DATE="2023-12-17" WAREHOUSE_ID="1" COMPANY_ID="1" COMPANY="Склад 1" USER="Тестовый юзер"/>
+            <row NAME="Samsung 32 LED Телевизор" DESCRIPTION="Телевизор с качественной картинкой, поддержкой Smart TV и HDMI-портами." CATEGORY="Электроника" PRICE="20000.00" QUANTITY="7" CREATION_DATE="2023-12-17" WAREHOUSE_ID="1" COMPANY_ID="1" COMPANY="Склад 1" USER="Тестовый юзер"/>
+            <row NAME="Apple AirPods Pro" DESCRIPTION="Беспроводные наушники с шумоподавлением и высоким качеством звука." CATEGORY="Электроника" PRICE="22000.00" QUANTITY="9" CREATION_DATE="2023-12-17" WAREHOUSE_ID="1" COMPANY_ID="1" COMPANY="Склад 1" USER="Тестовый юзер"/>
+        </rows>
+    </data>
+    <data id="product.cursor">
+        <metadata>
+            <columns>
+                <column name="INDEX" type="int64"/>
+                <column name="TOTAL" type="int64"/>
+                <column name="PAGESIZE" type="int64"/>
+            </columns>
+        </metadata>
+        <rows>
+            <row INDEX="0" TOTAL="54" PAGESIZE="100"/>
+        </rows>
+    </data>
+</document>

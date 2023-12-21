@@ -9,6 +9,11 @@
 <header th:replace="~{fragments/common_header_fragment :: head}"></header>
 
 <div class="container">
+
+    <div th:if="${param.alreadyExists}" class="alert alert-warning">
+        В системе уже есть работник с таким номером телефона / почтой
+    </div>
+
     <form th:action="@{/employees/create}" th:object="${employeeRegistrationForm}" method="post">
         <div class="px-4">
             <div>

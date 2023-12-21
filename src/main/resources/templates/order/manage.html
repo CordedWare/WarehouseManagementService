@@ -12,10 +12,10 @@
 
 <div class="container">
     <h2>Вы вошли в систему как <span sec:authentication="name"></span></h2>
-    <div>
+    <div sec:authorize="hasRole('ROLE_CLIENT')">
         <hr>
         <p>
-            Раздел управления заказами
+            Раздел создания заказов
         </p>
         <p>
         <form th:action="@{/orders/manage/create}" th:object="${order}" method="post">

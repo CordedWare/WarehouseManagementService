@@ -13,4 +13,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     List<Employee> findAllByCompany(Company company);
 
+    boolean existsByTelephone(Long telephone);
+    boolean existsByEmail(String email);
+
+
 }

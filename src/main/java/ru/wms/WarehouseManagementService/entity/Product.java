@@ -39,7 +39,7 @@ public class Product {
     @JoinColumn(name = "warehouse_id")
     private Warehouse warehouse;
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(mappedBy = "products", cascade = CascadeType.REMOVE)
     private Set<Order> orderSet;
 
     @Override
