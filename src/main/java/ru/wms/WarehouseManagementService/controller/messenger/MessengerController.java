@@ -35,10 +35,10 @@ public class MessengerController {
             @AuthenticationPrincipal UserPrincipal userPrincipal){
         var chat = chatService.getById(id);
         var user = userPrincipal.getUser();
-        if(chat.getInitiator().getId() == user.getId()) {
-            return "redirect:/messenger/chat?partner=" + chat.getPartner().getId();
+        if(chat.getInitiator().get(0).getId() == user.getId()) {
+            return "redirect:/messenger/chat?partner=" + chat.getPartner().get(0).getId();
         }
-        return "redirect:/messenger/chat?partner="+chat.getInitiator().getId();
+        return "redirect:/messenger/chat?partner="+chat.getInitiator().get(0).getId();
     }
 
 
