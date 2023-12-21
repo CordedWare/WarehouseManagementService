@@ -22,6 +22,7 @@
     <form th:action="@{'/products/upload'}" method="post" enctype="multipart/form-data" th:object="${uploadForm}">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <input type="file" name="file" accept=".xml">
+        <input type="hidden" name="warehouseId" th:value="${warehouseId}">
         <br>
         <br>
         <input type="submit" value="Upload">

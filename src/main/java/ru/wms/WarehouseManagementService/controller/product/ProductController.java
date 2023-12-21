@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.xml.sax.SAXException;
 import ru.wms.WarehouseManagementService.entity.Product;
 import ru.wms.WarehouseManagementService.entity.Warehouse;
 import ru.wms.WarehouseManagementService.exceptions.NotFoundWarehouseException;
@@ -19,6 +20,8 @@ import ru.wms.WarehouseManagementService.service.ProductService;
 import ru.wms.WarehouseManagementService.service.WarehouseService;
 import ru.wms.WarehouseManagementService.service.XmlDocParserService;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Optional;
@@ -52,6 +55,7 @@ public class ProductController {
         Optional<Iterable<Warehouse>> warehouseList = warehouseService.findAllById(warehouseId);
 
         model.addAttribute("warehouses", warehouseList);
+        model.addAttribute("warehouseId", warehouseId);
         model.addAttribute("product", new Product());
 
         return "product/addProduct";
@@ -74,8 +78,7 @@ public class ProductController {
         try {
             productService.createProduct(
                     product,
-                    warehouse,
-                    userPrincipal.getUser()
+                    warehouse
             );
         } catch (NotFoundWarehouseException e) {
             return String.format("redirect:/products/addProduct?warehouseId=%s&notFound", warehouse);
@@ -83,7 +86,7 @@ public class ProductController {
             return String.format("redirect:/products/addProduct?warehouseId=%s&overflow", warehouse);
         } catch (WarehouseException e) {
             throw new RuntimeException(e);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return String.format("redirect:/products/addProduct?warehouseId=%s&illegal", warehouse);
         }
 
@@ -106,9 +109,9 @@ public class ProductController {
     ) {
         Optional<Iterable<Product>> productList = Optional.of(
                 nameFilterOpt
-                        .filter( filter -> !filter.isEmpty())
-                        .flatMap( name  -> productService.findByNameContaining(name))
-                        .orElseGet( ()  -> productService.getAllProducts().orElse(new ArrayList<>()))
+                        .filter(filter -> !filter.isEmpty())
+                        .flatMap(name -> productService.findByNameContaining(name))
+                        .orElseGet(() -> productService.getAllProducts().orElse(new ArrayList<>()))
         );
 
         model.addAttribute("products", productList.get());
@@ -169,7 +172,7 @@ public class ProductController {
         return "product/products";
     }
 
-    @GetMapping("upload")
+    @GetMapping("/upload")
     public String showUploadForm(HttpServletRequest request) {
 
         var referer = request.getHeader("Referer");
@@ -177,30 +180,36 @@ public class ProductController {
         return "redirect:" + referer;
     }
 
-    @PostMapping("upload")
+    @PostMapping("/upload")
     public String uploadFile(
             @RequestParam("file") MultipartFile file,
+            @RequestParam(required = true) Long warehouseId,
             Model model,
             HttpServletRequest request
-    ) {
+    ) throws IOException {
+        var content = new String(file.getBytes());
         try {
-            String content = new String(file.getBytes());
-            xmlDocParserService.parseAndSaveDate(content);
-
-            boolean isLoadSuccess = true;
-            if (isLoadSuccess) {
-                model.addAttribute("uploadStatus", "Файл успешно загружен");
-            } else {
-                model.addAttribute("uploadStatus", "Произошла ошибка при сохранении данных");
-            }
-
-            var referer = request.getHeader("Referer");
-
-            return "redirect:" + referer;
+            xmlDocParserService.parseAndSaveDate(content, warehouseId);
+        } catch (NotFoundWarehouseException e) {
+            return String.format("redirect:/products/addProduct?warehouseId=%s&notFound", warehouseId);
+        } catch (OverflowWarehouse e) {
+            return String.format("redirect:/products/addProduct?warehouseId=%s&overflow", warehouseId);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
+            return "redirect:/products/addProduct";
         }
+
+        var isLoadSuccess = true;
+
+        if (isLoadSuccess) {
+            model.addAttribute("uploadStatus", "Файл успешно загружен");
+        } else {
+            model.addAttribute("uploadStatus", "Произошла ошибка при сохранении данных");
+        }
+
+        var referer = request.getHeader("Referer");
+
+        return String.format("redirect:/warehouses/%d/products",warehouseId);
+
     }
 
 }

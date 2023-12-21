@@ -65,7 +65,7 @@ public class ProductService {
         productRepository.saveAll(products);
     }
 
-    public void createProduct(Product product, Long warehouseId, User user) throws WarehouseException {
+    public void createProduct(Product product, Long warehouseId) throws WarehouseException {
         var warehouseOpt = warehouseService.getById(warehouseId);
 
         if(warehouseOpt.isEmpty())
@@ -97,10 +97,9 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    public void saveParserProduct(List<Product> product) {
-        if (product != null) {
-            productRepository.saveAll(product);
-        }
+    public void saveParserProduct(List<Product> products,Long warehouseId) throws WarehouseException {
+        for (var p : products)
+            createProduct(p,warehouseId);
     }
 
 }
