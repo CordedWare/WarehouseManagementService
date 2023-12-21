@@ -2,6 +2,7 @@ package ru.wms.WarehouseManagementService.controller.product;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@Slf4j
 @Controller
 @RequestMapping("/products")
 public class ProductController {
@@ -81,12 +83,16 @@ public class ProductController {
                     warehouse
             );
         } catch (NotFoundWarehouseException e) {
+            log.error("NotFound Warehouse");
             return String.format("redirect:/products/addProduct?warehouseId=%s&notFound", warehouse);
         } catch (OverflowWarehouse e) {
+            log.error("Overflow Warehouse");
             return String.format("redirect:/products/addProduct?warehouseId=%s&overflow", warehouse);
         } catch (WarehouseException e) {
+            log.error("Warehouse Exception");
             throw new RuntimeException(e);
         } catch (IllegalArgumentException e) {
+            log.error("Illegal Argument Exception");
             return String.format("redirect:/products/addProduct?warehouseId=%s&illegal", warehouse);
         }
 

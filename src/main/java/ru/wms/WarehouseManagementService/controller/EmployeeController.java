@@ -28,7 +28,7 @@ public class EmployeeController {
     @Value("${domen}")
     private String domen;
 
-    @Autowired
+
     private final EmployeeService employeeService;
 
     public EmployeeController(EmployeeService employeeService) {

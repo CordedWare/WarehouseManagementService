@@ -2,6 +2,7 @@ package ru.wms.WarehouseManagementService.controller.warehouse;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -16,12 +17,12 @@ import ru.wms.WarehouseManagementService.service.WarehouseService;
 import java.util.ArrayList;
 import java.util.Optional;
 
+@Slf4j
 @Controller
 @RequestMapping("/warehouses")
 @RequiredArgsConstructor
 public class WarehouseController {
 
-    @Autowired
     private final WarehouseService warehouseService;
 
     @GetMapping("/create")
@@ -41,6 +42,7 @@ public class WarehouseController {
             @AuthenticationPrincipal UserPrincipal userPrincipal
     ) {
         if (bindingResult.hasErrors()) {
+            log.error("Invalid warehouse data");
             throw new IllegalArgumentException("Invalid warehouse data");
         }
         var user = userPrincipal.getUser();
