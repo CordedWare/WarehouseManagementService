@@ -1,5 +1,6 @@
 package ru.wms.WarehouseManagementService.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,16 +15,14 @@ import java.util.Collections;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
-    private UserRepository<User, Long> userRepository;
+    private final UserRepository<User, Long> userRepository;
 
-    @Autowired
-    private ClientRepository clientRepository;
+    private final ClientRepository clientRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public boolean isUserExist( RegistrationForm registrationForm) {
         return userRepository.existsByEmail(registrationForm.getEmail()) || userRepository.existsByTelephone(registrationForm.getTelephone());
@@ -33,8 +32,6 @@ public class UserService {
      * Логика принципала как User с ролями и Customer как сущность заказчика разделены для атомарности.
      * TODO: Возможно придется вынести отдельно регистрацию Customer, если поменяется бизнес-логика
      */
-
-
 
     public Client registerClient(RegistrationForm registrationForm) {
         var client = new Client();

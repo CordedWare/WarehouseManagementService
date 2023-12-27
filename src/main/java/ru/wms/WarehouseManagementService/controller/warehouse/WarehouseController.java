@@ -69,7 +69,7 @@ public class WarehouseController {
         return "warehouse/warehouses";
     }
 
-    @PostMapping("/api/warehouses")
+    @PostMapping("/warehouses/api")
     @ResponseBody
     public ResponseEntity<Iterable<Warehouse>> getSortedWarehouses(
             @AuthenticationPrincipal UserPrincipal userPrincipal,

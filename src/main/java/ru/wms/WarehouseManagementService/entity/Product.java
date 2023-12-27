@@ -9,11 +9,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Set;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
-@Builder
+@NoArgsConstructor
 @Entity(name = "product_t")
 public class Product {
 
@@ -41,17 +39,4 @@ public class Product {
 
     @ManyToMany(mappedBy = "products", cascade = CascadeType.REMOVE)
     private Set<Order> orderSet;
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", category='" + category + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                ", creationDate=" + creationDate +
-                '}';
-    }
 }

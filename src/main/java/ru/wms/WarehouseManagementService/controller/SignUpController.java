@@ -1,5 +1,6 @@
 package ru.wms.WarehouseManagementService.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import ru.wms.WarehouseManagementService.service.MailSenderService;
 import ru.wms.WarehouseManagementService.service.UserService;
 
 @Controller
+@RequiredArgsConstructor
 public class SignUpController {
 
     /**
@@ -21,11 +23,9 @@ public class SignUpController {
     @Value("${domen}")
     private String domen;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private MailSenderService mailSender;
+    private final MailSenderService mailSender;
 
     @GetMapping("/sign-up")
     public String signUpPage(Model model) {

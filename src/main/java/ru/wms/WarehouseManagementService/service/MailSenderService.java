@@ -1,5 +1,6 @@
 package ru.wms.WarehouseManagementService.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -9,10 +10,10 @@ import org.springframework.util.StringUtils;
 import ru.wms.WarehouseManagementService.entity.User;
 
 @Service
+@RequiredArgsConstructor
 public class MailSenderService {
 
-    @Autowired
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
     @Value("${spring.mail.username}")
     private String username;

@@ -10,8 +10,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "warehouse_t")
 public class Warehouse {
 

@@ -1,5 +1,6 @@
 package ru.wms.WarehouseManagementService.controller.company;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -13,15 +14,11 @@ import ru.wms.WarehouseManagementService.service.CompanyService;
 
 @Controller
 @RequestMapping("/company")
+@RequiredArgsConstructor
 public class CompanyController {
 
 
     private final CompanyService companyService;
-
-    @Autowired
-    public CompanyController(CompanyService companyService) {
-        this.companyService = companyService;
-    }
 
     @GetMapping("/manage")
     public String manage(Model model,

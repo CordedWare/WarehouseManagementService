@@ -1,6 +1,7 @@
 package ru.wms.WarehouseManagementService.controller.order;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,24 +20,18 @@ import ru.wms.WarehouseManagementService.service.WarehouseService;
 
 @Controller
 @RequestMapping("/orders")
+@RequiredArgsConstructor
 public class OrderController {
 
     /**
      * Основной контроллер заказа
      */
 
-    private OrderService orderService;
+    private final OrderService orderService;
 
-    private ProductService productService;
+    private final ProductService productService;
 
-    private WarehouseService warehouseService;
-
-    @Autowired
-    public OrderController(OrderService orderService, ProductService productService, WarehouseService warehouseService) {
-        this.orderService = orderService;
-        this.productService = productService;
-        this.warehouseService = warehouseService;
-    }
+    private final WarehouseService warehouseService;
 
     @GetMapping
     public String orders(

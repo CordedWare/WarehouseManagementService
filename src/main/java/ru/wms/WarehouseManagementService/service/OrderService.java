@@ -1,5 +1,6 @@
 package ru.wms.WarehouseManagementService.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.dto.OrderDTO;
@@ -12,16 +13,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class OrderService {
 
-    @Autowired
-    private OrderRepository orderRepo;
+    private final OrderRepository orderRepo;
 
-    @Autowired
-    private WarehouseService warehouseService;
+    private final WarehouseService warehouseService;
 
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
     public List<Order> getAllOrders() {
 

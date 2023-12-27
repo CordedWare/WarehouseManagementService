@@ -1,5 +1,6 @@
 package ru.wms.WarehouseManagementService.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.dto.MessageForm;
@@ -14,19 +15,14 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ChatService {
 
     private final ChatRepository chatRepository;
+
     private final UserRepository<User, Long> userRepository;
+
     private final MessageRepository messageRepository;
-
-
-    @Autowired
-    public ChatService(ChatRepository chatRepository, UserRepository<User, Long> userRepository, MessageRepository messageRepository) {
-        this.chatRepository = chatRepository;
-        this.userRepository = userRepository;
-        this.messageRepository = messageRepository;
-    }
 
     public Chat findChat(User user, Long partnerId) {
 

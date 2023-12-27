@@ -49,7 +49,6 @@ public class WarehouseService {
         return Optional.of(result);
     }
 
-
     public Warehouse saveWarehouse(Warehouse warehouse, Company company) {
         warehouse.setCompany(company);
 
@@ -89,6 +88,5 @@ public class WarehouseService {
     public Optional<Iterable<Warehouse>> findAllById(Long warehouseId) {
         return Optional.ofNullable(warehouseRepository.findAllById(warehouseId));
     }
-
 
 }

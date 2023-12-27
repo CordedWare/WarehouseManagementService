@@ -9,11 +9,9 @@ import ru.wms.WarehouseManagementService.security.Authority;
 import java.util.List;
 import java.util.Set;
 
-@ToString
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "user_t")
 @Inheritance(strategy = InheritanceType.JOINED)

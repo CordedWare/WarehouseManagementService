@@ -1,6 +1,7 @@
 package ru.wms.WarehouseManagementService.controller;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,6 +20,7 @@ import ru.wms.WarehouseManagementService.service.EmployeeService;
 
 @Controller
 @RequestMapping("/employees")
+@RequiredArgsConstructor
 public class EmployeeController {
 
     /**
@@ -28,12 +30,7 @@ public class EmployeeController {
     @Value("${domen}")
     private String domen;
 
-
     private final EmployeeService employeeService;
-
-    public EmployeeController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
 
     @GetMapping
     public String getEmployee(

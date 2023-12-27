@@ -1,5 +1,6 @@
 package ru.wms.WarehouseManagementService.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class XmlDocParserService {
 
     /**
@@ -40,14 +42,12 @@ public class XmlDocParserService {
     public static final String COMPANY = "COMPANY";
     public static final String ADRESS = "";
 
-    @Autowired
-    private ProductService productService;
 
-    @Autowired
-    private WarehouseService warehouseService;
+    private final ProductService productService;
 
-    @Autowired
-    private CompanyService companyService;
+    private final WarehouseService warehouseService;
+
+    private final CompanyService companyService;
 
     public void parseAndSaveDate(String content, Long warehouseId) throws WarehouseException, ParserConfigurationException, IOException, SAXException { // TODO порефакторить для более универсального парсинга + работы с API
         List<Product> productRows = new ArrayList<>();

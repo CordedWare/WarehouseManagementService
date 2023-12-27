@@ -1,5 +1,6 @@
 package ru.wms.WarehouseManagementService.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.wms.WarehouseManagementService.dto.CompanyCreateForm;
@@ -12,17 +13,12 @@ import ru.wms.WarehouseManagementService.repository.UserRepository;
 import java.util.HashSet;
 
 @Service
+@RequiredArgsConstructor
 public class CompanyService {
 
     private final CompanyRepository companyRepository;
+
     private final UserRepository<User, Long> userRepository;
-
-
-    @Autowired
-    public CompanyService(CompanyRepository companyRepository,UserRepository<User, Long> userRepository) {
-        this.companyRepository = companyRepository;
-        this.userRepository = userRepository;
-    }
 
     public Company createCompany(CompanyCreateForm companyCreateForm, Client client){
         var company = new Company();

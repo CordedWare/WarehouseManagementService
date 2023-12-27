@@ -1,14 +1,17 @@
 package ru.wms.WarehouseManagementService.entity.messenger;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import ru.wms.WarehouseManagementService.entity.User;
 
 import java.time.LocalDateTime;
 
 @Data
-@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "message_t")
 public class Message {
 

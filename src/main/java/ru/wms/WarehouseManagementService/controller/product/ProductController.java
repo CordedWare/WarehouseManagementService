@@ -2,6 +2,7 @@ package ru.wms.WarehouseManagementService.controller.product;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -32,20 +33,18 @@ import java.util.stream.StreamSupport;
 @Slf4j
 @Controller
 @RequestMapping("/products")
+@RequiredArgsConstructor
 public class ProductController {
 
     /**
      * Основной контроллер товара
      */
 
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
-    @Autowired
-    private WarehouseService warehouseService;
+    private final WarehouseService warehouseService;
 
-    @Autowired
-    private XmlDocParserService xmlDocParserService;
+    private final XmlDocParserService xmlDocParserService;
 
     @GetMapping("/addProduct")
     public String addProduct(

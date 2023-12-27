@@ -5,8 +5,9 @@ import lombok.*;
 
 
 
-
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "employee_t")
 public class Employee extends User {

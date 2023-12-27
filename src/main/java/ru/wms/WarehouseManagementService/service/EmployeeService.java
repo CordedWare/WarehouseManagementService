@@ -24,7 +24,6 @@ public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
-
     private final PasswordEncoder passwordEncoder;
 
     private final CompanyService companyService;
@@ -58,10 +57,4 @@ public class EmployeeService {
 
         employeeRepository.save(employee);
     }
-
-    public void deleteEmployee(Employee employee) {
-//        userRepository.delete(employee.getUser());
-//        employeeRepository.delete(employee);
-    }
-
 }

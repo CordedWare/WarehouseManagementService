@@ -1,6 +1,7 @@
 package ru.wms.WarehouseManagementService.controller.messenger;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -12,16 +13,10 @@ import ru.wms.WarehouseManagementService.service.ChatService;
 
 @Controller
 @RequestMapping("/messenger")
+@RequiredArgsConstructor
 public class MessengerController {
 
-
     private final ChatService chatService;
-
-    @Autowired
-    public MessengerController(ChatService chatService) {
-        this.chatService = chatService;
-    }
-
 
     @GetMapping
     public String messenger(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model){
@@ -40,7 +35,6 @@ public class MessengerController {
         }
         return "redirect:/messenger/chat?partner="+chat.getInitiator().get(0).getId();
     }
-
 
     @GetMapping("/chat")
     public String chat(@RequestParam(name = "partner", required = true) Long partner,

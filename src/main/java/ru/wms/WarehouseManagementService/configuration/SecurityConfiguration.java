@@ -27,9 +27,10 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/home", "/sign-up","/logout","/login","/activate/*").permitAll()
+                                .requestMatchers("/home", "/sign-up", "/logout", "/login", "/activate/*").permitAll()
 //                        .requestMatchers("/employees","/employees/**", "/products/**", "/warehouses/**").hasRole("CLIENT")
-                        .anyRequest().authenticated()
+                                .requestMatchers("/api/warehouses").permitAll()
+                                .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage("/home")

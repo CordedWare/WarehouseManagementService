@@ -5,11 +5,9 @@ import lombok.*;
 
 import java.util.Set;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
-@Builder
+@NoArgsConstructor
 @Entity(name = "company_t")
 public class Company {
 
