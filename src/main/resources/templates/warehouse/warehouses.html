@@ -63,7 +63,7 @@
                 <form th:action="@{/warehouses}" method="get" id="sortForm">
                     <input type="hidden" name="sortBy" id="currentSortBy" value="name">
                     <input type="hidden" name="sortPath" id="sortPath" value="asc">
-                    <button type="submit" onclick="toggleSortDirection('sortPath')">Имя склада</button>
+                    <button type="submit" id="name">Имя склада</button>
                 </form>
             </th>
             <th>
@@ -117,18 +117,62 @@
 
 </div>
 
+<div>
+
+</div>
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    function toggleSortDirection(sortPath) {
-        var sortDirInput = document.getElementById(sortPath);
+    var form = document.getElementById('sortForm');
+    var sortInput = document.getElementById('name');
+    sortInput.addEventListener("click", toggleSortDirection);
+    form.addEventListener("submit", handleFormSubmit);
 
-        if (sortDirInput.value) {
+    async function handleFormSubmit(event) {
+        event.preventDefault();
+
+        const data = serializeForm(event.target);
+        const response = await sendData(data);
+    }
+
+    function serializeForm(formNode) {
+        const {elements} = formNode;
+
+        const data = new FormData();
+        Array.from(elements)
+            .filter(i => !!i.name)
+            .forEach(el => {
+                const {name, value} = el;
+                data.append(name, value);
+            });
+        return data;
+    }
+
+    async function sendData(data) {
+        console.log(data)
+        return await fetch("/api/warehouses", {
+            method: 'POST',
+            headers: { 'Content-Type': 'multipart/form-data' },
+            body: data,
+        })
+    }
+
+    // function serializeForm(form) {
+    //     return new FormData(form)
+    // }
+
+    function toggleSortDirection() {
+        var sortDirInput = document.getElementById('sortPath');
+        console.log(sortDirInput.value);
+        if (sortDirInput.value === 'asc') {
             sortDirInput.value = 'desc';
         } else {
             sortDirInput.value = 'asc';
         }
+        console.log(sortDirInput.value);
     }
+
 
 </script>
 </body>

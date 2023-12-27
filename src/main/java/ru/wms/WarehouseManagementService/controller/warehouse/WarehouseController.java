@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import ru.wms.WarehouseManagementService.security.UserPrincipal;
 import ru.wms.WarehouseManagementService.service.WarehouseService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Optional;
 
 @Slf4j
@@ -65,6 +67,17 @@ public class WarehouseController {
         model.addAttribute("warehouse", new Warehouse());
 
         return "warehouse/warehouses";
+    }
+
+    @PostMapping("/api/warehouses")
+    @ResponseBody
+    public ResponseEntity<Iterable<Warehouse>> getSortedWarehouses(
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
+            @RequestParam(name = "sortBy", defaultValue = "name") String sortBy,
+            @RequestParam(name = "sortPath", defaultValue = "asc") String sortPath
+    ) {
+        Optional<Iterable<Warehouse>> warehousesList = warehouseService.sorted(sortBy, sortPath);
+        return ResponseEntity.ok(warehousesList.orElse(Collections.emptyList()));
     }
 
     @GetMapping("/{warehouseId}/products")
