@@ -132,8 +132,11 @@
     async function handleFormSubmit(event) {
         event.preventDefault();
 
-        const data = serializeForm(event.target);
-        const response = await sendData(data);
+        // const data = serializeForm(event.target);
+        // const response = await sendData(data);
+        //
+        // const resultContainer = document.getElementById('sortForm').sortPath;
+        // resultContainer.innerHTML = await response.text();
     }
 
     function serializeForm(formNode) {
@@ -151,9 +154,9 @@
 
     async function sendData(data) {
         console.log(data)
-        return await fetch("/api/warehouses", {
+        return await fetch("/warehouses", {
             method: 'POST',
-            headers: { 'Content-Type': 'multipart/form-data' },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: data,
         })
     }

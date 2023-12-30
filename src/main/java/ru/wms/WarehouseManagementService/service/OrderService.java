@@ -36,11 +36,11 @@ public class OrderService {
                 product.setOrderSet(Collections.singleton(order)));
 
         return Optional.of(orderRepo.save(order))
-                .orElseThrow( () ->
+                .orElseThrow(() ->
                         new RuntimeException("Ошибка при сохранении заказа"));
     }
 
-    public Order findOrder(Long id){
+    public Order findOrder(Long id) {
 
         return orderRepo.findOrderById(id);
     }
@@ -62,9 +62,9 @@ public class OrderService {
     }
 
     public void moveToOtherWarehouse(OrderMoveDTO orderMoveDTO) {
-        var order     = orderRepo.findOrderById(orderMoveDTO.getOrderId());
+        var order = orderRepo.findOrderById(orderMoveDTO.getOrderId());
         var warehouse = warehouseService.getWarehouseById(orderMoveDTO.getWarehouseId());
-        var products  = order.getProducts();
+        var products = order.getProducts();
 
         productService.move(products, Optional.ofNullable(warehouse));
     }
