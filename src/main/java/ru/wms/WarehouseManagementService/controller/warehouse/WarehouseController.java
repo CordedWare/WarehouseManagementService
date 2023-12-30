@@ -69,16 +69,16 @@ public class WarehouseController {
         return "warehouse/warehouses";
     }
 
-    @PostMapping("/warehouses/api")
-    @ResponseBody
-    public ResponseEntity<Iterable<Warehouse>> getSortedWarehouses(
-            @AuthenticationPrincipal UserPrincipal userPrincipal,
-            @RequestParam(name = "sortBy", defaultValue = "name") String sortBy,
-            @RequestParam(name = "sortPath", defaultValue = "asc") String sortPath
-    ) {
-        Optional<Iterable<Warehouse>> warehousesList = warehouseService.sorted(sortBy, sortPath);
-        return ResponseEntity.ok(warehousesList.orElse(Collections.emptyList()));
-    }
+//    @PostMapping("/api")
+//    @ResponseBody
+//    public ResponseEntity<Iterable<Warehouse>> getSortedWarehouses(
+//            @AuthenticationPrincipal UserPrincipal userPrincipal,
+//            @RequestParam(name = "sortBy", defaultValue = "name") String sortBy,
+//            @RequestParam(name = "sortPath", defaultValue = "asc") String sortPath
+//    ) {
+//        Optional<Iterable<Warehouse>> warehousesList = warehouseService.sorted(sortBy, sortPath);
+//        return ResponseEntity.ok(warehousesList.orElse(Collections.emptyList()));
+//    }
 
     @GetMapping("/{warehouseId}/products")
     public String warehouseProducts(
