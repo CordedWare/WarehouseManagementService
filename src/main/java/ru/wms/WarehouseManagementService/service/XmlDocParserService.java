@@ -8,9 +8,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import ru.wms.WarehouseManagementService.entity.Company;
 import ru.wms.WarehouseManagementService.entity.Product;
-import ru.wms.WarehouseManagementService.entity.Warehouse;
 import ru.wms.WarehouseManagementService.exceptions.WarehouseException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -49,10 +47,9 @@ public class XmlDocParserService {
     @Autowired
     private CompanyService companyService;
 
-    public void parseAndSaveDate(String content, Long warehouseId) throws WarehouseException, ParserConfigurationException, IOException, SAXException { // TODO порефакторить для более универсального парсинга + работы с API
+    public void parseAndSaveDate(String content, Long warehouseId) throws
+            WarehouseException, ParserConfigurationException, IOException, SAXException { // TODO порефакторить для более универсального парсинга + работы с API
         List<Product> productRows = new ArrayList<>();
-        List<Warehouse> warehouseRows = new ArrayList<>();
-        List<Company> companyRows = new ArrayList<>();
 
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
@@ -61,7 +58,6 @@ public class XmlDocParserService {
 
         for (int i = 0; i < rowList.getLength(); i++) { // TODO еще доработать
             Element rowElem = (Element) rowList.item(i);
-
 //            Company company = new Company();
 //            String companyId = rowElem.getAttribute(COMPANY_ID);
 //            company.setId(companyId.isEmpty() || companyId.equals("") ? 1 : Long.parseLong(companyId));
@@ -78,7 +74,6 @@ public class XmlDocParserService {
 //            warehouseSet.add(warehouse);
 //            company.setWarehouses(warehouseSet);
 //            companyRows.add(company);
-
             var product = new Product();
 //            var productId = rowElem.getAttribute(WAREHOUSE_ID);
 //            product.setId(productId.isEmpty() ? 1 : Long.parseLong(productId));
@@ -99,7 +94,6 @@ public class XmlDocParserService {
                 productRows.add(product);
         }
 
-//        List<Product> prod = Collections.singletonList(productRows.get(0));
         productService.saveParserProduct(productRows, warehouseId);
     }
 
